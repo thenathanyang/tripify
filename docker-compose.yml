@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  backend:
+    build:
+      context: backend
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend:/var/www/backend
+
+  ui:
+    build:
+      context: ui
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./ui:/var/www/ui

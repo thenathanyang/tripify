@@ -1,0 +1,18 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for tripify",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "pwd; nodemon -i node_modules -e js"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}

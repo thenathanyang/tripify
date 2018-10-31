@@ -4,7 +4,7 @@
   "description": "Backend for tripify",
   "scripts": {
     "start": "node index.js",
-    "dev": "pwd; nodemon -i node_modules -e js"
+    "dev": "nodemon -i node_modules -e js"
   },
   "main": "index.js",
   "license": "MIT",
@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "winston": "^3.1.0"
   }
 }

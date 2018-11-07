@@ -1,0 +1,34 @@
+$body-font: 'Lato', 'Helvetica Neue', 'Helvetica', sans-serif;
+$subheader-font: 'Avenir Next', 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
+$header-font: 'Montserrat', 'Helvetica Neue', 'Helvetica', sans-serif;
+
+$black: #031123;
+$gray: #AAAAAA;
+$white: #FCFCFC;
+
+body {
+  margin: 0px;
+  padding: 20px;
+  color: $black;
+  font-family: $body-font;
+}
+
+h1 {
+  font-family: $header-font;
+  margin: 0px 0px 10px 0px;
+}
+
+h2 {
+  color: $gray;
+  font-family: $subheader-font;
+  text-transform: uppercase;
+}
+
+p {
+  padding: 3px 0px 6px 0px;
+  line-height: 120%;
+}
+
+/** import component styles here */
+
+@import "components/text/style.scss";

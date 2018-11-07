@@ -1,7 +1,8 @@
 import React from 'react';
+import Title from 'components/text/Title';
 
 export default class Home extends React.Component {
   render() {
-    return <h1>Hello World</h1>;
+    return <Title text="Hello World!" />;
   }
 }

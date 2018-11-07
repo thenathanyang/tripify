@@ -2,6 +2,9 @@ $body-font: 'Lato', 'Helvetica Neue', 'Helvetica', sans-serif;
 $subheader-font: 'Avenir Next', 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
 $header-font: 'Montserrat', 'Helvetica Neue', 'Helvetica', sans-serif;
 
+$input-shadow: 0px 2px 4px rgba(120,120,120,0.3);
+$input-focus-shadow: 0px 3px 6px rgba(120,120,120,0.4);
+
 $black: #031123;
 $gray: #AAAAAA;
 $white: #FCFCFC;
@@ -30,5 +33,5 @@ p {
 }
 
 /** import component styles here */
-
+@import "components/input/style.scss";
 @import "components/text/style.scss";

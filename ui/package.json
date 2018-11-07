@@ -10,6 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^6.26.3",
@@ -23,6 +24,7 @@
     "html-minifier": "^3.5.21",
     "html-webpack-plugin": "^4.0.0-beta.2",
     "node-sass": "^4.9.4",
+    "prop-types": "^15.6.2",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",

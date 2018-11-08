@@ -1,4 +1,4 @@
-input[type="text"] {
+input {
   background: #FCFCFC;
   border: none;
   border-radius: 5px;
@@ -16,4 +16,8 @@ input[type="text"] {
   &:focus {
     box-shadow: $input-focus-shadow;
   }
+}
+
+div.date-picker input {
+  width: 120px;
 }

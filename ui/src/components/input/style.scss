@@ -17,3 +17,7 @@ input[type="text"] {
     box-shadow: $input-focus-shadow;
   }
 }
+
+div.time-selector input[type="text"] {
+  max-width: 120px;
+}

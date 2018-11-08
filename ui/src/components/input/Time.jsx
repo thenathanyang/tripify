@@ -21,17 +21,17 @@ import 'rc-time-picker/assets/index.css';
  */
 class TimeSelector extends React.Component {
   /**
-   * Handle's the user selecting a new date from the dropdown.
+   * Handle the user selecting a new date from the dropdown.
    * 
-   * @param value The `moment` date object representing the time selected
+   * @param {moment} time The object representing the time selected
    */
-  handleChange = value => this.props.onChange(this.props.name, value);
+  handleChange = time => this.props.onChange(this.props.name, time);
 
   render() {
     return (
       <div className="time-selector">
         <TimePicker
-          defaultValue={this.props.defaultValue}
+          defaultValue={this.props.defaultTime}
           inputReadOnly
           minuteStep={15}
           onChange={this.handleChange}
@@ -45,15 +45,15 @@ class TimeSelector extends React.Component {
 
 TimeSelector.propTypes = {
   /** Initial date to populate the TimeSelector */
-  defaultValue: PropTypes.instanceOf(moment),
+  defaultTime: PropTypes.instanceOf(moment),
   /** The HTML name for the input */
   name: PropTypes.string.isRequired,
-  /** The change handler for the input, with signature (name: string, value: moment) => void */
+  /** The change handler for the input, with signature (name: string, time: moment) => void */
   onChange: PropTypes.func.isRequired,
 };
 
 TimeSelector.defaultProps = {
-  defaultValue: null,
+  defaultTime: null,
 };
 
 export default TimeSelector;

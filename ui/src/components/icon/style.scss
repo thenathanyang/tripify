@@ -1,5 +1,6 @@
 span.fas, span.fab {
   color: $black;
+  &.blue { color: $blue; }
   &.gray { color: $gray; }
   &.white { color: $white; }
 }

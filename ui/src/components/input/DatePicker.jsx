@@ -10,7 +10,7 @@ import 'react-day-picker/lib/style.css';
  * DatePicker represents a clickable calendar that allows users to select a date
  *
  * Example:
- *  <DayPicker
+ *  <DatePicker
  *    name="selected-date"
  *    defaultValue={moment()}
  *    onDayChange={(name, value) => console.log(name, value)}
@@ -29,7 +29,7 @@ class DatePicker extends React.Component {
    *
    * @param date The `moment` date object representing the date selected
    */
-  handleClick = date => this.props.onDayChange(this.props.name, date);
+  handleClick = date => this.props.onChange(this.props.name, date);
 
   render() {
     return (
@@ -40,7 +40,7 @@ class DatePicker extends React.Component {
           value={this.props.defaultValue != null 
                   ? formatDate(this.props.defaultValue, this.format)
                   : ''}
-          placeholder={`${formatDate(moment(), this.format)}`}
+          placeholder={formatDate(moment(), this.format)}
           onDayChange={this.handleClick}
         />
       </div>
@@ -54,7 +54,7 @@ DatePicker.propTypes = {
   /** The HTML name for the input */
   name: PropTypes.string.isRequired, 
   /** The change handler for the input */
-  onDayChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 DatePicker.defaultProps = {

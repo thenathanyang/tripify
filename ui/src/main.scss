@@ -4,11 +4,15 @@ $header-font: 'Montserrat', 'Helvetica Neue', 'Helvetica', sans-serif;
 
 $input-shadow: 0px 2px 4px rgba(120,120,120,0.3);
 $input-focus-shadow: 0px 3px 6px rgba(120,120,120,0.4);
-$button-shadow: 0px 1px 2px rgba(0,31,73,0.85);
+$button-shadow: 0px 2px 4px rgba(0,31,73,0.85);
+$button-disable-shadow: 0px 1px 2px rgba(0,31,73,0.85);
 
 $black: #031123;
 $gray: #AAAAAA;
 $white: #FCFCFC;
+$green: #7ED321;
+$blue: #00A6EE;
+$red: #F67575;
 
 body {
   margin: 0px;

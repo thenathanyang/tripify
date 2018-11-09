@@ -19,6 +19,13 @@ import { classnames } from 'utils';
  *  />
  */
 class Icon extends React.Component {
+  /**
+   * Handle the click functionality on the icon
+   * 
+   * @param icon The icon that is handling the click
+   */
+  handleClick = icon => this.props.onClick(this.props.className, icon);
+
   render() {
     const { brands, className, id, color, icon, solid } = this.props;
     const classes = {
@@ -28,7 +35,7 @@ class Icon extends React.Component {
       [`${color}`]: true,
       [`fa-${icon}`]: true,
     };
-    return <span id={id} className={classnames(classes)} />;
+    return <span id={id} className={classnames(classes)} onClick={this.handleClick}/>;
   }
 }
 
@@ -45,6 +52,8 @@ Icon.propTypes = {
   id: PropTypes.string,
   /** Whether the icon is a FontAwesome solid style icon (default) */
   solid: PropTypes.bool,
+  /** The click handler for the icon */
+  onClick: PropTypes.func,
 };
 
 Icon.defaultProps = {

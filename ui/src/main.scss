@@ -12,15 +12,15 @@ $button-shadow: 0px 2px 4px rgba(0,31,73,0.85);
 $button-disable-shadow: 0px 1px 2px rgba(0,31,73,0.85);
 
 $black: #031123;
+$dark-gray: #666666;
 $gray: #AAAAAA;
 $white: #FCFCFC;
 $green: #7ED321;
-$blue: #00A6EE;
+$blue: #1CA7EB;
 $red: #F67575;
 
 body {
   margin: 0px;
-  padding: 20px;
   color: $black;
   font-family: $body-font;
 }
@@ -55,6 +55,9 @@ p {
   width: 44%;
   display: inline-block;
 }
+.container {
+  padding: 20px;
+}
 
 /** import component styles here */
 @import "components/icon/style.scss";
@@ -63,3 +66,4 @@ p {
 @import "components/tile/style.scss";
 @import "components/button/style.scss";
 @import "components/section/styles.scss";
+@import "components/header/style.scss";

@@ -18,9 +18,8 @@ input[type=text] {
   }
 }
 
-div.time-selector input[type=text] {
+div.time-selector input {
   max-width: 140px;
-  text-align: center;
   text-transform: uppercase;
 }
 

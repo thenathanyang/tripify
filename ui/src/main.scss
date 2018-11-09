@@ -45,6 +45,17 @@ p {
   line-height: 120%;
 }
 
+#create-button {
+  width: 54%;
+  margin-right: 2%;
+  display: inline-block;
+}
+
+#cancel-button {
+  width: 44%;
+  display: inline-block;
+}
+
 /** import component styles here */
 @import "components/icon/style.scss";
 @import "components/input/style.scss";

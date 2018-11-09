@@ -10,6 +10,7 @@ import {render} from 'react-dom';
 import {store, history} from 'reducers';
 
 import Home from 'pages/home';
+import CreateTrip from 'pages/createTrip';
 
 class App extends React.Component {
 	render(){
@@ -17,7 +18,8 @@ class App extends React.Component {
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<Switch>
-						<Route path="/" component={Home}/>
+						<Route path="/" component={CreateTrip}/>
+						<Route path="/trip" component={CreateTrip}/>
 						<Redirect to="/"/>
 					</Switch>
 				</ConnectedRouter>

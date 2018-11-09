@@ -13,7 +13,7 @@ import 'react-day-picker/lib/style.css';
  *  <DatePicker
  *    name="selected-date"
  *    defaultValue={moment()}
- *    onDayChange={(name, value) => console.log(name, value)}
+ *    onChange={(name, value) => console.log(name, value)}
  * />
  *
  */

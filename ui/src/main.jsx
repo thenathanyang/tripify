@@ -10,6 +10,7 @@ import {render} from 'react-dom';
 import {store, history} from 'reducers';
 
 import Home from 'pages/home';
+import Trips from 'pages/trips';
 
 class App extends React.Component {
 	render(){
@@ -17,7 +18,7 @@ class App extends React.Component {
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<Switch>
-						<Route path="/" component={Home}/>
+						<Route path="/" component={Trips}/>
 						<Redirect to="/"/>
 					</Switch>
 				</ConnectedRouter>

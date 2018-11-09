@@ -4,6 +4,10 @@ $header-font: 'Montserrat', 'Helvetica Neue', 'Helvetica', sans-serif;
 
 $input-shadow: 0px 2px 4px rgba(120,120,120,0.3);
 $input-focus-shadow: 0px 3px 6px rgba(120,120,120,0.4);
+
+$tile-shadow: 0 3px 8px 0 rgba(83,83,83,0.42);
+$tile-hover-shadow: 0 4px 10px 0 rgba(83,83,83,0.70);
+
 $button-shadow: 0px 2px 4px rgba(0,31,73,0.85);
 $button-disable-shadow: 0px 1px 2px rgba(0,31,73,0.85);
 
@@ -45,5 +49,6 @@ p {
 @import "components/icon/style.scss";
 @import "components/input/style.scss";
 @import "components/text/style.scss";
+@import "components/tile/style.scss";
 @import "components/button/style.scss";
 @import "components/section/styles.scss";

@@ -10,6 +10,7 @@ import {render} from 'react-dom';
 import {store, history} from 'reducers';
 
 import Home from 'pages/home';
+import CreateTrip from 'pages/createTrip';
 import Trips from 'pages/trips';
 
 class App extends React.Component {

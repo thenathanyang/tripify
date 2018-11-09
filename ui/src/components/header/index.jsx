@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Icon from 'components/icon/index';
 
 class Header extends React.Component {
@@ -20,10 +22,12 @@ class Header extends React.Component {
         <Icon className={iconClass} color="white" icon={icon} onClick={this.handleClick}/>
         <div className={overlayClass}></div>
         <div className={dropdownClass}>
-          <div className="item">
-            <Icon icon="map-marked-alt" color="blue" className="nav-icon" />
-            VIEW TRIPS
-          </div>
+          <Link to="/" className="link">
+            <div className="item">
+              <Icon icon="map-marked-alt" color="blue" className="nav-icon" />
+              VIEW TRIPS
+            </div>
+          </Link>
           <div className="item">
             <Icon icon="calendar-alt" color="blue" className="nav-icon" />
             VIEW EVENTS

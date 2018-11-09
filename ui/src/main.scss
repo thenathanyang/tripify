@@ -22,13 +22,17 @@ h1 {
 }
 
 h2 {
+  padding: 0px;
+  margin: 0px 0px 5px 0px;
+  font-size: 18px;
+  font-weight: 500;
   color: $gray;
   font-family: $subheader-font;
   text-transform: uppercase;
 }
 
 p {
-  padding: 3px 0px 6px 0px;
+  margin: 0px 0px 12px 0px ;
   line-height: 120%;
 }
 
@@ -36,3 +40,4 @@ p {
 @import "components/icon/style.scss";
 @import "components/input/style.scss";
 @import "components/text/style.scss";
+@import "components/section/styles.scss";

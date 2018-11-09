@@ -20,7 +20,7 @@ class TextInput extends React.Component {
    * Handle's the user typing into the field and calls the passed in function
    * to handle the change.
    * 
-   * @param e The React.ChangeEvent triggered by a user typing into the field
+   * @param {React.ChangeEvent<HTMLElement>} e The event triggered by a user typing into the field
    */
   handleChange = e => this.props.onChange(e.target.name, e.target.value);
 

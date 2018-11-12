@@ -11,7 +11,6 @@ import {store, history} from 'reducers';
 
 import Home from 'pages/home';
 import CreateTrip from 'pages/createTrip';
-import Trips from 'pages/trips';
 
 class App extends React.Component {
 	render(){
@@ -19,8 +18,8 @@ class App extends React.Component {
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<Switch>
-						<Route exact path="/" component={Trips}/>
-						<Route path="/create" component={CreateTrip} />
+						<Route exact path="/" component={Home}/>
+						<Route path="/trip/create" component={CreateTrip} />
 						<Redirect to="/"/>
 					</Switch>
 				</ConnectedRouter>

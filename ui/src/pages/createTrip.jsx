@@ -25,10 +25,10 @@ export default class CreateTrip extends React.Component {
 
           <div className="buttons">
             <div id="create-button">
-              <Button blue label="Create" onClick={() => { console.log("Create New Trip Button") }} />
+              <Button blue label="Create" />
             </div>
             <div id="cancel-button">
-              <Link to="/"><Button gray label="Cancel" onClick={() => {}} /></Link>
+              <Link to="/trips"><Button gray label="Cancel" /></Link>
             </div>
           </div>
         </div>

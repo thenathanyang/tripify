@@ -18,9 +18,9 @@ class App extends React.Component {
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<Switch>
-						<Route exact path="/" component={Home}/>
-						<Route path="/trip/create" component={CreateTrip} />
-						<Redirect to="/"/>
+						<Route exact path="/trips" component={Home}/>
+						<Route path="/trips/create" component={CreateTrip} />
+						<Redirect to="/trips"/>
 					</Switch>
 				</ConnectedRouter>
 			</Provider>

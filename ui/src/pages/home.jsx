@@ -15,7 +15,7 @@ export default class Home extends React.Component {
         <Header />
         <div className="container">
           <Title text="Your Trips" />
-          <Link to="/trip/create"><Button blue label="Create New Trip" onClick={() => console.log("Create New Trip button clicked")} /></Link>
+          <Link to="/trips/create"><Button blue label="Create New Trip" /></Link>
           <Section title="Upcoming">
             <TripTile title="Kayaking Trip" />
           </Section>

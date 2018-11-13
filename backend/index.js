@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const errors = require('http-errors');
 const express = require('express');
 const morgan = require('morgan');
@@ -10,6 +11,7 @@ const routes = require('./routes');
 
 const app = express();
 app.use(morgan('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 

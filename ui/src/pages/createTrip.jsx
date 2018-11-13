@@ -22,6 +22,7 @@ class CreateTripPage extends React.Component {
       trip: {
         name: "",
         date: moment(),
+        price: "$20",
         background: "https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg",
       },
       error: null,
@@ -51,6 +52,10 @@ class CreateTripPage extends React.Component {
 
           <Section title="Trip Date">
             <DatePicker name="date" onChange={this.handleChange} />
+          </Section>
+
+          <Section title="Trip Description">
+            <TextInput name="description" onChange={this.handleChange} />
           </Section>
 
           { (this.state.error || this.props.error) &&

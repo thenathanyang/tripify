@@ -1,31 +1,67 @@
 import React from 'react';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 
-import Title from '../components/text/Title';
-import Section from '../components/section/Section';
-import TextInput from '../components/input/Text';
-import Button from '../components/button/Button';
-import DatePicker from '../components/input/DatePicker';
-import Header from '../components/header';
+import Title from 'components/text/Title';
+import Paragraph from 'components/text/Paragraph';
+import Section from 'components/section/Section';
+import TextInput from 'components/input/Text';
+import Button from 'components/button/Button';
+import DatePicker from 'components/input/DatePicker';
+import Header from 'components/header';
 
-export default class CreateTrip extends React.Component {
+import Trip from 'models/trip';
+import { CreateTrip } from 'reducers/trips';
+
+class CreateTripPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trip: {
+        name: "",
+        date: moment(),
+        background: "https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg",
+      },
+      error: null,
+    };
+  }
+
+  handleChange = (name, value) =>
+    this.setState(prev => ({ trip: { ...prev.trip, [name]: value } }));
+
+  createTrip = () => {
+    if (!this.state.trip.name)
+      return this.setState(prev => ({...prev, error: "Trip name must contain at least one character"}));
+    if (this.state.trip.date < moment().startOf('day'))
+      return this.setState(prev => ({...prev, error: "Trip date cannot be in the past"}));
+    this.props.createTrip(Trip.fromObject(this.state.trip), this.props.redirectTrip);
+  };
+
   render() {
     return (
     <div>
       <Header />
       <div className="container">
         <Title text="Create Trip" />
-          <Section title="TRIP NAME">
-            <TextInput name = "tripName" onChange={(name, value) => console.log(name, value)} />
+          <Section title="Trip Name">
+            <TextInput name="name" onChange={this.handleChange} />
           </Section>
 
-          <Section title="TRIP DATE">
-            <DatePicker name = "tripDate" onChange={(name, value) => console.log(name, value)} />
+          <Section title="Trip Date">
+            <DatePicker name="date" onChange={this.handleChange} />
           </Section>
+
+          { (this.state.error || this.props.error) &&
+            <Section title="">
+              <div className="error">{ this.state.error || this.props.error }</div>
+            </Section>
+          }
 
           <div className="buttons">
             <div id="create-button">
-              <Button blue label="Create" />
+              <Button blue label="Create" onClick={this.createTrip} />
             </div>
             <div id="cancel-button">
               <Link to="/trips"><Button gray label="Cancel" /></Link>
@@ -36,3 +72,15 @@ export default class CreateTrip extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  error: state.Trips.error,
+  creatingTrip: state.Trips.creatingTrip,
+});
+
+const mapDispatchToProps = dispatch => ({
+  createTrip: (trip, callback) => dispatch(CreateTrip(trip, callback)),
+  redirectTrip: trip => dispatch(replace(`/trips/${trip.id}`)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTripPage);

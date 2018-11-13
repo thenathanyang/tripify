@@ -3,17 +3,18 @@ import { classnames } from 'utils';
 
 class Button extends React.Component {
   render() {
-    const classes ={
+    const classes = {
       'green-button': this.props.green,
       'red-button': this.props.red,
       'blue-button': this.props.blue,
-      'grey-button': this.props.grey,
+      'gray-button': this.props.gray,
       'disabled-button': this.props.disabled
     };
 
     return (
       <button
         className={classnames(classes)}
+        id={this.props.id}
         disabled={this.props.disabled}
         onClick = {() => this.props.onClick()}
       >
@@ -25,6 +26,7 @@ class Button extends React.Component {
 
 Button.defaultProps = {
   label: "",
+  id: "",
   onClick: () => {},
 };
 

@@ -26,7 +26,7 @@ class TextInput extends React.Component {
 
   render() {
     return (
-      <input {...this.props} type="text" onChange={this.handleChange} />
+      <input {...this.props} autoComplete="off" type="text" onChange={this.handleChange} />
     );
   }
 }

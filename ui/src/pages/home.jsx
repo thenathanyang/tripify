@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -24,6 +25,15 @@ class Home extends React.Component {
   }
 
   render() {
+    const now = moment().startOf('day');
+    const pastTrips =
+      this.props.trips
+        .filter(trip => trip.date < now)
+        .sort((a, b) => a.date > b.date);
+    const upcomingTrips =
+      this.props.trips
+        .filter(trip => trip.date >= now)
+        .sort((a, b) => a.date < b.date);
     return (
       <div>
         <Header />
@@ -31,8 +41,13 @@ class Home extends React.Component {
           <Title text="Your Trips" />
           <Link to="/trips/create"><Button blue label="Create New Trip" /></Link>
           <Section title={this.getUpcomingTitle()}>
-            { this.props.trips.map(trip => <TripTile key={trip.id} title={trip.name} background={trip.background} />) }
+            { upcomingTrips.map(trip => <TripTile key={trip.id} title={trip.name} background={trip.background} />) }
           </Section>
+          { pastTrips.length > 0 &&
+            <Section title="Past">
+              { pastTrips.map(trip => <TripTile key={trip.id} title={trip.name} background={trip.background} />) }
+            </Section>
+          }
         </div>
       </div>
     );

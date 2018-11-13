@@ -24,6 +24,7 @@ class Home extends React.Component {
   }
 
   render() {
+    const trips = this.props.trips.sort((a, b) => a.date < b.date);
     return (
       <div>
         <Header />
@@ -31,7 +32,7 @@ class Home extends React.Component {
           <Title text="Your Trips" />
           <Link to="/trips/create"><Button blue label="Create New Trip" /></Link>
           <Section title={this.getUpcomingTitle()}>
-            { this.props.trips.map(trip => <TripTile key={trip.id} title={trip.name} background={trip.background} />) }
+            { trips.map(trip => <TripTile key={trip.id} title={trip.name} background={trip.background} />) }
           </Section>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default class Trip {
   constructor(id, name, date, description, background, members, events) {
     this.id = id;
     this.name = name;
-    this.date = date ? moment(date) : null;
+    this.date = date ? moment(date).startOf('day') : null;
     this.description = description || null;
     this.background = background || null;
     this.members = members || [];

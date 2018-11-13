@@ -1,14 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { GetTrips } from 'reducers/trips';
 
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
 import Button from '../components/button/Button';
 import TripTile from '../components/tile/Trip';
 import Header from '../components/header';
-import Paragraph from 'components/text/Paragraph';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
+  componentWillMount() {
+    this.props.getTrips();
+  }
+
+  getUpcomingTitle = () => {
+    if (this.props.gettingTrips)
+      return "Fetching Trips...";
+    if (this.props.trips.length === 0)
+      return "No Trips Found";
+    return "Upcoming";
+  }
+
   render() {
     return (
       <div>
@@ -16,15 +30,22 @@ export default class Home extends React.Component {
         <div className="container">
           <Title text="Your Trips" />
           <Link to="/trips/create"><Button blue label="Create New Trip" /></Link>
-          <Section title="Upcoming">
-            <TripTile title="Kayaking Trip" />
-          </Section>
-          <Section title="Past">
-            <TripTile title="Sunday Brunch" />
-            <TripTile title="Beach Day" />
+          <Section title={this.getUpcomingTitle()}>
+            { this.props.trips.map(trip => <TripTile key={trip.id} title={trip.name} background={trip.background} />) }
           </Section>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  trips: state.Trips.trips,
+  gettingTrips: state.Trips.gettingTrips,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getTrips: () => dispatch(GetTrips()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

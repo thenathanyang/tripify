@@ -21,7 +21,10 @@ export default class CreateTrip extends React.Component {
                     </Section>
 
                     <Section title="Event Date">
-                        <DatePicker name="eventDate" defaultVale={moment()}/>  
+                        <DatePicker name="eventDate" 
+                            defaultValue = {moment()}
+                         onChange={(name, value) => console.log(name, value)}
+                        />  
                     </Section>
 
                     <Section title="Event Time">

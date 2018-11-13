@@ -7,7 +7,7 @@ class Button extends React.Component {
       'green-button': this.props.green,
       'red-button': this.props.red,
       'blue-button': this.props.blue,
-      'gray-button': this.props.gray,
+      'gray-button': this.props.gray || this.props.grey,
       'disabled-button': this.props.disabled,
       'small': this.props.small
     };

@@ -1,5 +1,6 @@
 import React from 'react'; 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
@@ -18,7 +19,7 @@ import { GetTrip } from 'reducers/trips';
 
 class ViewTrip extends React.Component {
    componentDidMount() {
-    this.props.getTrip(this.props.route.match.params.id);
+    this.props.getTrip(this.props.id);
   }
 
   getTitle = () => {
@@ -30,7 +31,7 @@ class ViewTrip extends React.Component {
   }
 
   render() {
-      const trip = this.props.trip || new Trip("987654321","Kayaking Trip", moment(), "$20", "Fun Kayaking Trip!", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQRTv1vUhVksy1zgscQp28LnKkO2gryPvDvkaaVZs_zCYVGlhH6Q");
+      const trip = this.props.trip || new Trip("987654321","Kayaking Trip", moment(), "Fun Kayaking Trip!", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQRTv1vUhVksy1zgscQp28LnKkO2gryPvDvkaaVZs_zCYVGlhH6Q");
       return (
         <div>
           <Header/>
@@ -38,7 +39,7 @@ class ViewTrip extends React.Component {
             <div>
               <Title text={this.getTitle()}/>
               <div className="trip-header">
-                <Title text={trip.price}/>
+                <Title text={trip.price()}/>
                 <Subheader text="per person"/>
                 <div id="trip-buttons">
                   <div id="edit-trip-button">
@@ -74,8 +75,8 @@ class ViewTrip extends React.Component {
                 { trip.events.length > 0 && 
                   trip.events.map(event => 
                     <TripTile title={event.name}
-                      background={event.images} /> )}
-                <Button grey label="+ Add event"/>
+                      background={event.images.length ? event.images[0] : null} /> )}
+                <Link to={`/trips/${this.props.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
               </Section>
             </div>
           </div>

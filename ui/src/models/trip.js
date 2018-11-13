@@ -10,15 +10,17 @@ export default class Trip {
    * @param {String} id 
    * @param {String} name 
    * @param {moment} date 
+   * @param {String} price
    * @param {String} description 
    * @param {String} background 
    * @param {Array<Member>} members 
    * @param {Array<Event>} events 
    */
-  constructor(id, name, date, description, background, members, events) {
+  constructor(id, name, date, price, description, background, members, events) {
     this.id = id;
     this.name = name;
     this.date = date ? moment(date).startOf('day') : null;
+    this.price = price || null;
     this.description = description || null;
     this.background = background || null;
     this.members = members || [];
@@ -30,6 +32,7 @@ export default class Trip {
       id: this.id,
       name: this.name,
       date: this.date,
+      price: this.price,
       description: this.description,
       background: this.background,
       members: this.members,
@@ -43,6 +46,6 @@ export default class Trip {
    * @param {Object} obj
    */
   static fromObject(obj) {
-    return new Trip(obj.id, obj.name, obj.date, obj.description, obj.background, obj.members, obj.events);
+    return new Trip(obj.id, obj.name, obj.date, obj.price, obj.description, obj.background, obj.members, obj.events);
   }
 }

@@ -25,7 +25,7 @@ class App extends React.Component {
 						<Route path="/trips/create" component={CreateTrip} />
 						<Route path="/event/create" component={CreateEvent}/>
 						<Route path="/events" component={ViewEvent} />
-						<Route path="/trip" component={ViewTrip} />
+						<Route path="/trips/:id" component={route => <ViewTrip route={route} />} />
 						<Redirect to="/trips"/>
 					</Switch>
 				</ConnectedRouter>

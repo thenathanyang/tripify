@@ -1,4 +1,5 @@
 input[type='text'], .DayPickerInput input {
+  appearance: none;
   background: #FCFCFC;
   border: none;
   border-radius: 5px;
@@ -12,6 +13,7 @@ input[type='text'], .DayPickerInput input {
   padding: 0px 8px;
   transition: 0.1s all ease-in-out;
   width: 100%;
+  -webkit-appearance: none;
 
   &:focus {
     box-shadow: $input-focus-shadow;
@@ -20,7 +22,9 @@ input[type='text'], .DayPickerInput input {
 
 div.time-selector input {
   max-width: 140px;
+  appearance: none;
   text-transform: uppercase;
+  -webkit-appearance: none;
 }
 
 div.time-range {
@@ -35,5 +39,7 @@ div.time-range {
 }
 
 div.date-picker input {
+  appearance: none;
   width: 120px;
+  -webkit-appearance: none;
 }

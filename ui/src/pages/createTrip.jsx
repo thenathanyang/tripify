@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
 import TextInput from '../components/input/Text';
@@ -26,7 +28,7 @@ export default class CreateTrip extends React.Component {
               <Button blue label="Create" />
             </div>
             <div id="cancel-button">
-              <Button gray label="Cancel"/>
+              <Link to="/trips"><Button gray label="Cancel" /></Link>
             </div>
           </div>
         </div>

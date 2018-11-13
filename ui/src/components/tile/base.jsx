@@ -30,7 +30,7 @@ BaseTile.propTypes = {
   /** Width ratios for the base tile */
   width: PropTypes.oneOf([0.5, 0.75, 1.0]),
   /** Height ratios for the base tile */
-  height: PropTypes.oneOf(0.5, 1.0),
+  height: PropTypes.oneOf([0.5, 1.0]),
 };
 
 BaseTile.defaultProps = {

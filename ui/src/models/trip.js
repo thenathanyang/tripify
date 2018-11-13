@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * A Trip
  */
@@ -7,18 +9,32 @@ export default class Trip {
    * 
    * @param {String} id 
    * @param {String} name 
-   * @param {Date} date 
+   * @param {moment} date 
    * @param {String} description 
+   * @param {String} background 
    * @param {Array<Member>} members 
    * @param {Array<Event>} events 
    */
-  constructor(id, name, date, description, members, events) {
+  constructor(id, name, date, description, background, members, events) {
     this.id = id;
     this.name = name;
-    this.date = date;
-    this.description = description;
+    this.date = date ? moment(date) : null;
+    this.description = description || null;
+    this.background = background || null;
     this.members = members || [];
     this.events = events || [];
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      date: this.date,
+      description: this.description,
+      background: this.background,
+      members: this.members,
+      events: this.events,
+    };
   }
 
   /**
@@ -27,6 +43,6 @@ export default class Trip {
    * @param {Object} obj
    */
   static fromObject(obj) {
-    return new Trip(obj.id, obj.name, obj.date, obj.description, obj.members, obj.events);
+    return new Trip(obj.id, obj.name, obj.date, obj.description, obj.background, obj.members, obj.events);
   }
 }

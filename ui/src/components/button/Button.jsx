@@ -14,6 +14,7 @@ class Button extends React.Component {
     return (
       <button
         className={classnames(classes)}
+        id={this.props.id}
         disabled={this.props.disabled}
         onClick = {() => this.props.onClick()}
       >
@@ -25,6 +26,7 @@ class Button extends React.Component {
 
 Button.defaultProps = {
   label: "",
+  id: "",
   onClick: () => {},
 };
 

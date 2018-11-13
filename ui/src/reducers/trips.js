@@ -1,6 +1,6 @@
 import axios from "axios";
 import produce from "immer";
-import Storage from "storage";
+import Config from "config";
 
 import Trip from "models/trip";
 import { handleAxiosError } from "./error";
@@ -137,7 +137,7 @@ const GetTrip = id => async dispatch => {
     const response = await axios.get(Config.routes.trips.getOne(id));
     dispatch(Action.GetTrip(null, Trip.fromObject(response.data.trip)));
   } catch (err) {
-    handleAxiosError(dispatch, err, State.GetTrip);
+    handleAxiosError(dispatch, err, Action.GetTrip);
   }
 };
 
@@ -150,7 +150,7 @@ const GetTrips = () => async dispatch => {
     const response = await axios.get(Config.routes.trips.get());
     dispatch(Action.GetTrips(null, response.data.trips.map(Trip.fromObject)));
   } catch (err) {
-    handleAxiosError(dispatch, err, State.GetTrips);
+    handleAxiosError(dispatch, err, Action.GetTrips);
   }
 };
 
@@ -162,10 +162,10 @@ const GetTrips = () => async dispatch => {
 const CreateTrip = trip => async dispatch => {
   dispatch(Action.InitAction(CREATE_TRIP_INIT));
   try {
-    const response = await axios.post(Config.routes.user.create(), { trip });
-    dispatch(State.UpdateTrip(null, Trip.fromObject(response.data.trip)));
+    const response = await axios.post(Config.routes.user.create(), { trip: trip.toJSON() });
+    dispatch(Action.UpdateTrip(null, Trip.fromObject(response.data.trip)));
   } catch (err) {
-    handleAxiosError(dispatch, err, State.UpdateTrip);
+    handleAxiosError(dispatch, err, Action.UpdateTrip);
   }
 };
 
@@ -179,9 +179,9 @@ const UpdateTrip = (id, trip) => async dispatch => {
   dispatch(Action.InitAction(UPDATE_TRIP_INIT));
   try {
     const response = await axios.put(Config.routes.user.update(id), { trip });
-    dispatch(State.UpdateTrip(null, Trip.fromObject(response.data.trip)));
+    dispatch(Action.UpdateTrip(null, Trip.fromObject(response.data.trip)));
   } catch (err) {
-    handleAxiosError(dispatch, err, State.UpdateTrip);
+    handleAxiosError(dispatch, err, Action.UpdateTrip);
   }
 };
 
@@ -196,7 +196,7 @@ const DeleteTrip = id => async dispatch => {
     const response = await axios.delete(Config.routes.trips.delete(id));
     dispatch(Action.DeleteTrip(null));
   } catch (err) {
-    handleAxiosError(dispatch, err, State.DeleteTrip);
+    handleAxiosError(dispatch, err, Action.DeleteTrip);
   }
 };
 

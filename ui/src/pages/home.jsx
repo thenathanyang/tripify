@@ -6,7 +6,6 @@ import Section from '../components/section/Section';
 import Button from '../components/button/Button';
 import TripTile from '../components/tile/Trip';
 import Header from '../components/header';
-import Paragraph from 'components/text/Paragraph';
 
 export default class Home extends React.Component {
   render() {

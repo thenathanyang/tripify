@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 class Image extends React.Component {
   render() {
     return (
-      <div className='image'>
-        <img src={this.props.src} title={this.props.title} height={this.props.height} width={this.props.width} />
+      <div>
+        <img className='image' src={this.props.src} title={this.props.title} />
       </div>
     );
   }
@@ -14,8 +14,10 @@ class Image extends React.Component {
 Image.propTypes = {
   src: PropTypes.string.isRequired,
   title: PropTypes.string,
-  height: PropTypes.number,
-  width: PropTypes.number
 };
+
+Image.defaultProps = {
+  title: "",
+}
 
 export default Image;

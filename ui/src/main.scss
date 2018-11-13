@@ -55,6 +55,36 @@ p {
   width: 44%;
   display: inline-block;
 }
+
+#delete-trip-button{
+  display: inline-block;
+}
+
+#edit-trip-button{
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.trip-header h2{
+  color: $black;
+  display: inline-block;
+  margin: 0px 10px 0px 0px;
+  font-size: 20px;
+  text-transform: lowercase;
+
+}
+
+.trip-header h1{
+  color: $green;
+  margin: 0px 10px 0px 0px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+#trip-buttons{
+  float: right;
+}
+
 .container {
   padding: 20px;
 }

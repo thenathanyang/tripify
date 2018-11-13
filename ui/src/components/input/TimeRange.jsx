@@ -65,12 +65,14 @@ class TimeRange extends React.Component {
           defaultTime={defaultStartTime}
           name={startName}
           onChange={this.handleStartTimeChange}
+          disabled={this.props.disabled}
         />
         <Icon color="gray" icon="arrow-right" />
         <TimeSelector
           defaultTime={defaultEndTime}
           name={endName}
           onChange={this.handleEndTimeChange}
+          disabled={this.props.disabled}
         />
       </div>
     );
@@ -86,11 +88,14 @@ TimeRange.propTypes = {
   name: PropTypes.string.isRequired,
   /** The change handler for the input, with signature (name: string, start: moment, end: moment) => void */
   onChange: PropTypes.func.isRequired,
+  /** Boolean corresponding to whether time selection is disabled*/
+  disabled: PropTypes.bool
 };
 
 TimeRange.defaultProps = {
   defaultEndTime: null,
   defaultStartTime: null,
+  disabled: false
 };
 
 export default TimeRange;

@@ -37,6 +37,7 @@ class TimeSelector extends React.Component {
           onChange={this.handleChange}
           showSecond={false}
           use12Hours
+          disabled={this.props.disabled}
         />
       </div>
     );
@@ -50,10 +51,13 @@ TimeSelector.propTypes = {
   name: PropTypes.string.isRequired,
   /** The change handler for the input, with signature (name: string, time: moment) => void */
   onChange: PropTypes.func.isRequired,
+  /** Boolean corresponding to whether input is disabled */
+  disabled: PropTypes.bool
 };
 
 TimeSelector.defaultProps = {
   defaultTime: null,
+  disabled: false
 };
 
 export default TimeSelector;

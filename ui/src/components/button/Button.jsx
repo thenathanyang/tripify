@@ -8,7 +8,8 @@ class Button extends React.Component {
       'red-button': this.props.red,
       'blue-button': this.props.blue,
       'gray-button': this.props.gray,
-      'disabled-button': this.props.disabled
+      'disabled-button': this.props.disabled,
+      'small': this.props.small
     };
 
     return (

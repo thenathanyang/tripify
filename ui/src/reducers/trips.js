@@ -159,11 +159,12 @@ const GetTrips = () => async dispatch => {
  * 
  * @param {Trip} trip 
  */
-const CreateTrip = trip => async dispatch => {
+const CreateTrip = (trip, callback) => async dispatch => {
   dispatch(Action.InitAction(CREATE_TRIP_INIT));
   try {
-    const response = await axios.post(Config.routes.user.create(), { trip: trip.toJSON() });
+    const response = await axios.post(Config.routes.trips.create(), { trip: trip.toJSON() });
     dispatch(Action.UpdateTrip(null, Trip.fromObject(response.data.trip)));
+    if (callback) callback(Trip.fromObject(response.data.trip));
   } catch (err) {
     handleAxiosError(dispatch, err, Action.UpdateTrip);
   }
@@ -178,7 +179,7 @@ const CreateTrip = trip => async dispatch => {
 const UpdateTrip = (id, trip) => async dispatch => {
   dispatch(Action.InitAction(UPDATE_TRIP_INIT));
   try {
-    const response = await axios.put(Config.routes.user.update(id), { trip });
+    const response = await axios.put(Config.routes.trips.update(id), { trip });
     dispatch(Action.UpdateTrip(null, Trip.fromObject(response.data.trip)));
   } catch (err) {
     handleAxiosError(dispatch, err, Action.UpdateTrip);

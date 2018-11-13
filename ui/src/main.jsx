@@ -11,6 +11,7 @@ import {store, history} from 'reducers';
 
 import Home from 'pages/home';
 import CreateTrip from 'pages/createTrip';
+import CreateEvent from 'pages/createEvent';
 import ViewEvent from 'pages/ViewEvent';
 import ViewTrip from 'pages/ViewTrip';
 
@@ -22,6 +23,7 @@ class App extends React.Component {
 					<Switch>
 						<Route exact path="/trips" component={Home}/>
 						<Route path="/trips/create" component={CreateTrip} />
+						<Route path="/event/create" component={CreateEvent}/>
 						<Route path="/events" component={ViewEvent} />
 						<Route path="/trip" component={ViewTrip} />
 						<Redirect to="/trips"/>

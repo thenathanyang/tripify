@@ -51,7 +51,7 @@ class CreateTripPage extends React.Component {
           </Section>
 
           <Section title="Trip Date">
-            <DatePicker name="date" onChange={this.handleChange} />
+            <DatePicker name="date" defaultValue={moment()} onChange={this.handleChange} />
           </Section>
 
           <Section title="Trip Description">
@@ -65,10 +65,10 @@ class CreateTripPage extends React.Component {
           }
 
           <div className="buttons">
-            <div id="create-button">
+            <div className="create-button">
               <Button blue label="Create" onClick={this.createTrip} />
             </div>
-            <div id="cancel-button">
+            <div className="cancel-button">
               <Link to="/trips"><Button gray label="Cancel" /></Link>
             </div>
           </div>

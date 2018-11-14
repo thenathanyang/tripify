@@ -31,7 +31,7 @@ export default class Trip {
     return "$20";
   }
 
-  toJSON() {
+  toObject() {
     return {
       id: this.id,
       name: this.name,

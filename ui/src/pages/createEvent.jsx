@@ -1,4 +1,11 @@
-import React from 'react'; 
+import React from 'react';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { replace } from 'connected-react-router';
+
+import Trip from 'models/trip';
+import { GetTrip, UpdateTrip } from 'reducers/trips';
+
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
 import TextInput from '../components/input/Text';
@@ -6,50 +13,125 @@ import Button from '../components/button/Button';
 import DatePicker from '../components/input/DatePicker';
 import TimeRange from '../components/input/TimeRange';
 import Header from '../components/header';
-import moment from 'moment';
 
-export default class CreateTrip extends React.Component {
-    render()
-    {
-        return(
-            <div>
-                <Header/>
-                <div className="container">
-                    <Title text="Create an Event" />
-                    <Section title="Event Name">
-                        <TextInput name = "eventName" onChange={(name, value) => console.log(name, value)} />
-                    </Section>
-
-                    <Section title="Event Date">
-                        <DatePicker name="eventDate" 
-                            defaultValue = {moment()}
-                         onChange={(name, value) => console.log(name, value)}
-                        />  
-                    </Section>
-
-                    <Section title="Event Time">
-                        <TimeRange name="eventTimeRange" 
-                            defaultEndTime={moment()}   
-                            defaultStartTime={moment()} 
-                            onChange={(name, start, end) => console.log(name, start, end)}
-                        />
-                    </Section>
-
-                    <Section title="Event Location">
-                        <TextInput name = "eventLocation" onChange={(name, value) => console.log(name, value)} />
-                    </Section>
-
-                    <Section title="Event Cost">
-                        <TextInput name = "eventCost" onChange={(name, value) => console.log(name, value)} />
-                    </Section>
-                    <div className="create-button">
-                        <Button blue label="Create"/>
-                    </div>
-                    <div className="cancel-button">
-                    <Button grey label="Cancel"/>
-                    </div>
-                </div>
-            </div>
-        );
+class CreateEvent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: (''+Math.random()).split('.')[1],
+      description: "Test Event",
+      images: ["https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg"],
+      name: "",
+      date: moment(),
+      start: moment(),
+      end: moment(),
+      location: "",
+      price: "",
+      error: null,
     }
+  }
+
+  handleChange = (name, value) =>
+    this.setState(prev => ({...prev, [name]: value}));
+
+  handleTimeRangeChange = (name, start, end) =>
+    this.setState(prev => ({...prev, start, end}));
+
+  updateTrip = (trip, event) => {
+    const newTrip = Trip.fromObject(trip.toObject());
+    newTrip.events.push(event);
+    this.props.updateTrip(trip.id, newTrip, () => this.props.redirectTrip(trip.id));
+  }
+  
+  createEvent = () => {
+    const event = {
+      ...this.state,
+      price: parseInt(this.state.price),
+      startDate: moment(this.state.date).hour(moment(this.state.start).hour()).minute(moment(this.state.start).minute()),
+      endDate: moment(this.state.date).hour(moment(this.state.end).hour()).minute(moment(this.state.end).minute()),
+    };
+    
+    if (!event.name)
+      return this.setState(prev => ({...prev, error: "The event name cannot be empty"}));
+    if (!event.location)
+      return this.setState(prev => ({...prev, error: "The event location cannot be empty"}));
+    if (isNaN(event.price) || event.price < 0)
+      return this.setState(prev => ({...prev, error: "The event price must be a number at least 0"}));
+    if (event.startDate < moment())
+      return this.setState(prev => ({...prev, error: "The start date cannot be in the past"}));
+    if (event.endDate < moment())
+      return this.setState(prev => ({...prev, error: "The end date cannot be in the past"}));
+    if (event.endDate < event.startDate)
+      return this.setState(prev => ({...prev, error: "The end date cannot be before the start date"}));
+    
+    if (this.props.trip && this.props.trip.id === this.props.tripId) {
+      this.updateTrip(this.props.trip, event);
+    } else {
+      this.props.getTrip(this.props.tripId, trip => this.updateTrip(trip, event));
+    }
+  }
+
+  render() {
+    return(
+      <div>
+        <Header/>
+        <div className="container">
+          <Title text="Create an Event" />
+          <Section title="Event Name">
+            <TextInput name="name" onChange={this.handleChange} />
+          </Section>
+
+          <Section title="Event Date">
+            <DatePicker
+              name="date" 
+              defaultValue={moment()}
+              onChange={this.handleChange}
+            />  
+          </Section>
+
+          <Section title="Event Time">
+            <TimeRange name="eventTimeRange" 
+              defaultEndTime={moment()}   
+              defaultStartTime={moment()} 
+              onChange={this.handleTimeRangeChange}
+            />
+          </Section>
+
+          <Section title="Event Location">
+            <TextInput name="location" onChange={this.handleChange} />
+          </Section>
+
+          <Section title="Event Price">
+            <TextInput name="price" onChange={this.handleChange} />
+          </Section>
+
+          { (this.state.error || this.props.error) &&
+            <Section title="">
+              <div className="error">{ this.state.error || this.props.error }</div>
+            </Section>
+          }
+
+          <div className="create-button">
+            <Button blue label="Create" onClick={this.createEvent} />
+          </div>
+          <div className="cancel-button">
+          <Button grey label="Cancel"/>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
+
+const mapStateToProps = state => ({
+  trip: state.Trips.trip,
+  error: state.Trips.error,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getTrip: (id, callback) => dispatch(GetTrip(id, callback)),
+  updateTrip: (id, trip, callback) => dispatch(UpdateTrip(id, trip, callback)),
+  redirectTrip: tripId => dispatch(replace(`/trips/${tripId}`)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

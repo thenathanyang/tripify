@@ -74,7 +74,7 @@ class ViewTrip extends React.Component {
               <Section title="Events">
                 { trip.events.length > 0 && 
                   trip.events.map(event => 
-                    <TripTile title={event.name}
+                    <TripTile key={event.id} title={event.name}
                       background={event.images.length ? event.images[0] : null} /> )}
                 <Link to={`/trips/${this.props.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
               </Section>

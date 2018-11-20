@@ -22,30 +22,31 @@ class ViewEvent extends React.Component {
   getDefaultView() {
     return (
       <> 
-        <Header /> 
+        <Header />
         <Title text="Fetching..." />
       </>
     )
   }
 
+  getErrorView() {
+    return (
+      <>
+        <Header />
+        <Section title="">
+          <div className="error">"Error loading event"</div>
+        </Section>
+      </>
+    );
+  }
+
   render() {
-    if (this.props.trip == null) {
+    if (!this.props.trip)
       return this.getDefaultView();
-    }
 
-    const events = this.props.trip.events;
-    const event = events.find((event) => { return event.id == this.props.eventId});
+    const event = this.props.trip.events.find(event => event.id == this.props.eventId);
 
-    if (event == undefined) {
-      return (
-        <>
-          <Header /> 
-          <Section title="">
-            <div className="error">"Error loading event"</div>
-          </Section>
-        </>
-      );
-    }
+    if (!event)
+      return this.getErrorView();
 
     return (
       <>
@@ -55,6 +56,7 @@ class ViewEvent extends React.Component {
           <div className="image-box">
             <Image src={event.images[0]} />
             <div className="attend-button">
+              { /* TODO @helenhyewonlee: only show the attend button if the event is not in the trip */ }
               <Button blue label="Attend" onClick={() => console.log("Attend button clicked")} />
             </div>
           </div>
@@ -62,12 +64,8 @@ class ViewEvent extends React.Component {
             <Paragraph text={event.location} />
           </Section>
           <Section title="Date and Time">
-            <Paragraph text={moment(event.startDate).format('dddd, MMMM Do')} />
-            <TimeRange name="tripTimeRange" 
-              defaultEndTime={moment(event.endDate, 'HH:mm a')} 
-              defaultStartTime={moment(event.startDate, 'HH:mm a')}
-              onChange={(name, start, end) => console.log(name, start, end)}
-            />
+            <Paragraph text={event.startDate.format('dddd, MMMM Do')} />
+            <TimeRange endTime={event.endDate} startTime={event.startDate} />
           </Section>
           <Section title="Description">
             <Paragraph text={event.description}></Paragraph>

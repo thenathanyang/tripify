@@ -135,7 +135,8 @@ class Action {
 const GetTrip = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(GET_TRIP_INIT));
   try {
-    const response = await axios.get(Config.routes.trips.getOne(id));
+    const userId = Storage.get('user');
+    const response = await axios.get(Config.routes.trips.getOne(userId, id));
     const trip = Trip.fromObject(response.data.trip);
     dispatch(Action.GetTrip(null, trip));
     if (callback) callback();
@@ -152,7 +153,8 @@ const GetTrip = (id, callback) => async dispatch => {
 const GetTrips = (callback) => async dispatch => {
   dispatch(Action.InitAction(GET_TRIPS_INIT));
   try {
-    const response = await axios.get(Config.routes.trips.get());
+    const userId = Storage.get('user');
+    const response = await axios.get(Config.routes.trips.get(userId));
     const trips = response.data.trips.map(Trip.fromObject);
     dispatch(Action.GetTrips(null, trips));
     if (callback) callback(user);
@@ -170,7 +172,8 @@ const GetTrips = (callback) => async dispatch => {
 const CreateTrip = (trip, callback) => async dispatch => {
   dispatch(Action.InitAction(CREATE_TRIP_INIT));
   try {
-    const response = await axios.post(Config.routes.trips.create(), { trip: trip.toObject() });
+    const userId = Storage.get('user');
+    const response = await axios.post(Config.routes.trips.create(userId), { trip: trip.toObject() });
     const newTrip = Trip.fromObject(response.data.trip);
     dispatch(Action.CreateTrip(null, newTrip));
     if (callback) callback(newTrip);
@@ -189,7 +192,8 @@ const CreateTrip = (trip, callback) => async dispatch => {
 const UpdateTrip = (id, trip, callback) => async dispatch => {
   dispatch(Action.InitAction(UPDATE_TRIP_INIT));
   try {
-    const response = await axios.put(Config.routes.trips.update(id), { trip: trip.toObject() });
+    const userId = Storage.get('user');
+    const response = await axios.put(Config.routes.trips.update(userId, id), { trip: trip.toObject() });
     const newTrip = Trip.fromObject(response.data.trip);
     dispatch(Action.UpdateTrip(null, newTrip));
     if (callback) callback(newTrip);
@@ -207,7 +211,8 @@ const UpdateTrip = (id, trip, callback) => async dispatch => {
 const DeleteTrip = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(DELETE_TRIP_INIT));
   try {
-    const response = await axios.delete(Config.routes.trips.delete(id));
+    const userId = Storage.get('user');
+    const response = await axios.delete(Config.routes.trips.delete(userId, id));
     dispatch(Action.DeleteTrip());
     if (callback) callback();
   } catch (err) {

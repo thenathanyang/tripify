@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 
 import Trip from 'models/trip';
+import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
 
 import Title from '../components/text/Title';
@@ -115,7 +116,7 @@ class CreateEvent extends React.Component {
             <Button blue label="Create" onClick={this.createEvent} />
           </div>
           <div className="cancel-button">
-          <Button grey label="Cancel"/>
+            <Button grey label="Cancel" onClick={() => history.goBack()} />
           </div>
         </div>
       </div>

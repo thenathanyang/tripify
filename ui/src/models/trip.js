@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Event from './event';
 
 /**
  * A Trip
@@ -26,6 +27,18 @@ export default class Trip {
     this.events = events || [];
   }
 
+  startTime() {
+    if (!this.events.length)
+      return null;
+    return moment.min(this.events.map(e => e.startDate));
+  }
+
+  endTime() {
+    if (!this.events.length)
+      return null;
+    return moment.max(this.events.map(e => e.endDate));
+  }
+
   price() {
     /** to do: return actual price */
     return "$20";
@@ -49,6 +62,6 @@ export default class Trip {
    * @param {Object} obj
    */
   static fromObject(obj) {
-    return new Trip(obj.id, obj.name, obj.date, obj.description, obj.background, obj.members, obj.events);
+    return new Trip(obj.id, obj.name, obj.date, obj.description, obj.background, obj.members, (obj.events || []).map(Event.fromObject));
   }
 }

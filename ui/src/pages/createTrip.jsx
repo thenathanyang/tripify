@@ -13,6 +13,7 @@ import DatePicker from 'components/input/DatePicker';
 import Header from 'components/header';
 
 import Trip from 'models/trip';
+import { history } from 'reducers';
 import { CreateTrip } from 'reducers/trips';
 
 class CreateTripPage extends React.Component {
@@ -69,7 +70,7 @@ class CreateTripPage extends React.Component {
               <Button blue label="Create" onClick={this.createTrip} />
             </div>
             <div className="cancel-button">
-              <Link to="/trips"><Button gray label="Cancel" /></Link>
+              <Button gray label="Cancel" onClick={() => history.goBack()} />
             </div>
           </div>
         </div>

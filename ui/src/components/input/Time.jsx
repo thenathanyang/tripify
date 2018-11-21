@@ -31,13 +31,14 @@ class TimeSelector extends React.Component {
     return (
       <div className="time-selector">
         <TimePicker
+          value={this.props.time}
           defaultValue={this.props.defaultTime}
           inputReadOnly
           minuteStep={15}
           onChange={this.handleChange}
           showSecond={false}
           use12Hours
-          disabled={this.props.disabled}
+          disabled={!!this.props.time || this.props.disabled}
         />
       </div>
     );
@@ -47,17 +48,21 @@ class TimeSelector extends React.Component {
 TimeSelector.propTypes = {
   /** Initial date to populate the TimeSelector */
   defaultTime: PropTypes.instanceOf(moment),
+  /** Boolean corresponding to whether input is disabled */
+  disabled: PropTypes.bool,
   /** The HTML name for the input */
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   /** The change handler for the input, with signature (name: string, time: moment) => void */
   onChange: PropTypes.func.isRequired,
-  /** Boolean corresponding to whether input is disabled */
-  disabled: PropTypes.bool
+  /** The fixed time to display (disabled) in the TimeSelector */
+  time: PropTypes.instanceOf(moment),
 };
 
 TimeSelector.defaultProps = {
   defaultTime: null,
-  disabled: false
+  disabled: false,
+  name: undefined,
+  time: undefined,
 };
 
 export default TimeSelector;

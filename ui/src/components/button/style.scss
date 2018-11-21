@@ -1,8 +1,9 @@
-button{
+button {
     width: 100%;
     color: $white;
     border:none;
     border-radius: 5px;
+    outline: none;
     font-family: $body-font;
     box-shadow: $button-shadow;
     font-size: 1.0em;
@@ -18,6 +19,10 @@ button{
     &:hover {
         box-shadow: $button-hover-shadow;
         transform: scale(1.015);
+    }
+
+    &:active {
+        transform: scale(0.985)
     }
 }
 

@@ -1,4 +1,8 @@
 import React from 'react'; 
+import { connect } from 'react-redux';
+
+import Trip from 'models/trip';
+import { GetTrip } from 'reducers/trips';
 
 import Header from '../components/header';
 import Button from '../components/button/Button';
@@ -11,31 +15,60 @@ import Title from '../components/text/Title';
 import moment from 'moment';
 
 class ViewEvent extends React.Component {
-  render() {
+  componentDidMount() {
+    this.props.getTrip(this.props.tripId);
+  }
+
+  getDefaultView() {
+    return (
+      <> 
+        <Header />
+        <Title text="Fetching..." />
+      </>
+    )
+  }
+
+  getErrorView() {
     return (
       <>
         <Header />
-        <Title text="Free Museum Day" />
-        <div className="image-box">
-          <Image src="https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg" width='100%' />
-          <div className="attend-button">
-            <Button blue label="Attend" onClick={() => console.log("Attend button clicked")} />
-          </div>
-        </div>
+        <Section title="">
+          <div className="error">"Error loading event"</div>
+        </Section>
+      </>
+    );
+  }
+
+  render() {
+    if (!this.props.trip)
+      return this.getDefaultView();
+
+    const event = this.props.trip.events.find(event => event.id == this.props.eventId);
+
+    if (!event)
+      return this.getErrorView();
+
+    return (
+      <>
+        <Header />
         <div className="container">
+          <Title text={event.name} />
+          <div className="image-box">
+            <Image src={event.images[0]} />
+            <div className="attend-button">
+              { /* TODO @helenhyewonlee: only show the attend button if the event is not in the trip */ }
+              <Button blue label="Attend" onClick={() => console.log("Attend button clicked")} />
+            </div>
+          </div>
           <Section title="Location">
-            <Paragraph text="1 Museum Way Los Angeles, CA 90043" />
+            <Paragraph text={event.location} />
           </Section>
           <Section title="Date and Time">
-            <Paragraph text="Tuesday, November 14, 2018" />
-            <TimeRange name="tripTimeRange" 
-              defaultEndTime={moment('3:30', 'HH:mm a')} 
-              defaultStartTime={moment('7:00', 'HH:mm a')}
-              onChange={(name, start, end) => console.log(name, start, end)}
-            />
+            <Paragraph text={event.startDate.format('dddd, MMMM Do')} />
+            <TimeRange endTime={event.endDate} startTime={event.startDate} />
           </Section>
           <Section title="Description">
-            <Paragraph text="Attend this amazing opportunity to go to the museum!"></Paragraph>
+            <Paragraph text={event.description}></Paragraph>
           </Section>
         </div> 
       </>
@@ -43,4 +76,14 @@ class ViewEvent extends React.Component {
   }
 }
 
-export default ViewEvent;
+const mapStateToProps = state => ({
+  trip: state.Trips.trip,
+  gettingTrip: state.Trips.gettingTrip,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getTrip: (id) => dispatch(GetTrip(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
+// export default ViewEvent;

@@ -2,7 +2,7 @@ import { replace } from "connected-react-router";
 import Storage from "storage";
 
 ///////////////////////////////////////////////////////////////////////////////
-//                       Contants and helper functions                       //
+//                       Constants and helper functions                      //
 ///////////////////////////////////////////////////////////////////////////////
 
 /**

@@ -22,7 +22,7 @@ class ViewTrip extends React.Component {
     this.props.getTrip(this.props.id);
   }
 
-  getTitle = () => {
+  getTitle() {
     if (this.props.trip)
         return this.props.trip.name;
     if (this.props.gettingTrip)
@@ -53,14 +53,8 @@ class ViewTrip extends React.Component {
             </div>
             <div>
               <Section title="Date & Time">
-              <Paragraph text={trip.date.format('dddd, MMMM Do')} />
-              <TimeRange
-                name="eventTimeRange"
-                defaultEndTime={moment()}  
-                defaultStartTime={moment()} 
-                onChange={(name, start, end) => console.log(name, start, end)}
-                disabled
-              />
+                <Paragraph text={trip.date.format('dddd, MMMM Do')} />
+                <TimeRange endTime={trip.endTime()} startTime={trip.startTime()} />
               </Section>
             </div>
 
@@ -72,11 +66,15 @@ class ViewTrip extends React.Component {
 
             <div>
               <Section title="Events">
-                { trip.events.length > 0 && 
-                  trip.events.map(event => 
-                    <TripTile key={event.id} title={event.name}
-                      background={event.images.length ? event.images[0] : null} /> )}
-                <Link to={`/trips/${this.props.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
+                { trip.events.length > 0 && trip.events.map(event =>
+                  <Link key={event.id} to={`/trips/${trip.id}/${event.id}`}>
+                    <TripTile
+                      title={event.name}
+                      background={event.images.length ? event.images[0] : null}
+                    />
+                  </Link>
+                )}
+                <Link to={`/trips/${trip.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
               </Section>
             </div>
           </div>

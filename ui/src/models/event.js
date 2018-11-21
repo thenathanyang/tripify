@@ -33,6 +33,6 @@ export default class Event {
    * @param {Object} obj
    */
   static fromObject(obj) {
-    return new Trip(obj.id, obj.name, obj.startDate, obj.endDate, obj.location, obj.price, obj.description, obj.images);
+    return new Event(obj.id, obj.name, obj.startDate, obj.endDate, obj.location, obj.price, obj.description, obj.images);
   }
 }

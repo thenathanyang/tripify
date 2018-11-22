@@ -18,16 +18,16 @@ router.route('/')
     res.json({ user: Users.createUser(req.body.name, req.body.email) });
   });
 
-router.route('/:user')
-  .get((req, res) => {
-    const user = Users.getUser(req.params.user);
-    if (!user)
-      throw new errors.NotFound('User not found');
-    res.json({ user });
-  });
+router.use('/:user', (req, res, next) => {
+  req.user = Users.getUser(req.params.user);
+  if (!req.user)
+    throw new errors.NotFound('User not found');
+  next();
+});
 
+router.route('/:user').get((req, res) => res.json({ user: req.user }));
 router.use('/:user/trips', (req, res, next) => {
-  req.trips = Trips.userTrips(req.params.user);
+  req.trips = Trips.userTrips(req.user.id);
   next();
 }, trips);
 

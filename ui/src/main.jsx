@@ -11,6 +11,7 @@ import {store, history} from 'reducers';
 
 import CreateEvent from 'pages/createEvent';
 import CreateTrip from 'pages/createTrip';
+import Login from 'pages/login';
 import ViewEvent from 'pages/ViewEvent';
 import ViewTrip from 'pages/ViewTrip';
 import ViewTrips from 'pages/home';
@@ -21,6 +22,8 @@ class App extends React.Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>
+            <Route exact path="/login" component={Login} />
+
             <Route exact path="/trips" component={ViewTrips}/>
             <Route exact path="/trips/create" component={CreateTrip} />
             <Route exact path="/trips/:id" component={({match}) => <ViewTrip id={match.params.id} />} />

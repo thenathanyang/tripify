@@ -28,7 +28,6 @@ class TimeSelector extends React.Component {
   handleChange = time => this.props.onChange(this.props.name, time);
 
   render() {
-    console.log(this.props);
     return (
       <div className="time-selector">
         <TimePicker

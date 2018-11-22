@@ -28,11 +28,11 @@ class TimeSelector extends React.Component {
   handleChange = time => this.props.onChange(this.props.name, time);
 
   render() {
+    console.log(this.props);
     return (
       <div className="time-selector">
         <TimePicker
-          value={this.props.time}
-          defaultValue={this.props.defaultTime}
+          defaultValue={this.props.defaultTime || this.props.time}
           inputReadOnly
           minuteStep={15}
           onChange={this.handleChange}

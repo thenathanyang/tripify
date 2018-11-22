@@ -1,6 +1,7 @@
 import axios from "axios";
 import produce from "immer";
 import Config from "config";
+import Storage from "storage";
 
 import Trip from "models/trip";
 import { handleAxiosError } from "./error";

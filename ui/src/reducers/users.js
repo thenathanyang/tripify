@@ -22,6 +22,8 @@ const LOGIN_INIT = Symbol("LOGIN_INIT");
 const LOGIN_SUCCESS = Symbol("LOGIN_SUCCESS");
 const LOGIN_FAILURE = Symbol("LOGIN_FAILURE");
 
+/** export this one so that the error handler can access it */
+export const LOGOUT = Symbol("LOGOUT");
 
 const initState = () => ({
   error: null,
@@ -107,7 +109,7 @@ const GetUser = (id, callback) => async dispatch => {
     dispatch(Action.GetUser(null, user));
     if (callback) callback(user);
   } catch (err) {
-    handleAxiosError(dispatch, err, Action.GetUser);
+    handleAxiosError(dispatch, err, Action.GetUser, false);
   }
 };
 
@@ -125,7 +127,7 @@ const CreateUser = (user, callback) => async dispatch => {
     dispatch(Action.CreateUser(null, newUser));
     if (callback) callback(newUser);
   } catch (err) {
-    handleAxiosError(dispatch, err, Action.CreateUser);
+    handleAxiosError(dispatch, err, Action.CreateUser, false);
   }
 };
 
@@ -143,7 +145,7 @@ const LoginUser = (email, callback) => async dispatch => {
     dispatch(Action.LoginUser(null, user));
     if (callback) callback(user);
   } catch (err) {
-    handleAxiosError(dispatch, err, Action.LoginUser);
+    handleAxiosError(dispatch, err, Action.LoginUser, false);
   }
 };
 
@@ -178,16 +180,21 @@ const Users = (state = initState(), action) =>
      */
     switch (action.type) {
       case GET_USER_FAILURE:
+        draft.authenticated = false;
         draft.getUserFailure = true;
         draft.user = null;
         return;
       case CREATE_USER_FAILURE:
+        draft.authenticated = false;
         draft.createUserFailure = true;
         draft.user = null;
         return;
+      case LOGOUT:
       case LOGIN_FAILURE:
+        draft.authenticated = false;
         draft.logInFailure = true;
         draft.user = null;
+        Storage.remove('token');
         return;
     }
 

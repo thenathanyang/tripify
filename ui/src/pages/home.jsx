@@ -11,6 +11,8 @@ import Button from '../components/button/Button';
 import TripTile from '../components/tile/Trip';
 import Header from '../components/header';
 
+import requireAuth from './requireAuth';
+
 class Home extends React.Component {
   componentWillMount() {
     this.props.getTrips();
@@ -63,4 +65,4 @@ const mapDispatchToProps = dispatch => ({
   getTrips: () => dispatch(GetTrips()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(Home));

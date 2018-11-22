@@ -1,4 +1,5 @@
 import React from 'react'; 
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 import Trip from 'models/trip';
@@ -12,7 +13,7 @@ import TimeRange from '../components/input/TimeRange';
 import Image from '../components/image/Image';
 import Title from '../components/text/Title';
 
-import moment from 'moment';
+import requireAuth from './requireAuth';
 
 class ViewEvent extends React.Component {
   componentDidMount() {
@@ -65,7 +66,7 @@ class ViewEvent extends React.Component {
           </Section>
           <Section title="Date and Time">
             <Paragraph text={event.startDate.format('dddd, MMMM Do')} />
-            <TimeRange endTime={event.endDate} startTime={event.startDate} />
+            <TimeRange disabled endTime={event.endDate} startTime={event.startDate} />
           </Section>
           <Section title="Description">
             <Paragraph text={event.description}></Paragraph>
@@ -85,5 +86,4 @@ const mapDispatchToProps = dispatch => ({
   getTrip: (id) => dispatch(GetTrip(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
-// export default ViewEvent;
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewEvent));

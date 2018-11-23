@@ -39,7 +39,7 @@ class ViewTrip extends React.Component {
           <div>
             <Title text={this.getTitle()}/>
             <div className="trip-header">
-              <Title text={trip.price()}/>
+              <Title text={"$" + trip.price().toLocaleString('en-US', { maximumFractionDigits: 2 })}/>
               <Subheader text="per person"/>
               <div id="trip-buttons">
                 <div id="edit-trip-button">

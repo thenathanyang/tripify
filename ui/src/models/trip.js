@@ -41,13 +41,7 @@ export default class Trip {
 
   price() {
     /** to do: return actual price */
-    let price = 0;
-    if (this.events.length > 0) {
-      this.events.map(event => {
-        price += parseInt(event.price);
-      });
-    }
-    return "$" + price.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    return this.events.reduce((total, event) => total + event.price, 0);
   }
 
   toObject() {

@@ -67,6 +67,9 @@ class ViewEvent extends React.Component {
             <Paragraph text={event.startDate.format('dddd, MMMM Do')} />
             <TimeRange endTime={event.endDate} startTime={event.startDate} />
           </Section>
+          <Section title="Price">
+            <Paragraph text={"$" + event.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) + " per person"}></Paragraph>
+          </Section>
           <Section title="Description">
             <Paragraph text={event.description}></Paragraph>
           </Section>

@@ -29,7 +29,7 @@ class CreateEvent extends React.Component {
       start: moment(),
       end: moment(),
       location: "",
-      price: "",
+      price: 0,
       error: null,
     }
   }

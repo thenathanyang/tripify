@@ -41,7 +41,7 @@ export default class Trip {
 
   price() {
     /** to do: return actual price */
-    return "$20";
+    return this.events.reduce((total, event) => total + event.price, 0);
   }
 
   toObject() {

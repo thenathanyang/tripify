@@ -43,7 +43,7 @@ class ViewTrip extends React.Component {
               <Subheader text="per person"/>
               <div id="trip-buttons">
                 <div id="edit-trip-button">
-                  <Button small blue label="Edit"/>
+                  <Link key={trip.id} to={`/trips/${trip.id}/updateTrip`}><Button small blue label="Edit"/></Link>
                 </div>
                 <div id="delete-trip-button">
                   <Button small red label="Delete"/>

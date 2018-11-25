@@ -14,6 +14,7 @@ import CreateTrip from 'pages/createTrip';
 import ViewEvent from 'pages/ViewEvent';
 import ViewTrip from 'pages/ViewTrip';
 import ViewTrips from 'pages/home';
+import UpdateTripPage from 'pages/UpdateTrip';
 
 class App extends React.Component {
   render(){
@@ -24,6 +25,7 @@ class App extends React.Component {
             <Route exact path="/trips" component={ViewTrips}/>
             <Route exact path="/trips/create" component={CreateTrip} />
             <Route exact path="/trips/:id" component={({match}) => <ViewTrip id={match.params.id} />} />
+            <Route exact path="/trips/:id/updateTrip" component={({match}) => <UpdateTripPage id={match.params.id} />} />
             <Route exact path="/trips/:id/createEvent" component={({match}) => <CreateEvent tripId={match.params.id} />} />
             <Route exact path="/trips/:id/:event" component={({match}) => <ViewEvent tripId={match.params.id} eventId={match.params.event} />} />
             <Redirect to="/trips"/>

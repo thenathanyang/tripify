@@ -28,10 +28,12 @@ class Header extends React.Component {
               VIEW TRIPS
             </div>
           </Link>
+          <Link to="/events" className="link">
           <div className="item">
             <Icon icon="calendar-alt" color="blue" className="nav-icon" />
             VIEW EVENTS
           </div>
+          </Link>
         </div>
       </div>
     );

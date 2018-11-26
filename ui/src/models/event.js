@@ -35,4 +35,15 @@ export default class Event {
   static fromObject(obj) {
     return new Event(obj.id, obj.name, obj.startDate, obj.endDate, obj.location, obj.price, obj.description, obj.images);
   }
+
+  /**
+   * Creates a Event from a Mappening object 
+   * 
+   * @param {Object} obj
+   */
+  static fromMappeningObject(obj) {
+    var location = obj.properties.place.location.street + ", " + obj.properties.place.location.city + " " +obj.properties.place.location.state;
+    return new Event(obj.id, obj.properties.name, obj.properties.start_time , obj.properties.end_time , location, null , obj.properties.description, [obj.properties.cover_picture]);
+  }
+
 }

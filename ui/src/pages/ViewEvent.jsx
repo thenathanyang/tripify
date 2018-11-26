@@ -1,8 +1,5 @@
 import React from 'react'; 
-import { connect } from 'react-redux';
-
-import Trip from 'models/trip';
-import { GetTrip } from 'reducers/trips';
+import PropTypes from 'prop-types';
 
 import Header from '../components/header';
 import Button from '../components/button/Button';
@@ -12,38 +9,11 @@ import TimeRange from '../components/input/TimeRange';
 import Image from '../components/image/Image';
 import Title from '../components/text/Title';
 
-import moment from 'moment';
-
 class ViewEvent extends React.Component {
-  componentDidMount() {
-    this.props.getTrip(this.props.tripId);
-  }
-
-  getDefaultView() {
-    return (
-      <> 
-        <Header />
-        <Title text="Fetching..." />
-      </>
-    )
-  }
-
-  getErrorView() {
-    return (
-      <>
-        <Header />
-        <Section title="">
-          <div className="error">"Error loading event"</div>
-        </Section>
-      </>
-    );
-  }
 
   render() {
-    if (!this.props.trip)
-      return this.getDefaultView();
 
-    const event = this.props.trip.events.find(event => event.id == this.props.eventId);
+    const event = this.props.event;
 
     if (!event)
       return this.getErrorView();
@@ -79,14 +49,9 @@ class ViewEvent extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  trip: state.Trips.trip,
-  gettingTrip: state.Trips.gettingTrip,
-});
+ViewEvent.propTypes = {
+    /** Event object */
+    event: PropTypes.object.isRequired,
+  };
 
-const mapDispatchToProps = dispatch => ({
-  getTrip: (id) => dispatch(GetTrip(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
-// export default ViewEvent;
+export default ViewEvent;

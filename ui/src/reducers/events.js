@@ -84,6 +84,11 @@ const GetEvents = () => async dispatch => {
     var d = new Date();
     var month = d.getMonth();
     const response = await axios.get(Config.routes.events.get(month+1));
+    response.data.features.sort(function (a,b){
+      var timeA = a.properties.start_time;
+      var timeB = b.properties.start_time;
+      return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
+    });
     dispatch(Action.GetEvents(null, response.data.features.map(Event.fromMappeningObject)));
   } catch (err) {
     handleAxiosError(dispatch, err, Action.GetEvents);

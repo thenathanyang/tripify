@@ -2,10 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
-import { Link } from 'react-router-dom';
 
 import Title from 'components/text/Title';
-import Paragraph from 'components/text/Paragraph';
 import Section from 'components/section/Section';
 import TextInput from 'components/input/Text';
 import Button from 'components/button/Button';
@@ -16,7 +14,7 @@ import Trip from 'models/trip';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
 
-class UpdateTripPage extends React.Component {
+class EditTrip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +30,12 @@ class UpdateTripPage extends React.Component {
 
   componentDidMount() {
     this.props.getTrip(this.props.id);
-    this.setState({ trip: this.props.trip });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.getTripSuccess && this.state.trip.id !== this.props.id) {
+      this.setState({ trip: this.props.trip });
+    }
   }
 
   getDefaultView() {
@@ -49,7 +52,7 @@ class UpdateTripPage extends React.Component {
       <>
         <Header />
         <Section title="">
-          <div className="error">"Error loading event"</div>
+          <div className="error">"Error loading trip"</div>
         </Section>
       </>
     );
@@ -63,9 +66,7 @@ class UpdateTripPage extends React.Component {
       return this.setState(prev => ({...prev, error: "Trip name must contain at least one character"}));
     if (this.state.trip.date < moment().startOf('day'))
       return this.setState(prev => ({...prev, error: "Trip date cannot be in the past"}));
-    console.log("received trip: ");
-    console.log(Trip.fromObject(this.state.trip));
-    this.props.updateTrip(Trip.fromObject(this.state.trip), this.props.redirectTrip);
+    this.props.updateTrip(this.state.trip.id, Trip.fromObject(this.state.trip), this.props.redirectTrip);
   };
 
   render() {
@@ -82,7 +83,7 @@ class UpdateTripPage extends React.Component {
           </Section>
 
           <Section title="Trip Date">
-            <DatePicker name="date" defaultValue={this.state.trip.date} onChange={this.handleChange} />
+            <DatePicker name="date" defaultValue={moment(this.state.trip.date)} onChange={this.handleChange} />
           </Section>
 
           <Section title="Trip Description">
@@ -112,13 +113,15 @@ class UpdateTripPage extends React.Component {
 const mapStateToProps = state => ({
   trip: state.Trips.trip,
   error: state.Trips.error,
+  getTripSuccess: state.Trips.getTripSuccess,
+  gettingTrip: state.Trips.gettingTrip,
   updatingTrip: state.Trips.updatingTrip,
 });
 
 const mapDispatchToProps = dispatch => ({
   getTrip: (id) => dispatch(GetTrip(id)),
-  updateTrip: (trip, callback) => dispatch(UpdateTrip(trip, callback)),
+  updateTrip: (id, trip, callback) => dispatch(UpdateTrip(id, trip, callback)),
   redirectTrip: trip => dispatch(replace(`/trips/${trip.id}`)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateTripPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditTrip);

@@ -39,8 +39,8 @@ class DatePicker extends React.Component {
           parseDate={parseDate}
           value={this.props.defaultValue != null 
                   ? formatDate(this.props.defaultValue, this.format)
-                  : ''}
-          placeholder={formatDate(moment(), this.format)}
+                  : '' }
+          placeholder={formatDate(moment(), this.format) }
           onDayChange={this.handleClick}
         />
       </div>

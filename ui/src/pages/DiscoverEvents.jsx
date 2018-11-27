@@ -7,7 +7,8 @@ import { GetEvents } from 'reducers/events';
 import Header from '../components/header';
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
-import TripTile from '../components/tile/Trip';
+import EventTile from '../components/tile/Event';
+import moment from 'moment';
 
 class DiscoverEvents extends React.Component{
 
@@ -22,7 +23,7 @@ class DiscoverEvents extends React.Component{
         <div className="container">
           <Title text="Discover"/>
           <Section title="Nearby Events">
-            {this.props.events.map(event => <Link key={event.id} to={`/events/${event.id}`}><TripTile title={event.name}background={event.images[0]}/> </Link>)}
+            {this.props.events.map(event => <Link key={event.id} className="link" to={`/events/${event.id}`}><EventTile title={event.name} background={event.images[0]} time={event.startDate}/> </Link>)}
           </Section>
         </div>
      </div>

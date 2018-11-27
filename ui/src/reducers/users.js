@@ -119,10 +119,10 @@ const GetUser = (id, callback) => async dispatch => {
  * @param {User} user 
  * @param {Function} callback
  */
-const CreateUser = (user, callback) => async dispatch => {
+const CreateUser = (name, email, password, callback) => async dispatch => {
   dispatch(Action.InitAction(CREATE_USER_INIT));
   try {
-    const response = await axios.post(Config.routes.users.create(), { user: user.toObject() });
+    const response = await axios.post(Config.routes.users.create(), { user: { name, email, password } });
     const newUser = User.fromObject(response.data.user);
     dispatch(Action.CreateUser(null, newUser));
     if (callback) callback(newUser);
@@ -137,10 +137,10 @@ const CreateUser = (user, callback) => async dispatch => {
  * @param {String} email
  * @param {Function} callback
  */
-const LoginUser = (email, callback) => async dispatch => {
+const LoginUser = (email, password, callback) => async dispatch => {
   dispatch(Action.InitAction(LOGIN_INIT));
   try {
-    const response = await axios.put(Config.routes.auth.login(), { email });
+    const response = await axios.post(Config.routes.auth.login(), { email, password });
     const user = User.fromObject(response.data.user);
     dispatch(Action.LoginUser(null, user));
     if (callback) callback(user);

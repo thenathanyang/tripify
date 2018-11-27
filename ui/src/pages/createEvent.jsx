@@ -15,6 +15,8 @@ import DatePicker from '../components/input/DatePicker';
 import TimeRange from '../components/input/TimeRange';
 import Header from '../components/header';
 
+import requireAuth from './requireAuth';
+
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
@@ -91,7 +93,8 @@ class CreateEvent extends React.Component {
           </Section>
 
           <Section title="Event Time">
-            <TimeRange name="eventTimeRange" 
+            <TimeRange
+              name="eventTimeRange" 
               defaultEndTime={moment()}   
               defaultStartTime={moment()} 
               onChange={this.handleTimeRangeChange}
@@ -135,4 +138,4 @@ const mapDispatchToProps = dispatch => ({
   redirectTrip: tripId => dispatch(replace(`/trips/${tripId}`)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(CreateEvent));

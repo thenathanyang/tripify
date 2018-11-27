@@ -31,8 +31,7 @@ class TimeSelector extends React.Component {
     return (
       <div className="time-selector">
         <TimePicker
-          value={this.props.time}
-          defaultValue={this.props.defaultTime}
+          defaultValue={this.props.defaultTime || this.props.time}
           inputReadOnly
           minuteStep={15}
           onChange={this.handleChange}

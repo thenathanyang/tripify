@@ -4,6 +4,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 
 import { Trips } from "./trips";
+import { Users } from "./users";
 
 const history = createHistory();
 const store = createStore(
@@ -11,6 +12,7 @@ const store = createStore(
     combineReducers({
       // add reducers here
       Trips,
+      Users,
     })
   ),
   compose(applyMiddleware(routerMiddleware(history), thunk))

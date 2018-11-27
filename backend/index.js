@@ -15,7 +15,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/trips', routes.trips);
+app.use('/api/auth', routes.auth);
+app.use('/api/users', routes.users);
 
 app.use((req, res, next) => next(new errors.NotFound()));
 app.use((error, req, res, next) =>

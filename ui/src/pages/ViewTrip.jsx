@@ -1,7 +1,11 @@
 import React from 'react'; 
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
+
+import Trip from 'models/trip';
+import { DeleteTrip, GetTrip, GetTrips } from 'reducers/trips';
 
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
@@ -13,10 +17,8 @@ import Paragraph from '../components/text/Paragraph';
 import TimeRange from '../components/input/TimeRange';
 import TripTile from '../components/tile/Trip';
 import Subheader from '../components/text/Subheading';
-import moment from 'moment';
 
-import Trip from 'models/trip';
-import { DeleteTrip, GetTrip, GetTrips } from 'reducers/trips';
+import requireAuth from './requireAuth';
 
 class ViewTrip extends React.Component {
   componentDidMount() {
@@ -61,7 +63,7 @@ class ViewTrip extends React.Component {
           <div>
             <Section title="Date & Time">
               <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
-              <TimeRange endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} />
+              <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} />
             </Section>
           </div>
 
@@ -102,4 +104,4 @@ const mapDispatchToProps = dispatch => ({
   redirectTrip: () => dispatch(replace(`/trips`)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewTrip);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewTrip));

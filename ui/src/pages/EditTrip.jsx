@@ -72,7 +72,6 @@ class EditTrip extends React.Component {
   render() {
     if (!this.props.trip)
       return this.getDefaultView();
-    console.log(this.state.trip);
     return (
     <div>
       <Header />

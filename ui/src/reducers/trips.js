@@ -192,11 +192,12 @@ const UpdateTrip = (id, trip, callback) => async dispatch => {
  * 
  * @param {String} id 
  */
-const DeleteTrip = id => async dispatch => {
+const DeleteTrip = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(DELETE_TRIP_INIT));
   try {
     const response = await axios.delete(Config.routes.trips.delete(id));
     dispatch(Action.DeleteTrip(null));
+    if (callback) callback();
   } catch (err) {
     handleAxiosError(dispatch, err, Action.DeleteTrip);
   }

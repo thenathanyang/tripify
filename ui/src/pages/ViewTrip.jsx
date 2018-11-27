@@ -10,8 +10,8 @@ import DatePicker from '../components/input/DatePicker';
 import Header from '../components/header';
 import Paragraph from '../components/text/Paragraph';
 import TimeRange from '../components/input/TimeRange';
-import TripTile from '../components/tile/Trip';
 import Subheader from '../components/text/Subheading';
+import EventTile from '../components/tile/Event';
 import moment from 'moment';
 
 import Trip from 'models/trip';
@@ -67,10 +67,11 @@ class ViewTrip extends React.Component {
           <div>
             <Section title="Events">
               { trip.events.length > 0 && trip.events.map(event =>
-                <Link key={event.id} to={`/trips/${trip.id}/${event.id}`}>
-                  <TripTile
+                <Link key={event.id} className="link" to={`/trips/${trip.id}/${event.id}`}>
+                  <EventTile
                     title={event.name}
                     background={event.images.length ? event.images[0] : null}
+                    time= {event.startDate}
                   />
                 </Link>
               )}

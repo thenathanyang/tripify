@@ -19,7 +19,7 @@ const handleAxiosError = (dispatch, err, fn, logoutOnFailure = true) => {
   let e = "A network error occurred: Check your internet connection";
   let status = 0;
   if (err.response && err.response.data) {
-    e = err.response.data.message || `Unknown error: ${err.statusText}`;
+    e = err.response.data.error || `Unknown error: ${err.statusText}`;
     status = err.response.status;
   }
   dispatch(fn(e));

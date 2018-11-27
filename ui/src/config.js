@@ -3,17 +3,17 @@ const API_URL = process.env.WEBPACK ? 'http://localhost:3000' : '';
 export default {
   routes: {
     auth: {
-      login: () => `${API_URL}/auth/login`,
+      login: () => `${API_URL}/api/auth/login`,
     },
     trips: {
-      get: (user) => `${API_URL}/api/users/${user}/trips`,
+      get:    (user)     => `${API_URL}/api/users/${user}/trips`,
       getOne: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
       update: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
       delete: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
-      create: (user) => `${API_URL}/api/users/${user}/trips`,
+      create: (user)     => `${API_URL}/api/users/${user}/trips`,
     },
     users: {
-      get: () => `${API_URL}/api/users`,
+      get:    () => `${API_URL}/api/users`,
       getOne: id => `${API_URL}/api/users/${id}`,
       create: () => `${API_URL}/api/users`,
     },

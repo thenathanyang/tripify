@@ -34,7 +34,7 @@ h1 {
 h2 {
   padding: 0px;
   margin: 0px 0px 5px 0px;
-  font-size: 18px;
+  font-size: 0.9em;
   font-weight: 500;
   color: $gray;
   font-family: $subheader-font;
@@ -91,12 +91,13 @@ p {
 }
 
 /** import component styles here */
-@import "components/icon/style.scss";
-@import "components/input/style.scss";
-@import "components/text/style.scss";
-@import "components/tile/style.scss";
-@import "components/button/style.scss";
-@import "components/section/style.scss";
-@import "components/header/style.scss";
-@import "components/image/style.scss";
-@import "pages/style.scss";
+@import "components/button/style";
+@import "components/header/style";
+@import "components/icon/style";
+@import "components/image/style";
+@import "components/input/style";
+@import "components/section/style";
+@import "components/tabs/style";
+@import "components/text/style";
+@import "components/tile/style";
+@import "pages/style";

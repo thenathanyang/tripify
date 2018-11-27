@@ -113,8 +113,6 @@ const mapStateToProps = state => ({
   trip: state.Trips.trip,
   error: state.Trips.error,
   getTripSuccess: state.Trips.getTripSuccess,
-  gettingTrip: state.Trips.gettingTrip,
-  updatingTrip: state.Trips.updatingTrip,
 });
 
 const mapDispatchToProps = dispatch => ({

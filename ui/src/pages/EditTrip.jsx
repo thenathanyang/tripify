@@ -34,7 +34,7 @@ class EditTrip extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.getTripSuccess && this.state.trip.id !== this.props.id) {
-      this.setState({ trip: this.props.trip });
+      this.setState({ trip: this.props.trip.toObject() });
     }
   }
 
@@ -72,18 +72,18 @@ class EditTrip extends React.Component {
   render() {
     if (!this.props.trip)
       return this.getDefaultView();
-
+    console.log(this.state.trip);
     return (
     <div>
       <Header />
       <div className="container">
-        <Title text="Update Trip" />
+        <Title text="Edit Trip" />
           <Section title="Trip Name">
             <TextInput name="name" defaultValue={this.state.trip.name} onChange={this.handleChange} />
           </Section>
 
           <Section title="Trip Date">
-            <DatePicker name="date" defaultValue={moment(this.state.trip.date)} onChange={this.handleChange} />
+            <DatePicker name="date" defaultValue={this.state.trip.date} onChange={this.handleChange} />
           </Section>
 
           <Section title="Trip Description">

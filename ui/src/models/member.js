@@ -1,8 +1,8 @@
 const validState = state => [MEMBER_INVITED, MEMBER_DECLINED, MEMBER_INVITED].includes(states);
 
-export const MEMBER_INVITED  = 1;
-export const MEMBER_DECLINED = 2;
-export const MEMBER_ACCEPTED = 3;
+export const MEMBER_INVITED  = 'invited';
+export const MEMBER_DECLINED = 'declined';
+export const MEMBER_ACCEPTED = 'accepted';
 
 /**
  * A Trip Member
@@ -11,12 +11,14 @@ export default class Member {
   /**
    * Creates a Member
    * 
+   * @param {String} id
    * @param {String} name 
    * @param {String} email 
    * @param {String} picture 
    * @param {number} state 
    */
-  constructor(name, email, picture, state) {
+  constructor(id, name, email, picture, state) {
+    this.id = id;
     this.name = name;
     this.email = email || null;
     this.picture = picture || null;
@@ -29,6 +31,6 @@ export default class Member {
    * @param {Object} obj
    */
   static fromObject(obj) {
-    return new Trip(obj.name, obj.email, obj.picture, obj.state);
+    return new Trip(obj.id, obj.name, obj.email, obj.picture, obj.state);
   }
 }

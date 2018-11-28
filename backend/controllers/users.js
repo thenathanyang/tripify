@@ -1,14 +1,43 @@
+const { getID } = require('../utils');
+const { getTrip } = require('./trips');
 const users = {}
 
-const getID = () => (''+Math.random()).split('.')[1];
+class User {
+  constructor(user, id) {
+    this.user = user;
+    this.trips = [];
+    this.id = id;
+  }
+
+  json() {
+    return {
+      ...this.user,
+      id: this.id,
+      trips: this.getTrips().map(t => t.json()),
+    }
+  };
+
+  getTrips() {
+    return this.trips.map(getTrip);
+  }
+
+  deleteTrip(id) {
+    this.trips = this.trips.filter(tripId => tripId !== id);
+  }
+}
+
+exports.hasUser = (id) => !!users[id];
+
+exports.getUser = (id) => users[id];
 
 exports.getUsers = () =>
-  Object.keys(users).map(id => users[id]);
-
-exports.getUser = id => users[id];
+  Object.keys(users).map(exports.getUser);
 
 exports.getUserByEmail = email =>
-  users[Object.keys(users).find(id => users[id].email === email)];
+  exports.getUsers().find(u => u.user.email === email);
 
 exports.createUser = (name, email, password, id = getID()) =>
-  users[id] = {name, email, password, id};
+  (users[id] = new User({name, email, password}, id));
+
+exports.deleteTripFromUsers = (id) =>
+  exports.getUsers().forEach(user => user.deleteTrip(id));

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 
+import Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
@@ -23,7 +24,7 @@ class CreateEvent extends React.Component {
     this.state = {
       id: (''+Math.random()).split('.')[1],
       description: "Test Event",
-      images: ["https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg"],
+      images: [Image.getRandomImage()],
       name: "",
       date: moment(),
       start: moment(),
@@ -43,9 +44,10 @@ class CreateEvent extends React.Component {
   updateTrip = (trip, event) => {
     const newTrip = Trip.fromObject(trip.toObject());
     newTrip.events.push(event);
+    if (newTrip.background === Image.getBlackImage()) newTrip.background = event.images[0];
     this.props.updateTrip(trip.id, newTrip, () => this.props.redirectTrip(trip.id));
   }
-  
+
   createEvent = () => {
     const event = {
       ...this.state,

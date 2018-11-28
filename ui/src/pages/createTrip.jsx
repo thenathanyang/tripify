@@ -12,6 +12,7 @@ import Button from 'components/button/Button';
 import DatePicker from 'components/input/DatePicker';
 import Header from 'components/header';
 
+import Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { CreateTrip } from 'reducers/trips';
@@ -25,7 +26,7 @@ class CreateTripPage extends React.Component {
       trip: {
         name: "",
         date: moment(),
-        background: "https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg",
+        background: Image.getBlackImage(),
       },
       error: null,
     };

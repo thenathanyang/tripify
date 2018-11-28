@@ -8,6 +8,8 @@ import Header from '../components/header';
 import Section from '../components/section/Section';
 import Title from '../components/text/Title';
 
+import requireAuth from './requireAuth';
+
 class ViewTripEvent extends React.Component {
   componentDidMount() {
     this.props.getTrip(this.props.tripId);
@@ -37,6 +39,7 @@ class ViewTripEvent extends React.Component {
     if (!this.props.trip)
       return this.getDefaultView();
 
+    console.log(this.props.trip.events);
     const event = this.props.trip.events.find(event => event.id == this.props.eventId);
 
     if (!event)
@@ -57,5 +60,6 @@ const mapDispatchToProps = dispatch => ({
   getTrip: (id) => dispatch(GetTrip(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewTripEvent);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewTripEvent));
+
 

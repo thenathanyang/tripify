@@ -17,7 +17,7 @@ import Paragraph from '../components/text/Paragraph';
 import TimeRange from '../components/input/TimeRange';
 import Subheader from '../components/text/Subheading';
 import EventTile from '../components/tile/Event';
-import moment from 'moment';
+
 
 
 import requireAuth from './requireAuth';
@@ -77,8 +77,8 @@ class ViewTrip extends React.Component {
 
           <div>
             <Section title="Events">
-              { trip.events.length > 0 && trip.events.map(event =>
-                <Link key={event.id} className="link" to={`/trips/${trip.id}/${event.id}`}>
+              { this.props.trip.events.length > 0 && this.props.trip.events.map(event =>
+                <Link key={event.id} className="link" to={`/trips/${this.props.trip.id}/${event.id}`}>
                   <EventTile
                     title={event.name}
                     background={event.images.length ? event.images[0] : null}

@@ -8,7 +8,6 @@ import Header from '../components/header';
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
 import EventTile from '../components/tile/Event';
-import moment from 'moment';
 
 class DiscoverEvents extends React.Component{
 

@@ -20,6 +20,17 @@ import requireAuth from './requireAuth';
 
 class ViewEvent extends React.Component {
 
+  getErrorView() {
+    return (
+      <>
+        <Header />
+        <Section title="">
+          <div className="error">"Error loading event"</div>
+        </Section>
+      </>
+    );
+  }
+
   render() {
 
     const event = this.props.event;
@@ -63,5 +74,5 @@ ViewEvent.propTypes = {
     event: PropTypes.object.isRequired,
   };
 
-export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewEvent));
+export default requireAuth(ViewEvent);
 

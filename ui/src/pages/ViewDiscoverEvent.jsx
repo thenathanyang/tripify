@@ -8,6 +8,8 @@ import Header from '../components/header';
 import Section from '../components/section/Section';
 import Title from '../components/text/Title';
 
+import requireAuth from './requireAuth';
+
 class ViewDiscoverEvent extends React.Component {
   componentDidMount() {
     this.props.getEvent(this.props.eventId);
@@ -55,5 +57,6 @@ const mapDispatchToProps = dispatch => ({
   getEvent: (id) => dispatch(GetEvent(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewDiscoverEvent);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewDiscoverEvent));
+
 

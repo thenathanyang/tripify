@@ -29,11 +29,11 @@ class EditTrip extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getTrip(this.props.id);
+    this.props.getTrip(this.props.tripId);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.getTripSuccess && this.state.trip.id !== this.props.id) {
+    if (this.props.getTripSuccess && this.state.trip.id !== this.props.tripId) {
       this.setState({ trip: this.props.trip.toObject() });
     }
   }

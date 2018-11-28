@@ -17,5 +17,9 @@ export default {
       getOne: id => `${API_URL}/api/users/${id}`,
       create: () => `${API_URL}/api/users`,
     },
+    events: {
+      get: month => `https://www.mappening.io/api/v2/events/search?month=${month}`,
+      getOne: id => `https://www.mappening.io/api/v2/events/id/${id}`,
+    }
   }
 };

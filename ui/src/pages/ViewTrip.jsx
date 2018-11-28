@@ -1,4 +1,5 @@
-import React from 'react'; 
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
@@ -6,14 +7,14 @@ import { Link } from 'react-router-dom';
 import { DeleteTrip, GetTrip, GetTrips } from 'reducers/trips';
 
 import Button from '../components/button/Button';
-import Header from '../components/header';
 import MemberTile from 'components/tile/Member';
 import Paragraph from '../components/text/Paragraph';
-import Section from '../components/section/Section';
 import Subheading from '../components/text/Subheading';
 import TimeRange from '../components/input/TimeRange';
 import Title from '../components/text/Title';
 import EventTile from '../components/tile/Event';
+import Header from '../components/header';
+import Section from '../components/section';
 
 import requireAuth from './requireAuth';
 
@@ -66,7 +67,6 @@ class ViewTrip extends React.Component {
           </Section>
 
           <Section title="Trip Members">
-            {!this.props.members.length && <span className="no-member">No members in this trip</span>}
             {this.props.trip.members.map(member => <MemberTile member={member} />)}
             <Link to={`/trips/${this.props.trip.id}/inviteMember`}>
               <Button blue small label="+ Invite Member" />
@@ -83,8 +83,8 @@ class ViewTrip extends React.Component {
                 />
               </Link>
             )}
-            <Link to={`/trips/${this.props.trip.id}/createEvent`}
-              ><Button blue small label="+ Add event"/>
+            <Link to={`/trips/${this.props.trip.id}/createEvent`}>
+              <Button blue small label="+ Add event"/>
             </Link>
           </Section>
         </div>
@@ -92,6 +92,14 @@ class ViewTrip extends React.Component {
     );
   }
 }
+
+ViewTrip.propTypes = {
+  viewOnly: PropTypes.bool,
+};
+
+ViewTrip.defaultProps = {
+  viewOnly: false,
+};
 
 const mapStateToProps = state => ({
   trip: state.Trips.trip,

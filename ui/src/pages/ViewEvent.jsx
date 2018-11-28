@@ -7,14 +7,13 @@ import { connect } from 'react-redux';
 import Trip from 'models/trip';
 import { GetTrip } from 'reducers/trips';
 
-
-import Header from '../components/header';
 import Button from '../components/button/Button';
-import Section from '../components/section/Section';
 import Paragraph from '../components/text/Paragraph';
 import TimeRange from '../components/input/TimeRange';
 import Image from '../components/image/Image';
 import Title from '../components/text/Title';
+import Header from '../components/header';
+import Section from '../components/section';
 
 import requireAuth from './requireAuth';
 
@@ -24,7 +23,7 @@ class ViewEvent extends React.Component {
     return (
       <>
         <Header />
-        <Section title="">
+        <Section>
           <div className="error">"Error loading event"</div>
         </Section>
       </>

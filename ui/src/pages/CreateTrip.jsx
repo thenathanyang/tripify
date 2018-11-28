@@ -5,12 +5,11 @@ import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 
 import Title from 'components/text/Title';
-import Paragraph from 'components/text/Paragraph';
-import Section from 'components/section/Section';
 import TextInput from 'components/input/Text';
 import Button from 'components/button/Button';
 import DatePicker from 'components/input/DatePicker';
 import Header from 'components/header';
+import Section from 'components/section';
 
 import * as Image from 'models/image';
 import Trip from 'models/trip';
@@ -62,16 +61,16 @@ class CreateTripPage extends React.Component {
           </Section>
 
           { (this.state.error || this.props.error) &&
-            <Section title="">
+            <Section>
               <div className="error">{ this.state.error || this.props.error }</div>
             </Section>
           }
 
           <div className="buttons">
-            <div className="create-button">
+            <div className="left-button">
               <Button blue label="Create" onClick={this.createTrip} />
             </div>
-            <div className="cancel-button">
+            <div className="right-button">
               <Button gray label="Cancel" onClick={() => history.goBack()} />
             </div>
           </div>

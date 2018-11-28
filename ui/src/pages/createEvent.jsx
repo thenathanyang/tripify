@@ -3,7 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 
-import Image from 'models/image';
+import * as Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';

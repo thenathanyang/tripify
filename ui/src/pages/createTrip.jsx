@@ -12,7 +12,7 @@ import Button from 'components/button/Button';
 import DatePicker from 'components/input/DatePicker';
 import Header from 'components/header';
 
-import Image from 'models/image';
+import * as Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { CreateTrip } from 'reducers/trips';

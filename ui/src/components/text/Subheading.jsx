@@ -12,7 +12,11 @@ class Subheading extends React.Component {
 
 Subheading.propTypes = {
   /** The text to display in the subheading */
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
+};
+
+Subheading.defaultProps = {
+  text: '',
 };
 
 export default Subheading;

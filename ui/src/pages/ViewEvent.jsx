@@ -1,24 +1,17 @@
 import React from 'react'; 
 import PropTypes from 'prop-types';
 
-import moment from 'moment';
-import { connect } from 'react-redux';
-
-import Trip from 'models/trip';
-import { GetTrip } from 'reducers/trips';
-
-import Button from '../components/button/Button';
-import Paragraph from '../components/text/Paragraph';
-import TimeRange from '../components/input/TimeRange';
-import Image from '../components/image/Image';
-import Title from '../components/text/Title';
-import Header from '../components/header';
-import Section from '../components/section';
+import Button from 'components/button/Button';
+import Paragraph from 'components/text/Paragraph';
+import TimeRange from 'components/input/TimeRange';
+import Image from 'components/image/Image';
+import Title from 'components/text/Title';
+import Header from 'components/header';
+import Section from 'components/section';
 
 import requireAuth from './requireAuth';
 
 class ViewEvent extends React.Component {
-
   getErrorView() {
     return (
       <>
@@ -31,9 +24,7 @@ class ViewEvent extends React.Component {
   }
 
   render() {
-
     const event = this.props.event;
-
     if (!event)
       return this.getErrorView();
 

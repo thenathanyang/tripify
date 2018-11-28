@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 
 import { GetTrips } from 'reducers/trips';
 
-import Title from '../components/text/Title';
-import Button from '../components/button/Button';
-import TripTile from '../components/tile/Trip';
-import Header from '../components/header';
-import Section from '../components/section';
+import Title from 'components/text/Title';
+import Button from 'components/button/Button';
+import TripTile from 'components/tile/Trip';
+import Header from 'components/header';
+import Section from 'components/section';
 
 import requireAuth from './requireAuth';
 

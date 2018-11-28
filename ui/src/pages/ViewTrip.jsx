@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 
 import { DeleteTrip, GetTrip, GetTrips } from 'reducers/trips';
 
-import Button from '../components/button/Button';
+import Button from 'components/button/Button';
 import MemberTile from 'components/tile/Member';
-import Paragraph from '../components/text/Paragraph';
-import Subheading from '../components/text/Subheading';
-import TimeRange from '../components/input/TimeRange';
-import Title from '../components/text/Title';
-import EventTile from '../components/tile/Event';
-import Header from '../components/header';
-import Section from '../components/section';
+import Paragraph from 'components/text/Paragraph';
+import Subheading from 'components/text/Subheading';
+import TimeRange from 'components/input/TimeRange';
+import Title from 'components/text/Title';
+import EventTile from 'components/tile/Event';
+import Header from 'components/header';
+import Section from 'components/section';
 
 import requireAuth from './requireAuth';
 

@@ -2,8 +2,8 @@ const users = {};
 const getID = () => (''+Math.random()).split('.')[1];
 
 class UserTrips {
-  constructor() {
-    this.trips = [];
+  constructor(trips = []) {
+    this.trips = trips;
   }
 
   getTripIndex(id) {
@@ -36,3 +36,6 @@ exports.userTrips = user => {
     users[user] = new UserTrips();
   return users[user];
 };
+
+exports.allTrips = () =>
+  new UserTrips([].concat(...Object.values(users).map(u => u.trips)));

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 
+import * as Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
@@ -15,13 +16,15 @@ import DatePicker from '../components/input/DatePicker';
 import TimeRange from '../components/input/TimeRange';
 import Header from '../components/header';
 
+import requireAuth from './requireAuth';
+
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: (''+Math.random()).split('.')[1],
       description: "Test Event",
-      images: ["https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg"],
+      images: [Image.getRandomImage()],
       name: "",
       date: moment(),
       start: moment(),
@@ -41,9 +44,10 @@ class CreateEvent extends React.Component {
   updateTrip = (trip, event) => {
     const newTrip = Trip.fromObject(trip.toObject());
     newTrip.events.push(event);
+    if (newTrip.background === Image.getBlackImage()) newTrip.background = event.images[0];
     this.props.updateTrip(trip.id, newTrip, () => this.props.redirectTrip(trip.id));
   }
-  
+
   createEvent = () => {
     const event = {
       ...this.state,
@@ -91,7 +95,8 @@ class CreateEvent extends React.Component {
           </Section>
 
           <Section title="Event Time">
-            <TimeRange name="eventTimeRange" 
+            <TimeRange
+              name="eventTimeRange" 
               defaultEndTime={moment()}   
               defaultStartTime={moment()} 
               onChange={this.handleTimeRangeChange}
@@ -135,4 +140,4 @@ const mapDispatchToProps = dispatch => ({
   redirectTrip: tripId => dispatch(replace(`/trips/${tripId}`)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(CreateEvent));

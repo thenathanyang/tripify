@@ -29,7 +29,7 @@ class DatePicker extends React.Component {
    *
    * @param date The `moment` date object representing the date selected
    */
-  handleClick = date => this.props.onChange(this.props.name, date);
+  handleClick = date => this.props.onChange(this.props.name, moment(date));
 
   render() {
     return (
@@ -39,8 +39,8 @@ class DatePicker extends React.Component {
           parseDate={parseDate}
           value={this.props.defaultValue != null 
                   ? formatDate(this.props.defaultValue, this.format)
-                  : ''}
-          placeholder={formatDate(moment(), this.format)}
+                  : '' }
+          placeholder={formatDate(moment(), this.format) }
           onDayChange={this.handleClick}
         />
       </div>

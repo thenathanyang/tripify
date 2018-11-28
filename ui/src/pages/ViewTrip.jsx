@@ -1,6 +1,11 @@
 import React from 'react'; 
+import moment from 'moment';
 import { connect } from 'react-redux';
+import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
+
+import Trip from 'models/trip';
+import { DeleteTrip, GetTrip, GetTrips } from 'reducers/trips';
 
 import Title from '../components/text/Title';
 import Section from '../components/section/Section';
@@ -14,53 +19,59 @@ import Subheader from '../components/text/Subheading';
 import EventTile from '../components/tile/Event';
 import moment from 'moment';
 
-import Trip from 'models/trip';
-import { GetTrip } from 'reducers/trips';
+
+import requireAuth from './requireAuth';
 
 class ViewTrip extends React.Component {
   componentDidMount() {
     this.props.getTrip(this.props.id);
   }
 
-  getTitle() {
-    if (this.props.trip)
-      return this.props.trip.name;
-    if (this.props.gettingTrip)
-      return "Fetching...";
-    return "Error!";
+  getDefaultView() {
+    return (
+      <> 
+        <Header />
+        <Title text="Fetching..." />
+      </>
+    )
+  }
+
+  deleteTrip = () => {
+    this.props.deleteTrip(this.props.trip.id, this.props.getTrips);
   }
 
   render() {
-    const trip = this.props.trip || new Trip("987654321","Kayaking Trip", moment(), "Fun Kayaking Trip!", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQRTv1vUhVksy1zgscQp28LnKkO2gryPvDvkaaVZs_zCYVGlhH6Q");
+    if (!this.props.trip)
+      return this.getDefaultView();
     return (
       <div>
         <Header/>
         <div className="container">
           <div>
-            <Title text={this.getTitle()}/>
+            <Title text={this.props.trip.name}/>
             <div className="trip-header">
-              <Title text={"$" + trip.price().toLocaleString('en-US', { maximumFractionDigits: 2 })}/>
+              <Title text={"$" + this.props.trip.price().toLocaleString('en-US', { maximumFractionDigits: 2 })}/>
               <Subheader text="per person"/>
               <div id="trip-buttons">
                 <div id="edit-trip-button">
-                  <Button small blue label="Edit"/>
+                  <Link key={this.props.trip.id} to={`/trips/${this.props.trip.id}/editTrip`}><Button small blue label="Edit"/></Link>
                 </div>
                 <div id="delete-trip-button">
-                  <Button small red label="Delete"/>
+                  <Link to={'/trips'}><Button small red label="Delete" onClick={this.deleteTrip}/></Link>
                 </div>
               </div>
             </div>
           </div>
           <div>
             <Section title="Date & Time">
-              <Paragraph text={trip.date.format('dddd, MMMM Do')} />
-              <TimeRange endTime={trip.endTime()} startTime={trip.startTime()} />
+              <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
+              <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} />
             </Section>
           </div>
 
           <div>
             <Section title="Description">
-              <Paragraph text={trip.description}/>
+              <Paragraph text={this.props.trip.description}/>
             </Section>
           </div>
 
@@ -75,7 +86,7 @@ class ViewTrip extends React.Component {
                   />
                 </Link>
               )}
-              <Link to={`/trips/${trip.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
+              <Link to={`/trips/${this.props.trip.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
             </Section>
           </div>
         </div>
@@ -90,7 +101,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  deleteTrip: (id, callback) => dispatch(DeleteTrip(id, callback)),
   getTrip: (id) => dispatch(GetTrip(id)),
+  getTrips: () => dispatch(GetTrips()),
+  redirectTrip: () => dispatch(replace(`/trips`)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewTrip);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewTrip));

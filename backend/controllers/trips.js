@@ -1,20 +1,38 @@
-const trips = [];
-
+const users = {};
 const getID = () => (''+Math.random()).split('.')[1];
 
-const getTripIndex = id =>
-  trips.findIndex(elem => elem.id === id);
+class UserTrips {
+  constructor() {
+    this.trips = [];
+  }
 
-exports.getTrip = id =>
-  trips.find(trip => trip.id === id);
+  getTripIndex(id) {
+    return this.trips.findIndex(elem => elem.id === id);
+  }
 
-exports.getTrips = () => trips;
+  getTrip(id) {
+    return this.trips.find(trip => trip.id === id);
+  }
 
-exports.createTrip = trip =>
-  trips[trips.push({ ...trip, id: getID() }) - 1];
+  getTrips() {
+    return this.trips;
+  }
 
-exports.updateTrip = (id, trip) => 
-  trips[getTripIndex(id)] = trip;
+  createTrip(trip) {
+    return this.trips[this.trips.push({ ...trip, id: getID() }) - 1];
+  }
 
-exports.deleteTrip = id =>
-  trips.splice(getTripIndex(id), 1)[0];
+  updateTrip(id, trip) {
+    return this.trips[this.getTripIndex(id)] = trip;
+  }
+
+  deleteTrip(id) {
+    return this.trips.splice(this.getTripIndex(id), 1)[0];
+  }
+}
+
+exports.userTrips = user => {
+  if (!users[user])
+    users[user] = new UserTrips();
+  return users[user];
+};

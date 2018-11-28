@@ -1,6 +1,13 @@
 import React from 'react'; 
 import PropTypes from 'prop-types';
 
+import moment from 'moment';
+import { connect } from 'react-redux';
+
+import Trip from 'models/trip';
+import { GetTrip } from 'reducers/trips';
+
+
 import Header from '../components/header';
 import Button from '../components/button/Button';
 import Section from '../components/section/Section';
@@ -8,6 +15,8 @@ import Paragraph from '../components/text/Paragraph';
 import TimeRange from '../components/input/TimeRange';
 import Image from '../components/image/Image';
 import Title from '../components/text/Title';
+
+import requireAuth from './requireAuth';
 
 class ViewEvent extends React.Component {
 
@@ -35,7 +44,7 @@ class ViewEvent extends React.Component {
           </Section>
           <Section title="Date and Time">
             <Paragraph text={event.startDate.format('dddd, MMMM Do')} />
-            <TimeRange endTime={event.endDate} startTime={event.startDate} />
+            <TimeRange disabled endTime={event.endDate} startTime={event.startDate} />
           </Section>
           <Section title="Price">
             <Paragraph text={"$" + event.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) + " per person"}></Paragraph>
@@ -54,4 +63,5 @@ ViewEvent.propTypes = {
     event: PropTypes.object.isRequired,
   };
 
-export default ViewEvent;
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewEvent));
+

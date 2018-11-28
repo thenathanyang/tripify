@@ -1,6 +1,7 @@
 import axios from "axios";
 import produce from "immer";
 import Config from "config";
+import Storage from "storage";
 
 import Trip from "models/trip";
 import { handleAxiosError } from "./error";
@@ -130,12 +131,16 @@ class Action {
  * Gets a Trip by a particular ID
  * 
  * @param {String} id 
+ * @param {Function} callback
  */
-const GetTrip = id => async dispatch => {
+const GetTrip = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(GET_TRIP_INIT));
   try {
-    const response = await axios.get(Config.routes.trips.getOne(id));
-    dispatch(Action.GetTrip(null, Trip.fromObject(response.data.trip)));
+    const userId = Storage.get('user');
+    const response = await axios.get(Config.routes.trips.getOne(userId, id));
+    const trip = Trip.fromObject(response.data.trip);
+    dispatch(Action.GetTrip(null, trip));
+    if (callback) callback();
   } catch (err) {
     handleAxiosError(dispatch, err, Action.GetTrip);
   }
@@ -143,12 +148,17 @@ const GetTrip = id => async dispatch => {
 
 /**
  * Gets all Trips
+ * 
+ * @param {Function} callback
  */
-const GetTrips = () => async dispatch => {
+const GetTrips = (callback) => async dispatch => {
   dispatch(Action.InitAction(GET_TRIPS_INIT));
   try {
-    const response = await axios.get(Config.routes.trips.get());
-    dispatch(Action.GetTrips(null, response.data.trips.map(Trip.fromObject)));
+    const userId = Storage.get('user');
+    const response = await axios.get(Config.routes.trips.get(userId));
+    const trips = response.data.trips.map(Trip.fromObject);
+    dispatch(Action.GetTrips(null, trips));
+    if (callback) callback(user);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.GetTrips);
   }
@@ -158,15 +168,18 @@ const GetTrips = () => async dispatch => {
  * Creates a Trip
  * 
  * @param {Trip} trip 
+ * @param {Function} callback
  */
 const CreateTrip = (trip, callback) => async dispatch => {
   dispatch(Action.InitAction(CREATE_TRIP_INIT));
   try {
-    const response = await axios.post(Config.routes.trips.create(), { trip: trip.toObject() });
-    dispatch(Action.UpdateTrip(null, Trip.fromObject(response.data.trip)));
-    if (callback) callback(Trip.fromObject(response.data.trip));
+    const userId = Storage.get('user');
+    const response = await axios.post(Config.routes.trips.create(userId), { trip: trip.toObject() });
+    const newTrip = Trip.fromObject(response.data.trip);
+    dispatch(Action.CreateTrip(null, newTrip));
+    if (callback) callback(newTrip);
   } catch (err) {
-    handleAxiosError(dispatch, err, Action.UpdateTrip);
+    handleAxiosError(dispatch, err, Action.CreateTrip);
   }
 };
 
@@ -175,13 +188,16 @@ const CreateTrip = (trip, callback) => async dispatch => {
  * 
  * @param {String} id
  * @param {Trip} trip 
+ * @param {Function} callback
  */
 const UpdateTrip = (id, trip, callback) => async dispatch => {
   dispatch(Action.InitAction(UPDATE_TRIP_INIT));
   try {
-    const response = await axios.put(Config.routes.trips.update(id), { trip: trip.toObject() });
-    dispatch(Action.UpdateTrip(null, Trip.fromObject(response.data.trip)));
-    if (callback) callback(Trip.fromObject(response.data.trip));
+    const userId = Storage.get('user');
+    const response = await axios.put(Config.routes.trips.update(userId, id), { trip: trip.toObject() });
+    const newTrip = Trip.fromObject(response.data.trip);
+    dispatch(Action.UpdateTrip(null, newTrip));
+    if (callback) callback(newTrip);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.UpdateTrip);
   }
@@ -191,12 +207,15 @@ const UpdateTrip = (id, trip, callback) => async dispatch => {
  * Deletes a Trip by a particular ID
  * 
  * @param {String} id 
+ * @param {Function} callback
  */
-const DeleteTrip = id => async dispatch => {
+const DeleteTrip = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(DELETE_TRIP_INIT));
   try {
-    const response = await axios.delete(Config.routes.trips.delete(id));
-    dispatch(Action.DeleteTrip(null));
+    const userId = Storage.get('user');
+    const response = await axios.delete(Config.routes.trips.delete(userId, id));
+    dispatch(Action.DeleteTrip());
+    if (callback) callback();
   } catch (err) {
     handleAxiosError(dispatch, err, Action.DeleteTrip);
   }

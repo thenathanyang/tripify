@@ -21,6 +21,11 @@ class User {
     return this.trips.map(getTrip);
   }
 
+  addTrip(id) {
+    this.deleteTrip(id);
+    this.trips.push(id);
+  }
+
   deleteTrip(id) {
     this.trips = this.trips.filter(tripId => tripId !== id);
   }

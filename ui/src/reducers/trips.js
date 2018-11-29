@@ -159,7 +159,7 @@ const GetTrip = (id, callback) => async dispatch => {
     const response = await axios.get(Config.routes.trips.getOne(id));
     const trip = Trip.fromObject(response.data.trip);
     dispatch(Action.GetTrip(null, trip));
-    if (callback) callback();
+    if (callback) callback(trip);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.GetTrip);
   }

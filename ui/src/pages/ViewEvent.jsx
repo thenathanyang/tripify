@@ -8,10 +8,20 @@ import Image from 'components/image/Image';
 import Title from 'components/text/Title';
 import Header from 'components/header';
 import Section from 'components/section';
+import AddToTrip from './AddToTrip';
 
 import requireAuth from './requireAuth';
 
 class ViewEvent extends React.Component {
+
+  constructor(props)
+  {
+    super(props);
+    this.state = {showAddPage : false};
+
+    this.showAddPage = this.showAddPage.bind(this);
+  }
+
   getErrorView() {
     return (
       <>
@@ -23,12 +33,28 @@ class ViewEvent extends React.Component {
     );
   }
 
+  showAddPage() {
+    this.setState({showAddPage: true});
+  }
+
+  removeAddPage() {
+    this.setState({showAddPage: false});
+  }
+
   render() {
     const event = this.props.event;
+
+    const addPage = (
+      <div className="container">
+      <AddToTrip event={this.props.event}/>
+      <Button grey label="Cancel" onClick={() => {this.removeAddPage()}} className="cancel-button"/>
+      </div>
+    )
+
     if (!event)
       return this.getErrorView();
 
-    return (
+    const eventPage = (
       <>
         <Header />
         <div className="container">
@@ -37,7 +63,7 @@ class ViewEvent extends React.Component {
             <Image src={event.images[0]} />
             <div className="attend-button">
               { /* TODO @helenhyewonlee: only show the attend button if the event is not in the trip */ }
-              <Button blue label="Attend" onClick={() => console.log("Attend button clicked")} />
+              <Button blue label="Attend" onClick={this.showAddPage} />
             </div>
           </div>
           <Section title="Location">
@@ -56,6 +82,8 @@ class ViewEvent extends React.Component {
         </div> 
       </>
     );
+
+    return this.state.showAddPage ? addPage : eventPage;
   }
 }
 

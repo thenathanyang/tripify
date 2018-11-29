@@ -4,6 +4,8 @@ import Config from "config";
 import Storage from "storage";
 
 import Trip from "models/trip";
+import { MEMBER_ACCEPTED, MEMBER_DECLINED } from "models/member";
+
 import { handleAxiosError } from "./error";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,6 +32,10 @@ const DELETE_TRIP_INIT = Symbol("DELETE_TRIP_INIT");
 const DELETE_TRIP_SUCCESS = Symbol("DELETE_TRIP_SUCCESS");
 const DELETE_TRIP_FAILURE = Symbol("DELETE_TRIP_FAILURE");
 
+const RSVP_INIT = Symbol("RSVP_INIT");
+const RSVP_SUCCESS = Symbol("RSVP_SUCCESS");
+const RSVP_FAILURE = Symbol("RSVP_FAILURE");
+
 const initState = () => ({
   error: null,
   timestamp: null,
@@ -55,6 +61,10 @@ const initState = () => ({
   deletingTrip: false,
   deleteTripSuccess: false,
   deleteTripFailure: false,
+
+  rsvping: false,
+  rsvpSuccess: false,
+  rsvpFailure: false,
 });
 
 const resetFlags = state => {
@@ -77,6 +87,10 @@ const resetFlags = state => {
   state.deletingTrip = false;
   state.deleteTripSuccess = false;
   state.deleteTripFailure = false;
+
+  state.rsvping = false;
+  state.rsvpSuccess = false;
+  state.rsvpFailure = false;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,6 +132,12 @@ class Action {
   static DeleteTrip(error) {
     return {
       type: error ? DELETE_TRIP_FAILURE : DELETE_TRIP_SUCCESS,
+      error: error || null,
+    };
+  }
+  static RSVP(error) {
+    return {
+      type: error ? RSVP_FAILURE : RSVP_SUCCESS,
       error: error || null,
     };
   }
@@ -211,11 +231,31 @@ const DeleteTrip = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(DELETE_TRIP_INIT));
   try {
     const userId = Storage.get('user');
-    const response = await axios.delete(Config.routes.trips.delete(userId, id));
+    await axios.delete(Config.routes.trips.delete(userId, id));
     dispatch(Action.DeleteTrip());
     if (callback) callback();
   } catch (err) {
     handleAxiosError(dispatch, err, Action.DeleteTrip);
+  }
+};
+
+/**
+ * RSVPs a particular user to a trip
+ * 
+ * @param {string} id
+ * @param {boolean} accepted
+ * @param {Function} callback
+ */
+const RSVPTrip = (id, accepted, callback) => async dispatch => {
+  dispatch(Action.InitAction(RSVP_INIT));
+  try {
+    const userId = Storage.get('user');
+    const rsvp = accepted ? MEMBER_ACCEPTED : MEMBER_DECLINED;
+    await axios.post(Config.routes.trips.rsvp(userId, id), { rsvp });
+    dispatch(Action.RSVP(null));
+    if (callback) callback();
+  } catch (err) {
+    handleAxiosError(dispatch, err, Action.RSVP);
   }
 };
 
@@ -248,6 +288,9 @@ const Trips = (state = initState(), action) =>
       case DELETE_TRIP_INIT:
         draft.deletingTrip = true;
         return;
+      case RSVP_INIT:
+        draft.rsvping = true;
+        return;
     }
 
     draft.timestamp = Date.now();
@@ -271,6 +314,9 @@ const Trips = (state = initState(), action) =>
         return;
       case DELETE_TRIP_FAILURE:
         draft.deleteTripFailure = true;
+        return;
+      case RSVP_FAILURE:
+        draft.rsvpFailure = true;
         return;
     }
 
@@ -296,7 +342,10 @@ const Trips = (state = initState(), action) =>
       case DELETE_TRIP_SUCCESS:
         draft.deleteTripSuccess = true;
         return;
+      case RSVP_SUCCESS:
+        draft.rsvpSuccess = true;
+        return;
     }
   });
 
-export { Trips, GetTrip, GetTrips, CreateTrip, UpdateTrip, DeleteTrip };
+export { Trips, GetTrip, GetTrips, CreateTrip, UpdateTrip, DeleteTrip, RSVPTrip };

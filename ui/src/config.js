@@ -11,6 +11,7 @@ export default {
       create: (user) => `${API_URL}/api/users/${user}/trips`,
       update: (id)   => `${API_URL}/api/trips/${id}`,
       delete: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
+      rsvp:   (user, id) => `${API_URL}/api/users/${user}/trips/${id}/rsvp`,
     },
     users: {
       get:    () => `${API_URL}/api/users`,

@@ -45,7 +45,7 @@ class Notification extends React.Component {
     const popupClasses = {
       popup: true,
       showing: this.state.display,
-      success: this.props.success,
+      'popup-success': this.props.success,
     };
     return (
       <div className="fading-popup">

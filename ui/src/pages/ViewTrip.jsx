@@ -70,7 +70,11 @@ class ViewTrip extends React.Component {
           </Section>
 
           <Section title="Trip Members">
-            {this.props.trip.members.map(member => <MemberTile key={member.id} member={member} />)}
+            {this.props.trip.members.length > 0 &&
+              <div className="members-wrapper">
+                {this.props.trip.members.map(member => <MemberTile key={member.id} member={member} />)}
+              </div>
+            }
             {!viewOnly &&
               <Link to={`/trips/${this.props.trip.id}/inviteMember`}>
                 <Button blue small label="+ Invite Member" />

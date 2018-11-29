@@ -17,7 +17,7 @@ class Button extends React.Component {
         className={classnames(classes)}
         id={this.props.id}
         disabled={this.props.disabled}
-        onClick = {() => this.props.onClick()}
+        onClick={() => this.props.onClick()}
       >
         {this.props.label}
       </button>
@@ -28,6 +28,7 @@ class Button extends React.Component {
 Button.defaultProps = {
   label: "",
   id: "",
+  small: true,
   onClick: () => {},
 };
 

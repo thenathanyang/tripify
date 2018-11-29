@@ -24,6 +24,9 @@ export default class Member {
     this.state = validState(state) ? state : MEMBER_UNKNOWN;
   }
 
+  accepted = () => this.state === MEMBER_ACCEPTED || this.state === MEMBER_OWNER;
+  declined = () => this.state === MEMBER_DECLINED;
+
   /**
    * Creates a Member from an object with properties corresponding to the constructor
    * 

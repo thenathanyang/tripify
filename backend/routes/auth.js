@@ -13,7 +13,7 @@ router.route('/login')
     const user = Users.getUserByEmail(req.body.email);
     if (!user)
       throw new errors.NotFound('A user was not found for that email address');
-    if (req.body.password !== user.password)
+    if (!user.checkPassword(req.body.password))
       throw new errors.Unauthorized('The password is incorrect');
     res.json({ user });
   });

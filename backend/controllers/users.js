@@ -17,6 +17,10 @@ class User {
     }
   };
 
+  checkPassword(password) {
+    return password === this.user.password;
+  }
+
   getTrips() {
     return this.trips.map(getTrip);
   }

@@ -52,9 +52,19 @@ class ViewEvent extends React.Component {
           <Title text={event.name} />
           <div className="image-box">
             <Image src={event.images[0]} />
-            <div className="attend-button">
-              {this.props.showAttendButton && <Button blue label="Attend" onClick={this.showAddPage}/> }
-            </div>
+            { !this.props.isTripEvent && 
+              <div className="attend-button">
+                <Button blue label="Attend" onClick={() => console.log("Attend button clicked")} />
+              </div> }
+            { this.props.isTripEvent && 
+              <div className="edit-delete-buttons"> 
+                <div className="left-button">
+                  <Button blue label="Edit"/>
+                </div>
+                <div className="right-button">
+                  <Button gray label="Delete" />
+                </div>
+              </div>}
           </div>
           <Section title="Location">
             <Paragraph text={event.location} />
@@ -85,12 +95,9 @@ class ViewEvent extends React.Component {
 ViewEvent.propTypes = {
   /** Event object */
   event: PropTypes.object.isRequired,
-  showAttendButton: PropTypes.bool,
+  /** Boolean value to represent whether the event is associated with a trip */
+  isTripEvent: PropTypes.bool,
 };
-
-ViewEvent.defaultProps = {
-  showAttendButton: false,
-}
 
 export default requireAuth(ViewEvent);
 

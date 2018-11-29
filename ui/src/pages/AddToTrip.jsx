@@ -6,12 +6,12 @@ import Storage from "storage";
 
 import { GetTrips, GetTrip, UpdateTrip } from 'reducers/trips';
 
-import Title from '../components/text/Title';
+import Title from 'components/text/Title';
 import Trip from 'models/trip';
 import * as Image from 'models/image';
-import Section from '../components/section/Section';
-import Button from '../components/button/Button';
-import TripTile from  '../components/tile/Trip';
+import Section from 'components/section/index';
+import Button from 'components/button/Button';
+import TripTile from  'components/tile/Trip';
 
 import requireAuth from './requireAuth';
 
@@ -37,7 +37,6 @@ class AddToTrip extends React.Component{
     }
 
     handleClick = (id) =>{
-        console.log(Storage.get('local_events')[0]);
         this.props.getTrip(id, trip => this.updateTrip(trip));
     }
 
@@ -47,7 +46,7 @@ class AddToTrip extends React.Component{
             <div>
                 <div>
                     <Title text="Add to A Trip"/>
-                    <Button blue label="+ New Trip"/>
+                    <Link to={`/trips/create?addEvent=${this.props.event.id}`}><Button blue label="+ New Trip"/></Link>
                     <Section title={this.getUpcomingTitle()}>
                     { this.props.trips.map(trip =>
                         <Link className="link" onClick={() => this.handleClick(trip.id)} to={`/trips/${trip.id}`}>

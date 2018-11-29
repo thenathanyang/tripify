@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
@@ -15,6 +16,7 @@ import * as Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { CreateTrip } from 'reducers/trips';
+import { GetEvent } from 'reducers/events';
 
 import requireAuth from './requireAuth';
 
@@ -26,9 +28,18 @@ class CreateTripPage extends React.Component {
         name: "",
         date: moment(),
         background: Image.getBlackImage(),
+        events: []
       },
       error: null,
     };
+
+    if ([...this.props.query.keys()].includes('addEvent'))
+    {
+      console.log(this.props.query.get('addEvent'));
+      this.props.getEvent(this.props.query.get('addEvent'), event => {
+        this.handleChange('events', [event])
+      });
+    }
   }
 
   handleChange = (name, value) =>
@@ -42,7 +53,7 @@ class CreateTripPage extends React.Component {
     this.props.createTrip(Trip.fromObject(this.state.trip), this.props.redirectTrip);
   };
 
-  render() {
+  render() {   
     return (
     <div>
       <Header />
@@ -80,14 +91,26 @@ class CreateTripPage extends React.Component {
   }
 }
 
+CreateTripPage.propTypes = {
+  addEvent: PropTypes.bool,
+};
+
+CreateTripPage.defaultProps = {
+  addEvent: false,
+};
+
+
 const mapStateToProps = state => ({
   error: state.Trips.error,
   creatingTrip: state.Trips.creatingTrip,
+  event: state.Events.event,
+  gettingEvent: state.Events.gettingEvent,
 });
 
 const mapDispatchToProps = dispatch => ({
   createTrip: (trip, callback) => dispatch(CreateTrip(trip, callback)),
   redirectTrip: trip => dispatch(replace(`/trips/${trip.id}`)),
+  getEvent: (id,callback) => dispatch(GetEvent(id, callback)),
 });
 
 export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(CreateTripPage));

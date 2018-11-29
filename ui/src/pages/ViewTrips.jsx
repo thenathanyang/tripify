@@ -19,8 +19,6 @@ class Home extends React.Component {
   }
 
   getUpcomingTitle = () => {
-    if (this.props.gettingTrips)
-      return "Fetching Trips...";
     if (this.props.trips.length === 0)
       return "No Trips Found";
     return "Upcoming";
@@ -43,11 +41,11 @@ class Home extends React.Component {
           <Title text="Your Trips" />
           <Link to="/trips/create"><Button blue label="Create New Trip" /></Link>
           <Section title={this.getUpcomingTitle()}>
-            { upcomingTrips.map(trip => <Link style={{textDecoration: 'none'}}key={trip.id} to={`/trips/${trip.id}`}><TripTile title={trip.name} background={trip.background} /></Link>) }
+            { upcomingTrips.map(trip => <Link style={{textDecoration: 'none'}} key={trip.id} to={`/trips/${trip.id}`}><TripTile title={trip.name} background={trip.background} /></Link>) }
           </Section>
           { pastTrips.length > 0 &&
             <Section title="Past">
-              { pastTrips.map(trip => <Link key={trip.id} to={`/trips/${trip.id}?viewOnly`}><TripTile title={trip.name} background={trip.background} /></Link>) }
+              { pastTrips.map(trip => <Link style={{textDecoration: 'none'}} key={trip.id} to={`/trips/${trip.id}?viewOnly`}><TripTile title={trip.name} background={trip.background} /></Link>) }
             </Section>
           }
         </div>

@@ -8,6 +8,7 @@ import {ConnectedRouter} from 'connected-react-router';
 import {render} from 'react-dom';
 
 import {store, history} from 'reducers';
+import addNotification from 'pages/addNotification';
 
 import CreateEvent from 'pages/CreateEvent';
 import CreateTrip from 'pages/CreateTrip';
@@ -20,22 +21,22 @@ import EditTrip from 'pages/EditTrip';
 import DiscoverEvents from 'pages/DiscoverEvents';
 import ViewDiscoverEvent from 'pages/ViewDiscoverEvent';
 
-class App extends React.Component {
-  render(){
+class _App extends React.Component {
+  render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route exact path="/trips" component={ViewTrips}/>
-            <Route exact path="/trips/create" component={CreateTrip} />
-            <Route exact path="/trips/:id" component={({match, location}) => <ViewTrip tripId={match.params.id} query={new URLSearchParams(location.search)} />} />
-            <Route exact path="/trips/:id/editTrip" component={({match}) => <EditTrip tripId={match.params.id} />} />
-            <Route exact path="/trips/:id/joinTrip" component={({match}) => <JoinTrip tripId={match.params.id} />} />
-            <Route exact path="/trips/:id/createEvent" component={({match}) => <CreateEvent tripId={match.params.id} />} />
-            <Route exact path="/trips/:id/inviteMember" component={({match}) => <InviteMember tripId={match.params.id} />} />
-            <Route exact path="/trips/:id/:event" component={({match}) => <ViewTripEvent tripId={match.params.id} eventId={match.params.event} />} />
-            <Route exact path="/events" component={DiscoverEvents}/>
-            <Route exact path="/events/:id" component={({match}) => <ViewDiscoverEvent eventId={match.params.id}/>}/>
+            <Route exact path="/trips" component={() => <ViewTrips displayNotification={this.props.displayNotification} />}/>
+            <Route exact path="/trips/create" component={() => <CreateTrip displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id" component={({match, location}) => <ViewTrip tripId={match.params.id} query={new URLSearchParams(location.search)} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id/editTrip" component={({match}) => <EditTrip tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id/joinTrip" component={({match}) => <JoinTrip tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id/createEvent" component={({match}) => <CreateEvent tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id/inviteMember" component={({match}) => <InviteMember tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id/:event" component={({match}) => <ViewTripEvent tripId={match.params.id} eventId={match.params.event} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/events" component={() => <DiscoverEvents displayNotification={this.props.displayNotification} />}/>
+            <Route exact path="/events/:id" component={({match}) => <ViewDiscoverEvent eventId={match.params.id} displayNotification={this.props.displayNotification}/>}/>
             <Redirect to="/trips"/>
           </Switch>
         </ConnectedRouter>
@@ -43,5 +44,7 @@ class App extends React.Component {
     );
   }
 }
+
+const App = addNotification(_App);
 
 render(<App />, document.getElementById('root'));

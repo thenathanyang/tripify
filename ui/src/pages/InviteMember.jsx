@@ -45,9 +45,9 @@ class InviteMember extends React.Component {
             <Button small blue label="Copy Link" onClick={this.copyInviteLink} />
           </Section>
 
-          { this.state.linkCopied &&
+          {this.state.linkCopied &&
             <Section><div className="success">Link Copied!</div></Section>
-          }        
+          }
         </div> 
       </div>
     );

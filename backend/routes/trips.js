@@ -49,6 +49,9 @@ router.route('/:id/rsvp')
       throw new errors.BadRequest("RSVP must be either 'declined' or 'accepted'");
 
     const trip = Trips.getTrip(req.params.id);
+    if (trip.owner === req.user.id)
+      throw new errors.BadRequest('You cannot RSVP to your own trip');
+
     trip.addMember(req.user, req.body.rsvp);
     if (req.body.rsvp === 'accepted')
       req.user.addTrip(trip.id);

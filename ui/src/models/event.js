@@ -45,5 +45,4 @@ export default class Event {
     var location = obj.properties.place.location.street + ", " + obj.properties.place.location.city + " " +obj.properties.place.location.state;
     return new Event(obj.id, obj.properties.name, obj.properties.start_time , obj.properties.end_time , location, null , obj.properties.description, [obj.properties.cover_picture]);
   }
-
 }

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Event from './event';
+import Member from './member';
 
 /**
  * A Trip
@@ -62,6 +63,14 @@ export default class Trip {
    * @param {Object} obj
    */
   static fromObject(obj) {
-    return new Trip(obj.id, obj.name, obj.date, obj.description, obj.background, obj.members, (obj.events || []).map(Event.fromObject));
+    return new Trip(
+      obj.id,
+      obj.name,
+      obj.date,
+      obj.description,
+      obj.background,
+      (obj.members || []).map(Member.fromObject),
+      (obj.events || []).map(Event.fromObject)
+    );
   }
 }

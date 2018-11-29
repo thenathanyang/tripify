@@ -1,5 +1,5 @@
 import React from 'react';
-import Subheading from '../text/Subheading';
+import Subheading from 'components/text/Subheading';
 import PropTypes from 'prop-types';
 
 class Section extends React.Component {
@@ -14,7 +14,11 @@ class Section extends React.Component {
 }
 
 Section.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
+};
+
+Section.defaultProps = {
+  title: '',
 };
 
 export default Section;

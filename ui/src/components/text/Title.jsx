@@ -12,7 +12,11 @@ class Title extends React.Component {
 
 Title.propTypes = {
   /** The text to display in the subheading */
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
+};
+
+Title.defaultProps = {
+  text: '',
 };
 
 export default Title;

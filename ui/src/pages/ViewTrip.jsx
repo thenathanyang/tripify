@@ -1,30 +1,26 @@
-import React from 'react'; 
-import moment from 'moment';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 
-import Trip from 'models/trip';
 import { DeleteTrip, GetTrip, GetTrips } from 'reducers/trips';
 
-import Title from '../components/text/Title';
-import Section from '../components/section/Section';
-import TextInput from '../components/input/Text';
-import Button from '../components/button/Button';
-import DatePicker from '../components/input/DatePicker';
-import Header from '../components/header';
-import Paragraph from '../components/text/Paragraph';
-import TimeRange from '../components/input/TimeRange';
-import Subheader from '../components/text/Subheading';
-import EventTile from '../components/tile/Event';
-
-
+import Button from 'components/button/Button';
+import MemberTile from 'components/tile/Member';
+import Paragraph from 'components/text/Paragraph';
+import Subheading from 'components/text/Subheading';
+import TimeRange from 'components/input/TimeRange';
+import Title from 'components/text/Title';
+import EventTile from 'components/tile/Event';
+import Header from 'components/header';
+import Section from 'components/section';
 
 import requireAuth from './requireAuth';
 
 class ViewTrip extends React.Component {
   componentDidMount() {
-    this.props.getTrip(this.props.id);
+    this.props.getTrip(this.props.tripId);
   }
 
   getDefaultView() {
@@ -41,17 +37,18 @@ class ViewTrip extends React.Component {
   }
 
   render() {
+    const viewOnly = [...this.props.query.keys()].includes('viewOnly');
     if (!this.props.trip)
       return this.getDefaultView();
     return (
       <div>
         <Header/>
         <div className="container">
-          <div>
-            <Title text={this.props.trip.name}/>
-            <div className="trip-header">
-              <Title text={"$" + this.props.trip.price().toLocaleString('en-US', { maximumFractionDigits: 2 })}/>
-              <Subheader text="per person"/>
+          <Title text={this.props.trip.name}/>
+          <div className="trip-header">
+            <Title text={"$" + this.props.trip.price().toLocaleString('en-US', { maximumFractionDigits: 2 })}/>
+            <Subheading text="per person"/>
+            {!viewOnly &&
               <div id="trip-buttons">
                 <div id="edit-trip-button">
                   <Link key={this.props.trip.id} to={`/trips/${this.props.trip.id}/editTrip`}><Button small blue label="Edit"/></Link>
@@ -60,40 +57,60 @@ class ViewTrip extends React.Component {
                   <Link to={'/trips'}><Button small red label="Delete" onClick={this.deleteTrip}/></Link>
                 </div>
               </div>
-            </div>
-          </div>
-          <div>
-            <Section title="Date & Time">
-              <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
-              <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} />
-            </Section>
+            }
           </div>
 
-          <div>
-            <Section title="Description">
-              <Paragraph text={this.props.trip.description}/>
-            </Section>
-          </div>
+          <Section title="Date & Time">
+            <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
+            <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} />
+          </Section>
 
-          <div>
-            <Section title="Events">
-              { this.props.trip.events.length > 0 && this.props.trip.events.map(event =>
-                <Link key={event.id} className="link" to={`/trips/${this.props.trip.id}/${event.id}`}>
-                  <EventTile
-                    title={event.name}
-                    background={event.images.length ? event.images[0] : null}
-                    time= {event.startDate}
-                  />
-                </Link>
-              )}
-              <Link to={`/trips/${this.props.trip.id}/createEvent`}><Button blue small label="+ Add event"/></Link>
-            </Section>
-          </div>
+          <Section title="Description">
+            <Paragraph text={this.props.trip.description}/>
+          </Section>
+
+          <Section title="Trip Members">
+            {this.props.trip.members.length > 0 &&
+              <div className="members-wrapper">
+                {this.props.trip.members.map(member => <MemberTile key={member.id} member={member} />)}
+              </div>
+            }
+            {!viewOnly &&
+              <Link to={`/trips/${this.props.trip.id}/inviteMember`}>
+                <Button blue small label="+ Invite Member" />
+              </Link>
+            }
+          </Section>
+
+          <Section title="Events">
+            { this.props.trip.events.length > 0 && this.props.trip.events.map(event =>
+              <Link key={event.id} className="link" to={`/trips/${this.props.trip.id}/${event.id}`}>
+                <EventTile
+                  title={event.name}
+                  background={event.images.length ? event.images[0] : null}
+                  time={event.startDate}
+                />
+              </Link>
+            )}
+            {!viewOnly &&
+              <Link to={`/trips/${this.props.trip.id}/createEvent`}>
+                <Button blue small label="+ Add event"/>
+              </Link>
+            }
+          </Section>
         </div>
       </div>
     );
   }
 }
+
+ViewTrip.propTypes = {
+  viewOnly: PropTypes.bool,
+};
+
+ViewTrip.defaultProps = {
+  viewOnly: false,
+};
 
 const mapStateToProps = state => ({
   trip: state.Trips.trip,

@@ -6,11 +6,12 @@ export default {
       login: () => `${API_URL}/api/auth/login`,
     },
     trips: {
-      get:    (user)     => `${API_URL}/api/users/${user}/trips`,
-      getOne: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
-      update: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
+      get:    (user) => `${API_URL}/api/users/${user}/trips`,
+      getOne: (id)   => `${API_URL}/api/trips/${id}`,
+      create: (user) => `${API_URL}/api/users/${user}/trips`,
+      update: (id)   => `${API_URL}/api/trips/${id}`,
       delete: (user, id) => `${API_URL}/api/users/${user}/trips/${id}`,
-      create: (user)     => `${API_URL}/api/users/${user}/trips`,
+      rsvp:   (user, id) => `${API_URL}/api/users/${user}/trips/${id}/rsvp`,
     },
     users: {
       get:    () => `${API_URL}/api/users`,

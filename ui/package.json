@@ -38,6 +38,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "connected-react-router": "^4.5.0",
+    "copy-to-clipboard": "^3.0.8",
     "immer": "^1.7.3",
     "moment": "^2.22.2",
     "rc-time-picker": "^3.4.0",

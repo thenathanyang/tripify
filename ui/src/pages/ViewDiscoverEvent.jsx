@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { GetEvent } from 'reducers/events';
 
 import ViewEvent from './ViewEvent';
-import Header from '../components/header';
-import Section from '../components/section/Section';
-import Title from '../components/text/Title';
+import Title from 'components/text/Title';
+import Header from 'components/header';
+import Section from 'components/section';
 
 import requireAuth from './requireAuth';
 

@@ -7,6 +7,7 @@ export default class User {
    * 
    * @param {String} name
    * @param {String} email
+   * @param {String} id
    */
   constructor(name, email, id) {
     this.name = name;

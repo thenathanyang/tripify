@@ -1,38 +1,55 @@
-const users = {};
-const getID = () => (''+Math.random()).split('.')[1];
+const { getID } = require('../utils');
+const trips = {};
 
-class UserTrips {
-  constructor() {
-    this.trips = [];
+class Trip {
+  constructor(trip, owner, tripId) {
+    this.owner = owner;
+    this.trip = trip;
+    this.id = tripId;
+    this.members = [];
   }
 
-  getTripIndex(id) {
-    return this.trips.findIndex(elem => elem.id === id);
+  json() {
+    return {
+      ...this.trip,
+      id: this.id,
+      owner: this.owner,
+      members: this.members,
+    }
+  };
+
+  update(trip) {
+    this.trip = trip;
+    return this;
   }
 
-  getTrip(id) {
-    return this.trips.find(trip => trip.id === id);
-  }
-
-  getTrips() {
-    return this.trips;
-  }
-
-  createTrip(trip) {
-    return this.trips[this.trips.push({ ...trip, id: getID() }) - 1];
-  }
-
-  updateTrip(id, trip) {
-    return this.trips[this.getTripIndex(id)] = trip;
-  }
-
-  deleteTrip(id) {
-    return this.trips.splice(this.getTripIndex(id), 1)[0];
+  addMember(member, state) {
+    const existingMember = this.members.find(m => m.id === member.id);
+    if (existingMember) {
+      existingMember.state = state;
+    } else {
+      this.members.push({
+        email: member.user.email,
+        name: member.user.name,
+        id: member.id,
+        state,
+      });
+    }
   }
 }
 
-exports.userTrips = user => {
-  if (!users[user])
-    users[user] = new UserTrips();
-  return users[user];
-};
+exports.hasTrip = (id) => !!trips[id];
+
+exports.getTrip = (id) => trips[id];
+
+exports.getTrips = () =>
+  Object.keys(trips).map(exports.getTrip)
+
+exports.createTrip = (trip, owner, id = getID()) =>
+  (trips[id] = new Trip(trip, owner, id));
+
+exports.deleteTrip = (id) =>
+  delete trips[id];
+
+exports.userTrips = user =>
+  exports.getTrips().filter(trip => trip.owner === user);

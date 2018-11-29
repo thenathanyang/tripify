@@ -2,7 +2,6 @@ const { Router } = require('express');
 const errors = require('http-errors');
 const trips = require('./trips');
 const Users = require('../controllers/users');
-const Trips = require('../controllers/trips');
 
 const router = new Router();
 
@@ -24,16 +23,13 @@ router.route('/')
   });
 
 router.use('/:user', (req, res, next) => {
-  req.user = Users.getUser(req.params.user);
-  if (!req.user)
+  if (!Users.hasUser(req.params.user))
     throw new errors.NotFound('User not found');
+  req.user = Users.getUser(req.params.user);
   next();
 });
 
-router.route('/:user').get((req, res) => res.json({ user: req.user }));
-router.use('/:user/trips', (req, res, next) => {
-  req.trips = Trips.userTrips(req.user.id);
-  next();
-}, trips);
+router.get('/:user', (req, res) => res.json({ user: req.user.json() }));
+router.use('/:user/trips', trips);
 
 module.exports = router;

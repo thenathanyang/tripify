@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { GetEvents } from 'reducers/events';
 
-import Header from '../components/header';
-import Title from '../components/text/Title';
-import Section from '../components/section/Section';
-import EventTile from '../components/tile/Event';
+import Title from 'components/text/Title';
+import EventTile from 'components/tile/Event';
+import Header from 'components/header';
+import Section from 'components/section';
 
 class DiscoverEvents extends React.Component{
 

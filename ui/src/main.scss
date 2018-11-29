@@ -17,7 +17,10 @@ $dark-gray: #666666;
 $gray: #AAAAAA;
 $white: #FCFCFC;
 $green: #7ED321;
+$light-green: #99C760;
 $blue: #1CA7EB;
+$yellow: #FBB644;
+$light-yellow: #FED086;
 $red: #F67575;
 
 body {
@@ -56,4 +59,5 @@ p {
 @import "components/tabs/style";
 @import "components/text/style";
 @import "components/tile/style";
+@import "components/notification/style.scss";
 @import "pages/style";

@@ -233,9 +233,10 @@ const DeleteTrip = (id, callback) => async dispatch => {
     const userId = Storage.get('user');
     await axios.delete(Config.routes.trips.delete(userId, id));
     dispatch(Action.DeleteTrip());
-    if (callback) callback();
+    if (callback) callback(true);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.DeleteTrip);
+    if (callback) callback(false);
   }
 };
 

@@ -33,7 +33,12 @@ class ViewTrip extends React.Component {
   }
 
   deleteTrip = () => {
-    this.props.deleteTrip(this.props.trip.id, this.props.getTrips);
+    this.props.deleteTrip(this.props.trip.id, success => {
+      const message = success ? "Successfully deleted the trip" : "Failed to delete the trip";
+      const icon = success ? "check" : "exclamation-triangle";
+      this.props.displayNotification(message, icon, success);
+      this.props.getTrips();
+    });
   }
 
   render() {
@@ -62,7 +67,7 @@ class ViewTrip extends React.Component {
 
           <Section title="Date & Time">
             <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
-            <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} />
+            { this.props.trip.events.length > 0 && <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} /> }
           </Section>
 
           <Section title="Description">
@@ -115,6 +120,8 @@ ViewTrip.defaultProps = {
 const mapStateToProps = state => ({
   trip: state.Trips.trip,
   gettingTrip: state.Trips.gettingTrip,
+  deleteTripSuccess: state.Trips.deleteTripSuccess,
+  deleteTripFailure: state.Trips.deleteTripFailure,
 });
 
 const mapDispatchToProps = dispatch => ({

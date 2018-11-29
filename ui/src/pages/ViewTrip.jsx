@@ -37,6 +37,7 @@ class ViewTrip extends React.Component {
   }
 
   render() {
+    const viewOnly = [...this.props.query.keys()].includes('viewOnly');
     if (!this.props.trip)
       return this.getDefaultView();
     return (
@@ -47,14 +48,16 @@ class ViewTrip extends React.Component {
           <div className="trip-header">
             <Title text={"$" + this.props.trip.price().toLocaleString('en-US', { maximumFractionDigits: 2 })}/>
             <Subheading text="per person"/>
-            <div id="trip-buttons">
-              <div id="edit-trip-button">
-                <Link key={this.props.trip.id} to={`/trips/${this.props.trip.id}/editTrip`}><Button small blue label="Edit"/></Link>
+            {!viewOnly &&
+              <div id="trip-buttons">
+                <div id="edit-trip-button">
+                  <Link key={this.props.trip.id} to={`/trips/${this.props.trip.id}/editTrip`}><Button small blue label="Edit"/></Link>
+                </div>
+                <div id="delete-trip-button">
+                  <Link to={'/trips'}><Button small red label="Delete" onClick={this.deleteTrip}/></Link>
+                </div>
               </div>
-              <div id="delete-trip-button">
-                <Link to={'/trips'}><Button small red label="Delete" onClick={this.deleteTrip}/></Link>
-              </div>
-            </div>
+            }
           </div>
 
           <Section title="Date & Time">
@@ -67,10 +70,12 @@ class ViewTrip extends React.Component {
           </Section>
 
           <Section title="Trip Members">
-            {this.props.trip.members.map(member => <MemberTile member={member} />)}
-            <Link to={`/trips/${this.props.trip.id}/inviteMember`}>
-              <Button blue small label="+ Invite Member" />
-            </Link>
+            {this.props.trip.members.map(member => <MemberTile key={member.id} member={member} />)}
+            {!viewOnly &&
+              <Link to={`/trips/${this.props.trip.id}/inviteMember`}>
+                <Button blue small label="+ Invite Member" />
+              </Link>
+            }
           </Section>
 
           <Section title="Events">
@@ -83,9 +88,11 @@ class ViewTrip extends React.Component {
                 />
               </Link>
             )}
-            <Link to={`/trips/${this.props.trip.id}/createEvent`}>
-              <Button blue small label="+ Add event"/>
-            </Link>
+            {!viewOnly &&
+              <Link to={`/trips/${this.props.trip.id}/createEvent`}>
+                <Button blue small label="+ Add event"/>
+              </Link>
+            }
           </Section>
         </div>
       </div>

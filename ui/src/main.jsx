@@ -28,7 +28,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/trips" component={ViewTrips}/>
             <Route exact path="/trips/create" component={CreateTrip} />
-            <Route exact path="/trips/:id" component={({match}) => <ViewTrip tripId={match.params.id} />} />
+            <Route exact path="/trips/:id" component={({match, location}) => <ViewTrip tripId={match.params.id} query={new URLSearchParams(location.search)} />} />
             <Route exact path="/trips/:id/editTrip" component={({match}) => <EditTrip tripId={match.params.id} />} />
             <Route exact path="/trips/:id/joinTrip" component={({match}) => <JoinTrip tripId={match.params.id} />} />
             <Route exact path="/trips/:id/createEvent" component={({match}) => <CreateEvent tripId={match.params.id} />} />

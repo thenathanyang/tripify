@@ -47,7 +47,7 @@ class Home extends React.Component {
           </Section>
           { pastTrips.length > 0 &&
             <Section title="Past">
-              { pastTrips.map(trip => <Link key={trip.id} to={`/trips/${trip.id}`}><TripTile title={trip.name} background={trip.background} /></Link>) }
+              { pastTrips.map(trip => <Link key={trip.id} to={`/trips/${trip.id}?viewOnly`}><TripTile title={trip.name} background={trip.background} /></Link>) }
             </Section>
           }
         </div>

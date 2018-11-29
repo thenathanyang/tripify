@@ -20,13 +20,6 @@ class AddToTrip extends React.Component{
         this.props.getTrips();
       }
     
-    getUpcomingTitle = () => {
-        if (this.props.gettingTrips)
-          return "Fetching Trips...";
-        if (this.props.trips.length === 0)
-          return "";
-        return "Your Trips";
-    }
 
     updateTrip = (trip) => {
         var event = this.props.event;
@@ -47,7 +40,7 @@ class AddToTrip extends React.Component{
                 <div>
                     <Title text="Add to A Trip"/>
                     <Link to={`/trips/create?addEvent=${this.props.event.id}`}><Button blue label="+ New Trip"/></Link>
-                    <Section title={this.getUpcomingTitle()}>
+                    <Section title= "Your Trips">
                     { this.props.trips.map(trip =>
                         <Link className="link" onClick={() => this.handleClick(trip.id)} to={`/trips/${trip.id}`}>
                             <TripTile key={trip.id} title={trip.name} background={trip.background}/> 

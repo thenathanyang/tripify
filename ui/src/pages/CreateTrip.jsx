@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 import { Link } from 'react-router-dom';
@@ -35,7 +34,6 @@ class CreateTripPage extends React.Component {
 
     if ([...this.props.query.keys()].includes('addEvent'))
     {
-      console.log(this.props.query.get('addEvent'));
       this.props.getEvent(this.props.query.get('addEvent'), event => {
         this.handleChange('events', [event])
       });
@@ -90,14 +88,6 @@ class CreateTripPage extends React.Component {
     );
   }
 }
-
-CreateTripPage.propTypes = {
-  addEvent: PropTypes.bool,
-};
-
-CreateTripPage.defaultProps = {
-  addEvent: false,
-};
 
 
 const mapStateToProps = state => ({

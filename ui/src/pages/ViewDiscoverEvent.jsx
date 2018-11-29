@@ -43,7 +43,7 @@ class ViewDiscoverEvent extends React.Component {
       return this.getErrorView();
 
     return (
-      <ViewEvent event = {this.props.event}/>
+      <ViewEvent showAttendButton event = {this.props.event}/>
     );
   }
 }

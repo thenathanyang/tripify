@@ -45,6 +45,9 @@ class ViewTrip extends React.Component {
     const viewOnly = [...this.props.query.keys()].includes('viewOnly');
     if (!this.props.trip)
       return this.getDefaultView();
+
+    const events =  this.props.trip.events
+      .sort((a, b) => a.startDate > b.startDate);
     return (
       <div>
         <Header/>
@@ -88,7 +91,7 @@ class ViewTrip extends React.Component {
           </Section>
 
           <Section title="Events">
-            { this.props.trip.events.length > 0 && this.props.trip.events.map(event =>
+            { this.props.trip.events.length > 0 && events.map(event =>
               <Link key={event.id} className="link" to={`/trips/${this.props.trip.id}/${event.id}`}>
                 <EventTile
                   title={event.name}

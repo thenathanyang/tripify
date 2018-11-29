@@ -50,7 +50,11 @@ class JoinTrip extends React.Component {
               </div>
             </div>
           </Section>
-        </div> 
+
+          {(this.props.rsvpFailure && this.props.error) &&
+            <Section><div className="error">{this.props.error}</div></Section>
+          }
+        </div>
       </div>
     );
   }
@@ -63,6 +67,8 @@ JoinTrip.propTypes = {
 const mapStateToProps = state => ({
   user: state.Users.user,
   trip: state.Trips.trip,
+  error: state.Trips.error,
+  rsvpFailure: state.Trips.rsvpFailure,
 });
 
 const mapDispatchToProps = dispatch => ({

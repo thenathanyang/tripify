@@ -39,7 +39,7 @@ class ViewEvent extends React.Component {
     return (
       <div className="container">
       <AddToTrip event={this.props.event}/>
-      <Button grey label="Cancel" onClick={() => {this.removeAddPage}} className="cancel-button"/>
+      <Button grey label="Cancel" onClick={this.removeAddPage} className="cancel-button"/>
       </div>
     )
   }
@@ -54,7 +54,7 @@ class ViewEvent extends React.Component {
             <Image src={event.images[0]} />
             <div className="attend-button">
               { /* TODO @helenhyewonlee: only show the attend button if the event is not in the trip */ }
-              {this.props.showAttendButton ? <Button blue label="Attend" onClick={this.showAddPage}/> : null}
+              {this.props.showAttendButton && <Button blue label="Attend" onClick={this.showAddPage}/> }
             </div>
           </div>
           <Section title="Location">

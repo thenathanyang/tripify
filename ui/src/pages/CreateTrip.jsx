@@ -35,7 +35,9 @@ class CreateTripPage extends React.Component {
     if ([...this.props.query.keys()].includes('addEvent'))
     {
       this.props.getEvent(this.props.query.get('addEvent'), event => {
-        this.handleChange('events', [event])
+        this.handleChange('events', [event]);
+        this.handleChange('background', event.images[0]);
+        this.handleChange('date', event.startDate);
       });
     }
   }

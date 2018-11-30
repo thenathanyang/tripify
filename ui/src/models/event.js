@@ -9,8 +9,8 @@ export default class Event {
    * 
    * @param {String} id
    * @param {String} name
-   * @param {Date} startDate
-   * @param {Date} endDate
+   * @param {moment} startDate
+   * @param {moment} endDate
    * @param {String} location
    * @param {number} price
    * @param {String} description
@@ -19,12 +19,25 @@ export default class Event {
   constructor(id, name, startDate, endDate, location, price, description, images) {
     this.id = id;
     this.name = name;
-    this.startDate = startDate ? moment(startDate).startOf('minute') : null;
-    this.endDate = endDate ? moment(endDate).startOf('minute') : null;
+    this.startDate = startDate ? moment(startDate) : null;
+    this.endDate = endDate ? moment(endDate) : null;
     this.location = location;
-    this.price = parseInt(price) || 0;
+    this.price = parseFloat(price) || 0;
     this.description = description || null;
     this.images = images || [];
+  }
+
+  toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      location: this.location,
+      price: this.price, 
+      description: this.description,
+      images: this.images,
+    };
   }
 
   /**

@@ -14,6 +14,8 @@ import Trip from 'models/trip';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
 
+import requireAuth from './requireAuth';
+
 class EditTrip extends React.Component {
   constructor(props) {
     super(props);
@@ -121,4 +123,4 @@ const mapDispatchToProps = dispatch => ({
   redirectTrip: trip => dispatch(replace(`/trips/${trip.id}`)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditTrip);
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(EditTrip));

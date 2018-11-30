@@ -1,5 +1,6 @@
 import React from 'react'; 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Button from 'components/button/Button';
 import Paragraph from 'components/text/Paragraph';
@@ -52,9 +53,19 @@ class ViewEvent extends React.Component {
           <Title text={event.name} />
           <div className="image-box">
             <Image src={event.images[0]} />
-            <div className="attend-button">
-              {this.props.showAttendButton && <Button blue label="Attend" onClick={this.showAddPage}/> }
-            </div>
+            { !this.props.isTripEvent && 
+              <div className="attend-button">
+                <Button blue label="Attend" onClick={this.showAddPage} />
+              </div> }
+            { this.props.isTripEvent && 
+              <div className="edit-delete-buttons"> 
+                <div className="left-button">
+                <Link key={event.id} to={`/trips/${this.props.tripId}/${event.id}/editEvent`}><Button blue label="Edit"/></Link>
+                </div>
+                <div className="right-button">
+                  <Button red label="Delete" />
+                </div>
+              </div>}
           </div>
           <Section title="Location">
             <Paragraph text={event.location} />
@@ -83,14 +94,13 @@ class ViewEvent extends React.Component {
 }
 
 ViewEvent.propTypes = {
-  /** Event object */
-  event: PropTypes.object.isRequired,
-  showAttendButton: PropTypes.bool,
-};
-
-ViewEvent.defaultProps = {
-  showAttendButton: false,
-}
+    /** Event object */
+    event: PropTypes.object.isRequired,
+    /** Boolean value to represent whether the event is associated with a trip */
+    isTripEvent: PropTypes.bool,
+    /** TripId if the event is associated with a trip */
+    tripId: PropTypes.string
+  };
 
 export default requireAuth(ViewEvent);
 

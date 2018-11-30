@@ -45,8 +45,17 @@
 .attend-button {
   width: 40%;
   right: 0px;
-  margin-top: -8%;
+  transform: translateY(-50%);
   margin-right: 10px;
+  z-index: 300;
+  position: absolute;
+}
+
+.edit-delete-buttons {
+  width: 50%;
+  right: 0px;
+  margin-right: 10px;
+  transform: translateY(-50%);
   z-index: 300;
   position: absolute;
 }

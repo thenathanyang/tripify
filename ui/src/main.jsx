@@ -20,6 +20,7 @@ import ViewTripEvent from 'pages/ViewTripEvent';
 import EditTrip from 'pages/EditTrip';
 import DiscoverEvents from 'pages/DiscoverEvents';
 import ViewDiscoverEvent from 'pages/ViewDiscoverEvent';
+import EditEvent from 'pages/EditEvent';
 import UserProfile from 'pages/UserProfile';
 
 class _App extends React.Component {
@@ -36,6 +37,7 @@ class _App extends React.Component {
             <Route exact path="/trips/:id/createEvent" component={({match}) => <CreateEvent tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
             <Route exact path="/trips/:id/inviteMember" component={({match}) => <InviteMember tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
             <Route exact path="/trips/:id/:event" component={({match}) => <ViewTripEvent tripId={match.params.id} eventId={match.params.event} displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/:id/:eventId/editEvent" component={({match}) => <EditEvent tripId={match.params.id} eventId={match.params.eventId} displayNotification={this.props.displayNotification} />} /> 
             <Route exact path="/events" component={() => <DiscoverEvents displayNotification={this.props.displayNotification} />}/>
             <Route exact path="/events/:id" component={({match}) => <ViewDiscoverEvent eventId={match.params.id} displayNotification={this.props.displayNotification}/>}/>
             <Route exact path="/user" component={UserProfile} />

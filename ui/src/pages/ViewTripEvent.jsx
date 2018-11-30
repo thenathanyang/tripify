@@ -44,7 +44,11 @@ class ViewTripEvent extends React.Component {
       return this.getErrorView();
 
     return (
-      <ViewEvent event={event} isTripEvent={true} tripId={this.props.trip.id} />
+      <ViewEvent 
+        event={event} 
+        trip={this.props.trip} 
+        displayNotification={this.props.displayNotification}
+      />
     );
   }
 }

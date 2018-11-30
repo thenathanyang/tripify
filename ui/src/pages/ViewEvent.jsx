@@ -1,6 +1,8 @@
 import React from 'react'; 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { replace } from 'connected-react-router';
 
 import Button from 'components/button/Button';
 import Paragraph from 'components/text/Paragraph';
@@ -10,6 +12,8 @@ import Title from 'components/text/Title';
 import Header from 'components/header';
 import Section from 'components/section';
 import AddToTrip from './AddToTrip';
+import { UpdateTrip } from 'reducers/trips';
+import Trip from 'models/trip';
 
 import requireAuth from './requireAuth';
 
@@ -45,6 +49,18 @@ class ViewEvent extends React.Component {
     )
   }
 
+  deleteEvent = () => {
+    const newTrip = Trip.fromObject(this.props.trip.toObject());
+    newTrip.events = newTrip.events.filter(event => event.id !== this.props.event.id);
+
+    this.props.updateTrip(this.props.trip.id, newTrip, (updatedTrip, success) => {
+      const message = success ? "Successfully deleted the event" : "Failed to delete the event";
+      const icon = success ? "check" : "exclamation-triangle";
+      this.props.displayNotification(message, icon, success);
+      this.props.redirectTrip(this.props.trip.id);
+    });
+  }
+
   getEventPage(event) {
     return (
       <>
@@ -53,17 +69,17 @@ class ViewEvent extends React.Component {
           <Title text={event.name} />
           <div className="image-box">
             <Image src={event.images[0]} />
-            { !this.props.isTripEvent && 
+            { !this.props.trip && 
               <div className="attend-button">
                 <Button blue label="Attend" onClick={this.showAddPage} />
               </div> }
-            { this.props.isTripEvent && 
+            { this.props.trip && 
               <div className="edit-delete-buttons"> 
                 <div className="left-button">
-                <Link key={event.id} to={`/trips/${this.props.tripId}/${event.id}/editEvent`}><Button blue label="Edit"/></Link>
+                <Link key={event.id} to={`/trips/${this.props.trip.id}/${event.id}/editEvent`}><Button blue label="Edit"/></Link>
                 </div>
                 <div className="right-button">
-                  <Button red label="Delete" />
+                  <Button red label="Delete" onClick={this.deleteEvent} />
                 </div>
               </div>}
           </div>
@@ -94,13 +110,22 @@ class ViewEvent extends React.Component {
 }
 
 ViewEvent.propTypes = {
-    /** Event object */
-    event: PropTypes.object.isRequired,
-    /** Boolean value to represent whether the event is associated with a trip */
-    isTripEvent: PropTypes.bool,
-    /** TripId if the event is associated with a trip */
-    tripId: PropTypes.string
-  };
+  /** Event object */
+  event: PropTypes.object.isRequired,
+  /** Trip if the event is associated with a trip */
+  trip: PropTypes.object,
+  /** DisplayNotification function that triggers a notification to display */
+  displayNotification: PropTypes.func,
+};
 
-export default requireAuth(ViewEvent);
+const mapStateToProps = state => ({
+  
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateTrip: (id, trip, callback) => dispatch(UpdateTrip(id, trip, callback)),
+  redirectTrip: (tripId) => dispatch(replace(`/trips/${tripId}`)),
+});
+
+export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(ViewEvent));
 

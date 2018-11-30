@@ -215,9 +215,10 @@ const UpdateTrip = (id, trip, callback) => async dispatch => {
     const response = await axios.put(Config.routes.trips.update(id), { trip: trip.toObject() });
     const newTrip = Trip.fromObject(response.data.trip);
     dispatch(Action.UpdateTrip(null, newTrip));
-    if (callback) callback(newTrip);
+    if (callback) callback(newTrip, true);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.UpdateTrip);
+    if (callback) callback(null, false);
   }
 };
 

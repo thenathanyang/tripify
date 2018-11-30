@@ -150,7 +150,7 @@ class EditEvent extends React.Component {
           }
 
           <div className="left-button">
-            <Button blue label="Create" onClick={this.editEvent} />
+            <Button blue label="Save Changes" onClick={this.editEvent} />
           </div>
           <div className="right-button">
             <Button grey label="Cancel" onClick={() => history.goBack()} />

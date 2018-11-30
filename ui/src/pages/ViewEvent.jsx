@@ -55,7 +55,7 @@ class ViewEvent extends React.Component {
             <Image src={event.images[0]} />
             { !this.props.isTripEvent && 
               <div className="attend-button">
-                <Button blue label="Attend" onClick={() => console.log("Attend button clicked")} />
+                <Button blue label="Attend" onClick={this.showAddPage} />
               </div> }
             { this.props.isTripEvent && 
               <div className="edit-delete-buttons"> 

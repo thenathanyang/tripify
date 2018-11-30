@@ -35,8 +35,6 @@ class EditTrip extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.trip.id);
-    console.log(this.props.tripId);
     if (this.props.getTripSuccess && this.state.trip.id !== this.props.tripId) {
       this.setState({ trip: this.props.trip.toObject() });
     }

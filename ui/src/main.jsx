@@ -28,7 +28,7 @@ class _App extends React.Component {
         <ConnectedRouter history={history}>
           <Switch>
             <Route exact path="/trips" component={() => <ViewTrips displayNotification={this.props.displayNotification} />}/>
-            <Route exact path="/trips/create" component={() => <CreateTrip displayNotification={this.props.displayNotification} />} />
+            <Route exact path="/trips/create" component={({location}) => <CreateTrip displayNotification={this.props.displayNotification} query={new URLSearchParams(location.search)}/>} />
             <Route exact path="/trips/:id" component={({match, location}) => <ViewTrip tripId={match.params.id} query={new URLSearchParams(location.search)} displayNotification={this.props.displayNotification} />} />
             <Route exact path="/trips/:id/editTrip" component={({match}) => <EditTrip tripId={match.params.id} displayNotification={this.props.displayNotification} />} />
             <Route exact path="/trips/:id/joinTrip" component={({match}) => <JoinTrip tripId={match.params.id} displayNotification={this.props.displayNotification} />} />

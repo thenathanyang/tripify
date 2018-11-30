@@ -100,11 +100,13 @@ const GetEvents = () => async dispatch => {
  * 
  * @param {String} id 
  */
-const GetEvent = id => async dispatch => {
+const GetEvent = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(GET_EVENT_INIT));
   try{
     const response = await axios.get(Config.routes.events.getOne(id));
-    dispatch(Action.GetEvent(null, Event.fromMappeningObject(response.data.features[0])));
+    var data =  Event.fromMappeningObject(response.data.features[0]);
+    dispatch(Action.GetEvent(null, data));
+    if (callback) callback (data);
   }catch (err) {
     handleAxiosError(dispatch, err, Action.GetEvent);
   }

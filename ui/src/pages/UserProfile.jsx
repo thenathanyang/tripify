@@ -27,7 +27,7 @@ class UserProfile extends React.Component {
       <div>
         <Header />
         <div className="container">
-          <Title text="Profile" />
+          <Title text="Your Profile" />
           <Section title="Name">
             <Paragraph text={this.props.user.name} />
           </Section>

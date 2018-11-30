@@ -56,14 +56,13 @@ class TimeRange extends React.Component {
       this.props.onChange(this.props.name, this.state.startTime, endTime));
   
   render() {
-    const { defaultEndTime, defaultStartTime, endTime, startTime, name } = this.props;
+    const { defaultEndTime, defaultStartTime, name } = this.props;
     const startName = name ? `${name}_start` : undefined;
     const endName =  name ? `${name}_end` : undefined;
     return (
       <div className="time-range">
         <TimeSelector
           defaultTime={defaultStartTime}
-          time={startTime}
           name={startName}
           onChange={this.handleStartTimeChange}
           disabled={this.props.disabled}
@@ -71,7 +70,6 @@ class TimeRange extends React.Component {
         <Icon color="gray" icon="arrow-right" />
         <TimeSelector
           defaultTime={defaultEndTime}
-          time={endTime}
           name={endName}
           onChange={this.handleEndTimeChange}
           disabled={this.props.disabled}
@@ -86,10 +84,6 @@ TimeRange.propTypes = {
   defaultEndTime: PropTypes.instanceOf(moment),
   /** Initial date to populate the start TimeSelector */
   defaultStartTime: PropTypes.instanceOf(moment),
-  /** The fixed end time (disabled) to display in the TimeRange */
-  endTime: PropTypes.instanceOf(moment),
-  /** The fixed start time (disabled) to display in the TimeRange */
-  startTime: PropTypes.instanceOf(moment),
   /** The HTML name for the input */
   name: PropTypes.string,
   /** The change handler for the input, with signature (name: string, start: moment, end: moment) => void */
@@ -102,8 +96,6 @@ TimeRange.defaultProps = {
   defaultEndTime: null,
   defaultStartTime: null,
   disabled: false,
-  endTime: undefined,
-  startTime: undefined,
   name: undefined,
   onChange: () => {},
 };

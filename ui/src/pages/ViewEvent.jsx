@@ -13,11 +13,11 @@ import AddToTrip from './AddToTrip';
 import requireAuth from './requireAuth';
 
 class ViewEvent extends React.Component {
-
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
-    this.state = {showAddPage : false};
+    this.state = {
+      showAddPage: false
+    };
   }
 
   getErrorView() {
@@ -25,7 +25,7 @@ class ViewEvent extends React.Component {
       <>
         <Header />
         <Section>
-          <div className="error">"Error loading event"</div>
+          <div className="error">Error loading event</div>
         </Section>
       </>
     );
@@ -44,16 +44,15 @@ class ViewEvent extends React.Component {
     )
   }
 
-  getEventPage(event){
+  getEventPage(event) {
     return (
-    <>
+      <>
         <Header />
         <div className="container">
           <Title text={event.name} />
           <div className="image-box">
             <Image src={event.images[0]} />
             <div className="attend-button">
-              { /* TODO @helenhyewonlee: only show the attend button if the event is not in the trip */ }
               {this.props.showAttendButton && <Button blue label="Attend" onClick={this.showAddPage}/> }
             </div>
           </div>
@@ -62,7 +61,7 @@ class ViewEvent extends React.Component {
           </Section>
           <Section title="Date and Time">
             <Paragraph text={event.startDate.format('dddd, MMMM Do')} />
-            <TimeRange disabled endTime={event.endDate} startTime={event.startDate} />
+            <TimeRange disabled defaultEndTime={event.endDate} defaultStartTime={event.startDate} />
           </Section>
           <Section title="Price">
             <Paragraph text={"$" + event.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) + " per person"}></Paragraph>
@@ -77,19 +76,17 @@ class ViewEvent extends React.Component {
 
   render() {
     const event = this.props.event;
-
     if (!event)
       return this.getErrorView();
-
     return this.state.showAddPage ? this.getAddPage() : this.getEventPage(event);
   }
 }
 
 ViewEvent.propTypes = {
-    /** Event object */
-    event: PropTypes.object.isRequired,
-    showAttendButton: PropTypes.bool,
-  };
+  /** Event object */
+  event: PropTypes.object.isRequired,
+  showAttendButton: PropTypes.bool,
+};
 
 ViewEvent.defaultProps = {
   showAttendButton: false,

@@ -17,7 +17,7 @@ class Header extends React.Component {
         <Link to="/" className="link"><div className="name">Tripify</div></Link>
         <div className="nav-icons">
           <Link to="/" className="link">
-            <Icon icon="map-marked-alt" color="white" className="icon" />
+            <Icon icon="home" color="white" className="icon" />
           </Link>
           <Link to="/events" className="link">
             <Icon icon="compass" color="white" className="icon" />

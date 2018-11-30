@@ -218,7 +218,7 @@ const UpdateTrip = (id, trip, callback) => async dispatch => {
     if (callback) callback(newTrip, true);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.UpdateTrip);
-    if (callback) callback(false);
+    if (callback) callback(null, false);
   }
 };
 

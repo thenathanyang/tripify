@@ -47,8 +47,6 @@ class ViewTripEvent extends React.Component {
       <ViewEvent 
         event={event} 
         trip={this.props.trip} 
-        isTripEvent={true} 
-        tripId={this.props.trip.id} 
         displayNotification={this.props.displayNotification}
       />
     );

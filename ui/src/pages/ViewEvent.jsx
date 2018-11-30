@@ -1,5 +1,6 @@
 import React from 'react'; 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Button from 'components/button/Button';
 import Paragraph from 'components/text/Paragraph';
@@ -59,7 +60,7 @@ class ViewEvent extends React.Component {
             { this.props.isTripEvent && 
               <div className="edit-delete-buttons"> 
                 <div className="left-button">
-                  <Button blue label="Edit"/>
+                <Link key={event.id} to={`/trips/${this.props.tripId}/${event.id}/editEvent`}><Button blue label="Edit"/></Link>
                 </div>
                 <div className="right-button">
                   <Button gray label="Delete" />
@@ -93,11 +94,13 @@ class ViewEvent extends React.Component {
 }
 
 ViewEvent.propTypes = {
-  /** Event object */
-  event: PropTypes.object.isRequired,
-  /** Boolean value to represent whether the event is associated with a trip */
-  isTripEvent: PropTypes.bool,
-};
+    /** Event object */
+    event: PropTypes.object.isRequired,
+    /** Boolean value to represent whether the event is associated with a trip */
+    isTripEvent: PropTypes.bool,
+    /** TripId if the event is associated with a trip */
+    tripId: PropTypes.string
+  };
 
 export default requireAuth(ViewEvent);
 

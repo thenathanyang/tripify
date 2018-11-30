@@ -15,15 +15,7 @@ class DiscoverEvents extends React.Component{
     this.props.getEvents();
   }
 
-  getDefaultView() {
-    return (
-      <> 
-        <Header />
-        <Title text="Fetching..." />
-        
-      </>
-    )
-  }
+  getDefaultView = () => <><Header /><div className="container"></div></>
 
   render() {
     if (this.props.gettingEvents)

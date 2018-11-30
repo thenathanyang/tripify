@@ -11,7 +11,7 @@ class Title extends React.Component {
 }
 
 Title.propTypes = {
-  /** The text to display in the subheading */
+  /* The text to display in the subheading */
   text: PropTypes.string,
 };
 

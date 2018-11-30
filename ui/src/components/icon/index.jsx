@@ -35,7 +35,7 @@ class Icon extends React.Component {
       [`${color}`]: true,
       [`fa-${icon}`]: true,
     };
-    return <span id={id} className={classnames(classes)} onClick={this.handleClick}/>;
+    return <span id={id} className={classnames(classes)} />;
   }
 }
 

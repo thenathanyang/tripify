@@ -63,7 +63,7 @@ class ViewEvent extends React.Component {
                 <Link key={event.id} to={`/trips/${this.props.tripId}/${event.id}/editEvent`}><Button blue label="Edit"/></Link>
                 </div>
                 <div className="right-button">
-                  <Button gray label="Delete" />
+                  <Button red label="Delete" />
                 </div>
               </div>}
           </div>

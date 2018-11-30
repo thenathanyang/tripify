@@ -60,7 +60,7 @@ class EditEvent extends React.Component {
   editEvent = () => {
     const event = {
       ...this.state.event,
-      price: parseInt(this.state.event.price),
+      price: parseFloat(this.state.event.price),
       startDate:
         moment(this.state.event.date)
           .hour(moment(this.state.event.startDate).hour())

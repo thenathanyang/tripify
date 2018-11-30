@@ -22,7 +22,7 @@ export default class Event {
     this.startDate = startDate ? moment(startDate) : null;
     this.endDate = endDate ? moment(endDate) : null;
     this.location = location;
-    this.price = parseInt(price) || 0;
+    this.price = parseFloat(price) || 0;
     this.description = description || null;
     this.images = images || [];
   }

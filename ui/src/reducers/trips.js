@@ -196,9 +196,10 @@ const CreateTrip = (trip, callback) => async dispatch => {
     const response = await axios.post(Config.routes.trips.create(userId), { trip: trip.toObject() });
     const newTrip = Trip.fromObject(response.data.trip);
     dispatch(Action.CreateTrip(null, newTrip));
-    if (callback) callback(newTrip);
+    if (callback) callback(newTrip, true);
   } catch (err) {
     handleAxiosError(dispatch, err, Action.CreateTrip);
+    if (callback) callback(null, false);
   }
 };
 

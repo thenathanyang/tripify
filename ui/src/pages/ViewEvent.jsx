@@ -14,6 +14,7 @@ import Section from 'components/section';
 import AddToTrip from './AddToTrip';
 import { UpdateTrip } from 'reducers/trips';
 import Trip from 'models/trip';
+import * as ImageModel from 'models/image';
 
 import requireAuth from './requireAuth';
 

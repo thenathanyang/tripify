@@ -64,7 +64,7 @@ class CreateTripPage extends React.Component {
           </Section>
 
           <Section title="Trip Date">
-            <DatePicker name="date" defaultValue={moment()} onChange={this.handleChange} />
+            <DatePicker name="date" defaultValue={this.state.trip.date} onChange={this.handleChange} />
           </Section>
 
           <Section title="Trip Description">

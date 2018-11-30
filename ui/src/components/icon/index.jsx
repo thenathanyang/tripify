@@ -35,7 +35,7 @@ class Icon extends React.Component {
       [`${color}`]: true,
       [`fa-${icon}`]: true,
     };
-    return <span id={id} className={classnames(classes)} />;
+    return <span id={id} className={classnames(classes)} onClick={this.handleClick} />;
   }
 }
 
@@ -62,6 +62,7 @@ Icon.defaultProps = {
   color: 'black',
   id: null,
   solid: true,
+  onClick: () => {},
 };
 
 export default Icon;

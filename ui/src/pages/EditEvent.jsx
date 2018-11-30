@@ -53,8 +53,14 @@ class EditEvent extends React.Component {
     const newTrip = Trip.fromObject(trip.toObject());
     const eventIndex = newTrip.events.findIndex((event) => event.id == this.props.eventId);
     newTrip.events[eventIndex] = Event.fromObject(event);
-    if (newTrip.background === Image.getBlackImage()) newTrip.background = event.images[0];
-    this.props.updateTrip(trip.id, newTrip, () => this.props.redirectTrip(trip.id));
+    if (newTrip.background === Image.getBlackImage()) 
+      newTrip.background = event.images[0];
+    this.props.updateTrip(trip.id, newTrip, (trip, success) => {
+      const message = success ? "Successfully updated the event" : "Failed to update the event";
+      const icon = success ? "check" : "exclamation-triangle";
+      this.props.displayNotification(message, icon, success);
+      this.props.redirectTrip(trip.id)}
+    );
   }
 
   editEvent = () => {

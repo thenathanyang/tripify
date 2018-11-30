@@ -68,7 +68,12 @@ class EditTrip extends React.Component {
       return this.setState(prev => ({...prev, error: "Trip name must contain at least one character"}));
     if (this.state.trip.date < moment().startOf('day'))
       return this.setState(prev => ({...prev, error: "Trip date cannot be in the past"}));
-    this.props.updateTrip(this.state.trip.id, Trip.fromObject(this.state.trip), this.props.redirectTrip);
+    this.props.updateTrip(this.state.trip.id, Trip.fromObject(this.state.trip), (updatedTrip, success) => {
+      const message = success ? "Successfully updated the trip" : "Failed to update the trip";
+      const icon = success ? "check" : "exclamation-triangle";
+      this.props.displayNotification(message, icon, success);
+      this.props.redirectTrip(this.state.trip.id);
+    });
   };
 
   render() {
@@ -120,7 +125,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getTrip: (id) => dispatch(GetTrip(id)),
   updateTrip: (id, trip, callback) => dispatch(UpdateTrip(id, trip, callback)),
-  redirectTrip: trip => dispatch(replace(`/trips/${trip.id}`)),
+  redirectTrip: tripId => dispatch(replace(`/trips/${tripId}`)),
 });
 
 export default requireAuth(connect(mapStateToProps, mapDispatchToProps)(EditTrip));

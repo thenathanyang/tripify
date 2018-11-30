@@ -23,14 +23,7 @@ class ViewTrip extends React.Component {
     this.props.getTrip(this.props.tripId);
   }
 
-  getDefaultView() {
-    return (
-      <>
-        <Header />
-        <div className="container"></div>
-      </>
-    );
-  }
+  getDefaultView = () => <><Header /><div className="container"></div></>
 
   deleteTrip = () => {
     this.props.deleteTrip(this.props.trip.id, success => {
@@ -42,10 +35,10 @@ class ViewTrip extends React.Component {
   }
 
   render() {
-    const viewOnly = [...this.props.query.keys()].includes('viewOnly');
     if (!this.props.trip || this.props.trip.id !== this.props.tripId)
       return this.getDefaultView();
 
+    const viewOnly = [...this.props.query.keys()].includes('viewOnly');
     const events =  this.props.trip.events
       .sort((a, b) => a.startDate > b.startDate);
     return (

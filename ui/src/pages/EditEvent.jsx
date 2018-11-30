@@ -5,6 +5,7 @@ import { replace } from 'connected-react-router';
 
 import * as Image from 'models/image';
 import Trip from 'models/trip';
+import Event from 'models/event';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
 
@@ -22,17 +23,7 @@ class EditEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      event: {
-        description: "Test Event",
-        images: [Image.getRandomImage()],
-        name: "",
-        startDate: moment(),
-        endDate: moment(),
-        location: "",
-        price: 0,
-        error: null,
-      },
-      trip: {}
+      event: null,
     }
   }
 
@@ -41,22 +32,19 @@ class EditEvent extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.getTripSuccess && this.state.trip.id != this.props.tripId) {
+    if (this.props.getTripSuccess && (!this.state.event || this.state.event.id !== this.props.eventId)) {
+      const event = this.props.trip.events.find(event => event.id == this.props.eventId);
       this.setState({ 
-        trip: this.props.trip.toObject(),
-        event: this.props.trip.events.find((event) => event.id == this.props.eventId).toObject()
+        event: {
+          ...event,
+          date: moment(event.startDate).startOf('day'),
+        },
        });
     }
   }
 
   handleChange = (name, value) =>
-    this.setState(prev => ({
-      ...prev,
-      event: {
-        ...prev.event,
-        [name]: value
-      }
-    }));
+    this.setState(prev => ({...prev, event: {...prev.event, [name]: value }}));
 
   handleTimeRangeChange = (name, startDate, endDate) => 
     this.setState(prev => ({...prev, event: {...prev.event, startDate, endDate}}));
@@ -64,17 +52,23 @@ class EditEvent extends React.Component {
   updateTrip = (trip, event) => {
     const newTrip = Trip.fromObject(trip.toObject());
     const eventIndex = newTrip.events.findIndex((event) => event.id == this.props.eventId);
-    newTrip.events[eventIndex] = event;
+    newTrip.events[eventIndex] = Event.fromObject(event);
     if (newTrip.background === Image.getBlackImage()) newTrip.background = event.images[0];
     this.props.updateTrip(trip.id, newTrip, () => this.props.redirectTrip(trip.id));
   }
 
-  EditEvent = () => {
+  editEvent = () => {
     const event = {
       ...this.state.event,
       price: parseInt(this.state.event.price),
-      startDate: moment(this.state.event.startDate).hour(moment(this.state.event.startDate).hour()).minute(moment(this.state.event.startDate).minute()),
-      endDate: moment(this.state.event.endDate).hour(moment(this.state.event.endDate).hour()).minute(moment(this.state.event.endDate).minute()),
+      startDate:
+        moment(this.state.event.date)
+          .hour(moment(this.state.event.startDate).hour())
+          .minute(moment(this.state.event.startDate).minute()),
+      endDate:
+        moment(this.state.event.date)
+          .hour(moment(this.state.event.endDate).hour())
+          .minute(moment(this.state.event.endDate).minute()),
     };
     
     if (!event.name)
@@ -97,8 +91,13 @@ class EditEvent extends React.Component {
     }
   }
 
+  getDefaultView = () => <><Header /><div className="container"></div></>
+
   render() {
-    return(
+    if (!this.state.event)
+      return this.getDefaultView();
+
+    return (
       <div>
         <Header/>
         <div className="container">
@@ -151,7 +150,7 @@ class EditEvent extends React.Component {
           }
 
           <div className="left-button">
-            <Button blue label="Create" onClick={this.EditEvent} />
+            <Button blue label="Create" onClick={this.editEvent} />
           </div>
           <div className="right-button">
             <Button grey label="Cancel" onClick={() => history.goBack()} />

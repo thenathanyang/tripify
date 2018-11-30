@@ -70,7 +70,7 @@ class ViewTrip extends React.Component {
 
           <Section title="Date & Time">
             <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
-            { this.props.trip.events.length > 0 && <TimeRange name="trip" disabled defaultEndTime={this.props.trip.endTime()} defaultStartTime={this.props.trip.startTime()} /> }
+            { this.props.trip.events.length > 0 && <TimeRange disabled defaultEndTime={this.props.trip.endTime()} defaultStartTime={this.props.trip.startTime()} /> }
           </Section>
 
           <Section title="Description">

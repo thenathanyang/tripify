@@ -45,7 +45,7 @@ class TimeSelector extends React.Component {
   }
 
   getDefaultView = () =>
-    <div className="time-selector empty"></div>
+    <div className="time-selector empty" />
 
   getTimeView = () =>
     <div className="time-selector">

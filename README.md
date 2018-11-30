@@ -13,7 +13,7 @@ Team 200 OK's project for CS 188: Human Computer Interaction, Fall 2018
   - We used `webpack` to build the React source code
   - `src/components` contains reusable components, such as input fields, title, subheading, date picker, tiles, etc. so that we have a consistent UI
   - `src/models` contains data models used to reliably interchange data between views and with the backend
-  - `src/pages` implements the main structure and functionality of each of the screens of out application
+  - `src/pages` implements the main structure and functionality of each of the screens of our application
   - `src/reducers` contains all of the state-management logic and communication with the backend
   - `src/main.jsx` is the entrypoint to the React application and contains all of the routing logic
   - `src/main.scss` contains basic SCSS variables used to make fonts, colors, and sizes consistent throughout the UI

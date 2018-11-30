@@ -24,7 +24,7 @@ class CreateEvent extends React.Component {
     const now = moment().startOf('minute').add(15 - (moment().minute() % 15), 'minutes');
     this.state = {
       id: (''+Math.random()).split('.')[1],
-      description: "Test Event",
+      description: "",
       images: [Image.getRandomImage()],
       name: "",
       date: now,
@@ -61,6 +61,8 @@ class CreateEvent extends React.Component {
       return this.setState(prev => ({...prev, error: "The event name cannot be empty"}));
     if (!event.location)
       return this.setState(prev => ({...prev, error: "The event location cannot be empty"}));
+    if (!event.description)
+      return this.setState(prev => ({...prev, error: "The event description cannot be empty"}));
     if (isNaN(event.price) || event.price < 0)
       return this.setState(prev => ({...prev, error: "The event price must be a number at least 0"}));
     if (event.startDate < moment())
@@ -107,6 +109,10 @@ class CreateEvent extends React.Component {
 
           <Section title="Event Location">
             <TextInput name="location" onChange={this.handleChange} />
+          </Section>
+
+          <Section title="Event Description">
+            <TextInput name="description" onChange={this.handleChange}/>
           </Section>
 
           <Section title="Event Price">

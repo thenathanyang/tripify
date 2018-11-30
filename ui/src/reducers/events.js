@@ -84,6 +84,8 @@ const GetEvents = () => async dispatch => {
     var d = new Date();
     var month = d.getMonth();
     const response = await axios.get(Config.routes.events.get(month+1));
+    const secondMonth = await axios.get(Config.routes.events.get((month + 1) %12 +1 ));
+    response.data.features = response.data.features.concat(secondMonth.data.features);
     response.data.features.sort(function (a,b){
       var timeA = a.properties.start_time;
       var timeB = b.properties.start_time;

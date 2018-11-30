@@ -22,6 +22,9 @@ class Header extends React.Component {
           <Link to="/events" className="link">
             <Icon icon="compass" color="white" className="icon" />
           </Link>
+          <Link to="/user" className="link">
+            <Icon icon="user" color="white" className="icon" />
+          </Link>
         </div>
       </div>
     );

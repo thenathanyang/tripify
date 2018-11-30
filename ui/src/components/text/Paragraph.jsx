@@ -11,8 +11,12 @@ class Paragraph extends React.Component {
 }
 
 Paragraph.propTypes = {
-  /** The text to display in the paragraph */
-  text: PropTypes.string.isRequired,
+  /* The text to display in the paragraph */
+  text: PropTypes.string,
+};
+
+Paragraph.defaultProps = {
+  text: "",
 };
 
 export default Paragraph;

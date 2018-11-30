@@ -149,6 +149,9 @@ const LoginUser = (email, password, callback) => async dispatch => {
   }
 };
 
+const LogoutUser = () => async dispatch => {
+  dispatch({ type: LOGOUT });
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                  Reducer                                  //
@@ -218,4 +221,4 @@ const Users = (state = initState(), action) =>
     }
   });
 
-export { Users, GetUser, CreateUser, LoginUser };
+export { Users, GetUser, CreateUser, LoginUser, LogoutUser };

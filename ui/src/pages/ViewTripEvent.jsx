@@ -39,9 +39,7 @@ class ViewTripEvent extends React.Component {
     if (!this.props.trip)
       return this.getDefaultView();
 
-    console.log(this.props.trip.events);
     const event = this.props.trip.events.find(event => event.id == this.props.eventId);
-
     if (!event)
       return this.getErrorView();
 

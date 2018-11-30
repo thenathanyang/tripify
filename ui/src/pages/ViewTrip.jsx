@@ -25,11 +25,11 @@ class ViewTrip extends React.Component {
 
   getDefaultView() {
     return (
-      <> 
+      <>
         <Header />
-        <Title text="Fetching..." />
+        <div className="container"></div>
       </>
-    )
+    );
   }
 
   deleteTrip = () => {
@@ -43,7 +43,7 @@ class ViewTrip extends React.Component {
 
   render() {
     const viewOnly = [...this.props.query.keys()].includes('viewOnly');
-    if (!this.props.trip)
+    if (!this.props.trip || this.props.trip.id !== this.props.tripId)
       return this.getDefaultView();
 
     const events =  this.props.trip.events
@@ -70,7 +70,7 @@ class ViewTrip extends React.Component {
 
           <Section title="Date & Time">
             <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
-            { this.props.trip.events.length > 0 && <TimeRange disabled endTime={this.props.trip.endTime()} startTime={this.props.trip.startTime()} /> }
+            { this.props.trip.events.length > 0 && <TimeRange name="trip" disabled defaultEndTime={this.props.trip.endTime()} defaultStartTime={this.props.trip.startTime()} /> }
           </Section>
 
           <Section title="Description">
@@ -129,7 +129,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   deleteTrip: (id, callback) => dispatch(DeleteTrip(id, callback)),
-  getTrip: (id) => dispatch(GetTrip(id)),
+  getTrip: (id, callback) => dispatch(GetTrip(id, callback)),
   getTrips: () => dispatch(GetTrips()),
   redirectTrip: () => dispatch(replace(`/trips`)),
 });

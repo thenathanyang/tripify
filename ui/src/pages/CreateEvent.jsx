@@ -21,14 +21,15 @@ import requireAuth from './requireAuth';
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
+    const now = moment().startOf('minute').add(15 - (moment().minute() % 15), 'minutes');
     this.state = {
       id: (''+Math.random()).split('.')[1],
       description: "Test Event",
       images: [Image.getRandomImage()],
       name: "",
-      date: moment(),
-      start: moment(),
-      end: moment(),
+      date: now,
+      start: now,
+      end: now,
       location: "",
       price: 0,
       error: null,
@@ -51,7 +52,7 @@ class CreateEvent extends React.Component {
   createEvent = () => {
     const event = {
       ...this.state,
-      price: parseInt(this.state.price),
+      price: parseFloat(this.state.price),
       startDate: moment(this.state.date).hour(moment(this.state.start).hour()).minute(moment(this.state.start).minute()),
       endDate: moment(this.state.date).hour(moment(this.state.end).hour()).minute(moment(this.state.end).minute()),
     };
@@ -77,6 +78,7 @@ class CreateEvent extends React.Component {
   }
 
   render() {
+    const now = moment().startOf('minute').add(15 - (moment().minute() % 15), 'minutes');
     return(
       <div>
         <Header/>
@@ -89,7 +91,7 @@ class CreateEvent extends React.Component {
           <Section title="Event Date">
             <DatePicker
               name="date" 
-              defaultValue={moment()}
+              defaultValue={now}
               onChange={this.handleChange}
             />  
           </Section>
@@ -97,8 +99,8 @@ class CreateEvent extends React.Component {
           <Section title="Event Time">
             <TimeRange
               name="eventTimeRange" 
-              defaultEndTime={moment()}   
-              defaultStartTime={moment()} 
+              defaultEndTime={now}
+              defaultStartTime={now}
               onChange={this.handleTimeRangeChange}
             />
           </Section>

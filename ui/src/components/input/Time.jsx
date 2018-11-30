@@ -20,6 +20,13 @@ import 'rc-time-picker/assets/index.css';
  * @version 1.0.0
  */
 class TimeSelector extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showing: true,
+    }
+  }
+
   /**
    * Handle the user selecting a new date from the dropdown.
    * 
@@ -27,20 +34,34 @@ class TimeSelector extends React.Component {
    */
   handleChange = time => this.props.onChange(this.props.name, time);
 
+  /**
+   * Force the view to refresh
+   */
+  componentDidUpdate(prevProps) {
+    if (!prevProps.defaultTime || !this.props.defaultTime || (prevProps.defaultTime.unix() !== this.props.defaultTime.unix())) {
+      this.setState({ showing: false }, () =>
+        setTimeout(() => this.setState({ showing: true }), 0));
+    }
+  }
+
+  getDefaultView = () =>
+    <div className="time-selector empty"></div>
+
+  getTimeView = () =>
+    <div className="time-selector">
+      <TimePicker
+        defaultValue={this.props.defaultTime}
+        inputReadOnly
+        minuteStep={15}
+        onChange={this.handleChange}
+        showSecond={false}
+        use12Hours
+        disabled={this.props.disabled}
+      />
+    </div>
+
   render() {
-    return (
-      <div className="time-selector">
-        <TimePicker
-          defaultValue={this.props.defaultTime || this.props.time}
-          inputReadOnly
-          minuteStep={15}
-          onChange={this.handleChange}
-          showSecond={false}
-          use12Hours
-          disabled={!!this.props.time || this.props.disabled}
-        />
-      </div>
-    );
+    return this.state.showing ? this.getTimeView() : this.getDefaultView();
   }
 }
 
@@ -53,15 +74,12 @@ TimeSelector.propTypes = {
   name: PropTypes.string,
   /** The change handler for the input, with signature (name: string, time: moment) => void */
   onChange: PropTypes.func.isRequired,
-  /** The fixed time to display (disabled) in the TimeSelector */
-  time: PropTypes.instanceOf(moment),
 };
 
 TimeSelector.defaultProps = {
   defaultTime: null,
   disabled: false,
   name: undefined,
-  time: undefined,
 };
 
 export default TimeSelector;

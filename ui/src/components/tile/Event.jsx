@@ -6,7 +6,6 @@ import moment from 'moment';
 
 class EventTile extends React.Component{
     render() {
-        console.log("here");
         const { title, background } = this.props;
         const style = background ? { backgroundImage: `url(${background})`, width: '70%', float: 'left'} : {width: '70%', float:'left'};
         const inner = background ? (

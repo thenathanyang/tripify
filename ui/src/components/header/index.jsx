@@ -12,34 +12,20 @@ class Header extends React.Component {
   }
 
   getMenu = () => {
-    const icon = this.state.open ? "times" : "bars";
-    const iconClass = this.state.open ? "icon icon-selected" : "icon";
-    const overlayClass = this.state.open ? "dropdown-overlay showing" : "dropdown-overlay";
-    const dropdownClass = this.state.open ? "dropdown-menu showing" : "dropdown-menu";
     return (
       <div className="header">
-        Tripify
-        <Icon className={iconClass} color="white" icon={icon} onClick={this.handleClick}/>
-        <div className={overlayClass}></div>
-        <div className={dropdownClass}>
+        <Link to="/" className="link"><div className="name">Tripify</div></Link>
+        <div className="nav-icons">
           <Link to="/" className="link">
-            <div className="item">
-              <Icon icon="map-marked-alt" color="blue" className="nav-icon" />
-              VIEW TRIPS
-            </div>
+            <Icon icon="home" color="white" className="icon" />
           </Link>
           <Link to="/events" className="link">
-          <div className="item">
-            <Icon icon="calendar-alt" color="blue" className="nav-icon" />
-            VIEW EVENTS
-          </div>
+            <Icon icon="compass" color="white" className="icon" />
           </Link>
         </div>
       </div>
     );
   }
-
-  handleClick = () => this.setState(prev => ({open: !prev.open}));
 
   render() {
     return this.getMenu();

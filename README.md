@@ -2,6 +2,10 @@
 
 Team 200 OK's project for CS 188: Human Computer Interaction, Fall 2018
 
+Tripify URL: [http://tripify-188.herokuapp.com](http://tripify-188.herokuapp.com)
+
+GitHub Repository: [https://github.com/thenathanyang/tripify](https://github.com/thenathanyang/tripify)
+
 ## Repository Overview
 
 - We used Docker to run the development environment and build the image that gets deployed to Heroku.
@@ -17,6 +21,17 @@ Team 200 OK's project for CS 188: Human Computer Interaction, Fall 2018
   - `src/reducers` contains all of the state-management logic and communication with the backend
   - `src/main.jsx` is the entrypoint to the React application and contains all of the routing logic
   - `src/main.scss` contains basic SCSS variables used to make fonts, colors, and sizes consistent throughout the UI
+
+## Libraries & APIs
+
+We used the following libraries and APIs throughout the development of Tripify:
+- Libraries
+  - Express (server framework)
+  - Moment (date library)
+  - React (UI framework)
+  - Redux (state management)
+- APIs
+  - Mappening (local events)
 
 ## Development Environment
 

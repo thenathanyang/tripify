@@ -40,6 +40,7 @@ class DatePicker extends React.Component {
           value={this.props.defaultValue != null 
                   ? formatDate(this.props.defaultValue, this.format)
                   : '' }
+          dayPickerProps={{ disabledDays: {before: new Date()} }}
           placeholder={formatDate(moment(), this.format) }
           onDayChange={this.handleClick}
         />

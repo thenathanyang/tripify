@@ -53,8 +53,6 @@ class ViewEvent extends React.Component {
   deleteEvent = () => {
     const newTrip = Trip.fromObject(this.props.trip.toObject());
     newTrip.events = newTrip.events.filter(event => event.id !== this.props.event.id);
-    if (newTrip.background === ImageModel.getBlackImage()) 
-      newTrip.background = event.images[0];
 
     this.props.updateTrip(this.props.trip.id, newTrip, (updatedTrip, success) => {
       const message = success ? "Successfully deleted the event" : "Failed to delete the event";

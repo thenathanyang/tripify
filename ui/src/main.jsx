@@ -21,6 +21,7 @@ import EditTrip from 'pages/EditTrip';
 import DiscoverEvents from 'pages/DiscoverEvents';
 import ViewDiscoverEvent from 'pages/ViewDiscoverEvent';
 import EditEvent from 'pages/EditEvent';
+import UserProfile from 'pages/UserProfile';
 
 class _App extends React.Component {
   render() {
@@ -39,6 +40,7 @@ class _App extends React.Component {
             <Route exact path="/trips/:id/:eventId/editEvent" component={({match}) => <EditEvent tripId={match.params.id} eventId={match.params.eventId} displayNotification={this.props.displayNotification} />} /> 
             <Route exact path="/events" component={() => <DiscoverEvents displayNotification={this.props.displayNotification} />}/>
             <Route exact path="/events/:id" component={({match}) => <ViewDiscoverEvent eventId={match.params.id} displayNotification={this.props.displayNotification}/>}/>
+            <Route exact path="/user" component={UserProfile} />
             <Redirect to="/trips"/>
           </Switch>
         </ConnectedRouter>

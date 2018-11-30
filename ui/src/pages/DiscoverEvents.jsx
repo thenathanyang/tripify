@@ -15,7 +15,12 @@ class DiscoverEvents extends React.Component{
     this.props.getEvents();
   }
 
+  getDefaultView = () => <><Header /><div className="container"></div></>
+
   render() {
+    if (this.props.gettingEvents)
+    return this.getDefaultView();
+
     return (
       <div>
         <Header/>
@@ -35,7 +40,7 @@ class DiscoverEvents extends React.Component{
 const mapStateToProps = state => ({
   error: state.Events.error,
   events: state.Events.events,
-  gettingEvent: state.Events.gettingEvents,
+  gettingEvents: state.Events.gettingEvents,
 });
 
 const mapDispatchToProps = dispatch => ({

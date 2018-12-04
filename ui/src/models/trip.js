@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Event from './event';
 import Member from './member';
+import { getBlackImage } from './image';
 
 /**
  * A Trip
@@ -11,19 +12,14 @@ export default class Trip {
    * 
    * @param {String} id 
    * @param {String} name 
-   * @param {moment} date 
-   * @param {String} price
    * @param {String} description 
-   * @param {String} background 
    * @param {Array<Member>} members 
    * @param {Array<Event>} events 
    */
-  constructor(id, name, date, description, background, members, events) {
+  constructor(id, name, description, members, events) {
     this.id = id;
     this.name = name;
-    this.date = date ? moment(date).startOf('day') : null;
     this.description = description || null;
-    this.background = background || null;
     this.members = members || [];
     this.events = events || [];
   }
@@ -41,17 +37,18 @@ export default class Trip {
   }
 
   price() {
-    /** to do: return actual price */
     return this.events.reduce((total, event) => total + event.price, 0);
+  }
+
+  background() {
+    return this.events.length ? this.events[0].images[0] : getBlackImage();
   }
 
   toObject() {
     return {
       id: this.id,
       name: this.name,
-      date: this.date,
       description: this.description,
-      background: this.background,
       members: this.members,
       events: this.events,
     };
@@ -66,9 +63,7 @@ export default class Trip {
     return new Trip(
       obj.id,
       obj.name,
-      obj.date,
       obj.description,
-      obj.background,
       (obj.members || []).map(Member.fromObject),
       (obj.events || []).map(Event.fromObject)
     );

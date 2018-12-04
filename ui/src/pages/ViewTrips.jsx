@@ -28,12 +28,12 @@ class Home extends React.Component {
     const now = moment().startOf('day');
     const pastTrips =
       this.props.trips
-        .filter(trip => trip.date < now)
-        .sort((a, b) => a.date > b.date);
+        .filter(trip => trip.startTime() !== null && trip.startTime() < now)
+        .sort((a, b) => Math.min(1, Math.max(-1, b.startTime() - a.startTime())));
     const upcomingTrips =
       this.props.trips
-        .filter(trip => trip.date >= now)
-        .sort((a, b) => a.date < b.date);
+        .filter(trip => trip.startTime() === null || trip.startTime() >= now)
+        .sort((a, b) => Math.min(1, Math.max(-1, a.startTime() - b.startTime())));
     return (
       <div>
         <Header />
@@ -41,11 +41,19 @@ class Home extends React.Component {
           <Title text="Your Trips" />
           <Link to="/trips/create"><Button blue label="Create New Trip" /></Link>
           <Section title={this.getUpcomingTitle()}>
-            { upcomingTrips.map(trip => <Link style={{textDecoration: 'none'}} key={trip.id} to={`/trips/${trip.id}`}><TripTile title={trip.name} background={trip.background} /></Link>) }
+            {upcomingTrips.map(trip =>
+              <Link className="no-style" key={trip.id} to={`/trips/${trip.id}`}>
+                <TripTile title={trip.name} background={trip.background()} />
+              </Link>
+            )}
           </Section>
-          { pastTrips.length > 0 &&
+          {pastTrips.length > 0 &&
             <Section title="Past">
-              { pastTrips.map(trip => <Link style={{textDecoration: 'none'}} key={trip.id} to={`/trips/${trip.id}?viewOnly`}><TripTile title={trip.name} background={trip.background} /></Link>) }
+              {pastTrips.map(trip =>
+                <Link className="no-style" key={trip.id} to={`/trips/${trip.id}?viewOnly`}>
+                  <TripTile title={trip.name} background={trip.background()} />
+                </Link>
+              )}
             </Section>
           }
         </div>

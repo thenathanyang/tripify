@@ -3,7 +3,6 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 
-import * as Image from 'models/image';
 import Trip from 'models/trip';
 import Event from 'models/event';
 import { history } from 'reducers';
@@ -51,16 +50,13 @@ class EditEvent extends React.Component {
 
   updateTrip = (trip, event) => {
     const newTrip = Trip.fromObject(trip.toObject());
-    const eventIndex = newTrip.events.findIndex((event) => event.id == this.props.eventId);
-    newTrip.events[eventIndex] = Event.fromObject(event);
-    if (newTrip.background === Image.getBlackImage()) 
-      newTrip.background = event.images[0];
+    newTrip.events = newTrips.events.filter(e => e.id !== event.id).concat(Event.fromObject(event));
     this.props.updateTrip(trip.id, newTrip, (trip, success) => {
       const message = success ? "Successfully updated the event" : "Failed to update the event";
       const icon = success ? "check" : "exclamation-triangle";
       this.props.displayNotification(message, icon, success);
-      this.props.redirectTrip(trip.id)}
-    );
+      this.props.redirectTrip(trip.id)
+    });
   }
 
   editEvent = () => {
@@ -97,7 +93,7 @@ class EditEvent extends React.Component {
     }
   }
 
-  getDefaultView = () => <><Header /><div className="container"></div></>
+  getDefaultView = () => <><Header /><div className="container" /></>
 
   render() {
     if (!this.state.event)
@@ -149,7 +145,7 @@ class EditEvent extends React.Component {
             />
           </Section>
 
-          { (this.state.error || this.props.error) &&
+          {(this.state.error || this.props.error) &&
             <Section>
               <div className="error">{ this.state.error || this.props.error }</div>
             </Section>

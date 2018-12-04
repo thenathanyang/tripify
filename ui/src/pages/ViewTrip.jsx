@@ -23,7 +23,7 @@ class ViewTrip extends React.Component {
     this.props.getTrip(this.props.tripId);
   }
 
-  getDefaultView = () => <><Header /><div className="container"></div></>
+  getDefaultView = () => <><Header /><div className="container" /></>
 
   deleteTrip = () => {
     this.props.deleteTrip(this.props.trip.id, success => {
@@ -39,8 +39,7 @@ class ViewTrip extends React.Component {
       return this.getDefaultView();
 
     const viewOnly = [...this.props.query.keys()].includes('viewOnly');
-    const events =  this.props.trip.events
-      .sort((a, b) => a.startDate > b.startDate);
+    const events = this.props.trip.events.sort((a, b) => a.startDate > b.startDate);
     return (
       <div>
         <Header/>
@@ -61,10 +60,12 @@ class ViewTrip extends React.Component {
             }
           </div>
 
-          <Section title="Date & Time">
-            <Paragraph text={this.props.trip.date.format('dddd, MMMM Do')} />
-            { this.props.trip.events.length > 0 && <TimeRange disabled defaultEndTime={this.props.trip.endTime()} defaultStartTime={this.props.trip.startTime()} /> }
-          </Section>
+          {this.props.trip.events.length > 0 &&
+            <Section title="Date & Time">
+              <Paragraph text={this.props.trip.startTime().format('dddd, MMMM Do')} />
+              <TimeRange disabled defaultEndTime={this.props.trip.endTime()} defaultStartTime={this.props.trip.startTime()} />
+            </Section>
+          }
 
           <Section title="Description">
             <Paragraph text={this.props.trip.description}/>
@@ -85,7 +86,7 @@ class ViewTrip extends React.Component {
 
           <Section title="Events">
             { this.props.trip.events.length > 0 && events.map(event =>
-              <Link key={event.id} className="link" to={`/trips/${this.props.trip.id}/${event.id}`}>
+              <Link key={event.id} className="no-style" to={`/trips/${this.props.trip.id}/${event.id}`}>
                 <EventTile
                   title={event.name}
                   background={event.images.length ? event.images[0] : null}
@@ -116,8 +117,6 @@ ViewTrip.defaultProps = {
 const mapStateToProps = state => ({
   trip: state.Trips.trip,
   gettingTrip: state.Trips.gettingTrip,
-  deleteTripSuccess: state.Trips.deleteTripSuccess,
-  deleteTripFailure: state.Trips.deleteTripFailure,
 });
 
 const mapDispatchToProps = dispatch => ({

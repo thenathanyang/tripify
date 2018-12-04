@@ -70,8 +70,8 @@ class Login extends React.Component {
         <Header />
         <div className="container">
           <TabController tabs={["Log In", "Sign Up"]} onChange={this.handleTabUpdate} />
-          { this.state.logInView ? this.getLoginView() : this.getSignUpView() }
-          { ((this.props.logInFailure || this.props.createUserFailure) && this.props.error) && 
+          {this.state.logInView ? this.getLoginView() : this.getSignUpView()}
+          {((this.props.logInFailure || this.props.createUserFailure) && this.props.error) &&
             <Section><div className="error">{ this.props.error }</div></Section>
           }
         </div>

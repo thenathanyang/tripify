@@ -10,16 +10,15 @@ import Header from 'components/header';
 import Section from 'components/section';
 
 class DiscoverEvents extends React.Component{
-
   componentWillMount() {
     this.props.getEvents();
   }
 
-  getDefaultView = () => <><Header /><div className="container"></div></>
+  getDefaultView = () => <><Header /><div className="container" /></>
 
   render() {
     if (this.props.gettingEvents)
-    return this.getDefaultView();
+      return this.getDefaultView();
 
     return (
       <div>
@@ -27,7 +26,11 @@ class DiscoverEvents extends React.Component{
         <div className="container">
           <Title text="Discover"/>
           <Section title="Nearby Events">
-            {this.props.events.map(event => <Link key={event.id} className="link" to={`/events/${event.id}`}><EventTile title={event.name} background={event.images[0]} time={event.startDate}/> </Link>)}
+            {this.props.events.map(event =>
+              <Link key={event.id} className="no-style" to={`/events/${event.id}`}>
+                <EventTile title={event.name} background={event.images[0]} time={event.startDate}/>
+              </Link>
+            )}
           </Section>
         </div>
      </div>
@@ -49,4 +52,3 @@ const mapDispatchToProps = dispatch => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoverEvents);
-

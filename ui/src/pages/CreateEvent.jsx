@@ -3,8 +3,8 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
 
-import * as Image from 'models/image';
 import Trip from 'models/trip';
+import Event from 'models/event';
 import { history } from 'reducers';
 import { GetTrip, UpdateTrip } from 'reducers/trips';
 
@@ -25,7 +25,6 @@ class CreateEvent extends React.Component {
     this.state = {
       id: (''+Math.random()).split('.')[1],
       description: "",
-      images: [Image.getRandomImage()],
       name: "",
       date: now,
       start: now,
@@ -44,8 +43,7 @@ class CreateEvent extends React.Component {
 
   updateTrip = (trip, event) => {
     const newTrip = Trip.fromObject(trip.toObject());
-    newTrip.events.push(event);
-    if (newTrip.background === Image.getBlackImage()) newTrip.background = event.images[0];
+    newTrip.events.push(Event.fromObject(event));
     this.props.updateTrip(trip.id, newTrip, () => this.props.redirectTrip(trip.id));
   }
 
@@ -119,7 +117,7 @@ class CreateEvent extends React.Component {
             <TextInput name="price" onChange={this.handleChange} />
           </Section>
 
-          { (this.state.error || this.props.error) &&
+          {(this.state.error || this.props.error) &&
             <Section>
               <div className="error">{ this.state.error || this.props.error }</div>
             </Section>

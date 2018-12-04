@@ -39,7 +39,7 @@ class ViewTrip extends React.Component {
       return this.getDefaultView();
 
     const viewOnly = [...this.props.query.keys()].includes('viewOnly');
-    const events = this.props.trip.events.sort((a, b) => a.startDate > b.startDate);
+    const events = this.props.trip.events.sort((a, b) => Math.min(1, Math.max(-1, a.startDate - b.startDate)));
     return (
       <div>
         <Header/>

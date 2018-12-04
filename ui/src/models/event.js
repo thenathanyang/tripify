@@ -1,4 +1,5 @@
 import moment from "moment";
+import { getRandomImage } from "./image";
 
 /**
  * A Event
@@ -24,7 +25,7 @@ export default class Event {
     this.location = location;
     this.price = parseFloat(price) || 0;
     this.description = description || null;
-    this.images = images || [];
+    this.images = (images && images.length) ? images : [getRandomImage()];
   }
 
   toObject() {

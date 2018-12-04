@@ -1,17 +1,13 @@
 import React from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { replace } from 'connected-react-router';
-import { Link } from 'react-router-dom';
 
 import Title from 'components/text/Title';
 import TextInput from 'components/input/Text';
 import Button from 'components/button/Button';
-import DatePicker from 'components/input/DatePicker';
 import Header from 'components/header';
 import Section from 'components/section';
 
-import * as Image from 'models/image';
 import Trip from 'models/trip';
 import { history } from 'reducers';
 import { CreateTrip } from 'reducers/trips';
@@ -25,18 +21,14 @@ class CreateTripPage extends React.Component {
     this.state = {
       trip: {
         name: "",
-        date: moment(),
-        background: Image.getBlackImage(),
         events: []
       },
       error: null,
     };
 
-    if ([...this.props.query.keys()].includes('addEvent'))
-    {
+    if ([...this.props.query.keys()].includes('addEvent')) {
       this.props.getEvent(this.props.query.get('addEvent'), event => {
         this.handleChange('events', [event]);
-        this.handleChange('background', event.images[0]);
         this.handleChange('date', event.startDate);
       });
     }
@@ -48,8 +40,8 @@ class CreateTripPage extends React.Component {
   createTrip = () => {
     if (!this.state.trip.name)
       return this.setState(prev => ({...prev, error: "Trip name must contain at least one character"}));
-    if (this.state.trip.date < moment().startOf('day'))
-      return this.setState(prev => ({...prev, error: "Trip date cannot be in the past"}));
+    if (!this.state.trip.description)
+      return this.setState(prev => ({...prev, error: "Trip description must contain at least one character"}));
     this.props.createTrip(Trip.fromObject(this.state.trip), this.props.redirectTrip);
   };
 
@@ -63,15 +55,11 @@ class CreateTripPage extends React.Component {
             <TextInput name="name" onChange={this.handleChange} />
           </Section>
 
-          <Section title="Trip Date">
-            <DatePicker name="date" defaultValue={this.state.trip.date} onChange={this.handleChange} />
-          </Section>
-
           <Section title="Trip Description">
             <TextInput name="description" onChange={this.handleChange} />
           </Section>
 
-          { (this.state.error || this.props.error) &&
+          {(this.state.error || this.props.error) &&
             <Section>
               <div className="error">{ this.state.error || this.props.error }</div>
             </Section>

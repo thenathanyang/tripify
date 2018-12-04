@@ -43,7 +43,7 @@ class JoinTrip extends React.Component {
           <Section title="RSVP">
             <div className="buttons">
               <div className="left-button">
-                <Button blue small label="Attend" onClick={this.rsvp(true)} />
+                <Button blue small label="Accept" onClick={this.rsvp(true)} />
               </div>
               <div className="right-button">
                 <Button gray small label="Decline" onClick={this.rsvp(false)} />

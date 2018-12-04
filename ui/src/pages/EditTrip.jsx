@@ -6,7 +6,6 @@ import { replace } from 'connected-react-router';
 import Title from 'components/text/Title';
 import TextInput from 'components/input/Text';
 import Button from 'components/button/Button';
-import DatePicker from 'components/input/DatePicker';
 import Header from 'components/header';
 import Section from 'components/section';
 
@@ -20,12 +19,7 @@ class EditTrip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trip: {
-        name: "",
-        date: moment(),
-        price: "$20",
-        background: "https://washington-org.s3.amazonaws.com/s3fs-public/children-viewing-henry-the-elephant-at-natural-history-museum_credit-department-of-state-iip-photo-archive.jpg",
-      },
+      trip: null,
       error: null,
     };
   }
@@ -35,30 +29,12 @@ class EditTrip extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.getTripSuccess && this.state.trip.id !== this.props.tripId) {
+    if (this.props.getTripSuccess && (!this.state.trip || this.state.trip.id !== this.props.tripId)) {
       this.setState({ trip: this.props.trip.toObject() });
     }
   }
 
-  getDefaultView() {
-    return (
-      <> 
-        <Header />
-        <Title text="Fetching..." />
-      </>
-    )
-  }
-
-  getErrorView() {
-    return (
-      <>
-        <Header />
-        <Section>
-          <div className="error">"Error loading trip"</div>
-        </Section>
-      </>
-    );
-  }
+  getDefaultView = () => <><Header /><div className="container" /></>
 
   handleChange = (name, value) =>
     this.setState(prev => ({ trip: { ...prev.trip, [name]: value } }));
@@ -66,8 +42,8 @@ class EditTrip extends React.Component {
   updateTrip = () => {
     if (!this.state.trip.name)
       return this.setState(prev => ({...prev, error: "Trip name must contain at least one character"}));
-    if (this.state.trip.date < moment().startOf('day'))
-      return this.setState(prev => ({...prev, error: "Trip date cannot be in the past"}));
+    if (!this.state.trip.description)
+      return this.setState(prev => ({...prev, error: "Trip description must contain at least one character"}));
     this.props.updateTrip(this.state.trip.id, Trip.fromObject(this.state.trip), (updatedTrip, success) => {
       const message = success ? "Successfully updated the trip" : "Failed to update the trip";
       const icon = success ? "check" : "exclamation-triangle";
@@ -77,26 +53,23 @@ class EditTrip extends React.Component {
   };
 
   render() {
-    if (!this.props.trip)
+    if (!this.state.trip)
       return this.getDefaultView();
+
     return (
-    <div>
-      <Header />
-      <div className="container">
-        <Title text="Edit Trip" />
+      <div>
+        <Header />
+        <div className="container">
+          <Title text="Edit Trip" />
           <Section title="Trip Name">
             <TextInput name="name" defaultValue={this.state.trip.name} onChange={this.handleChange} />
-          </Section>
-
-          <Section title="Trip Date">
-            <DatePicker name="date" defaultValue={this.state.trip.date} onChange={this.handleChange} />
           </Section>
 
           <Section title="Trip Description">
             <TextInput name="description" defaultValue={this.state.trip.description} onChange={this.handleChange} />
           </Section>
 
-          { (this.state.error || this.props.error) &&
+          {(this.state.error || this.props.error) &&
             <Section>
               <div className="error">{ this.state.error || this.props.error }</div>
             </Section>

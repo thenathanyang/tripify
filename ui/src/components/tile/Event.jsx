@@ -5,35 +5,29 @@ import BaseTile from './base';
 import moment from 'moment';
 
 class EventTile extends React.Component{
-    render() {
-        const { title, background } = this.props;
-        const style = background ? { backgroundImage: `url(${background})`, width: '70%', float: 'left'} : {width: '70%', float:'left'};
-        const inner = background ? (
-          <div className="tile-inner-bg-gradient">
-            <span>{title}</span>
-          </div>
-        ) : (
-            <span>{title}</span>
-        );
+  render() {
+    const { title, background } = this.props;
+    const style = background ? { backgroundImage: `url(${background})`, width: '70%', float: 'left'} : {width: '70%', float:'left'};
+    const inner = background ? (
+      <div className="tile-inner-bg-gradient">
+        <span>{title}</span>
+      </div>
+    ) : (
+      <span>{title}</span>
+    );
 
-        const dateInner = (
-            <div>
-            <div>{moment.monthsShort(this.props.time.month())}</div>
-            <div>{this.props.time.date()}</div>
-            </div>
-        );
-    
-        return (
-          <BaseTile height={0.5}>
-            <div className="tile-inner-bg" style={style}>
-              {inner}
-            </div>
-            <div className="event-date" >
-                {dateInner}
-            </div>
-          </BaseTile>
-        )
-    }
+    return (
+      <BaseTile height={0.5}>
+        <div className="tile-inner-bg event-tile-inner-bg" style={style}>
+          {inner}
+        </div>
+        <div className="event-date" >
+          <div className="month">{moment.monthsShort(this.props.time.month())}</div>
+          <div className="date">{this.props.time.date()}</div>
+        </div>
+      </BaseTile>
+    );
+  }
 }
 
 EventTile.propTypes = {

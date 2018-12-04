@@ -11,18 +11,12 @@ export default (ComposedComponent) => {
         message: '',
         icon: '',
         success: true,
-      }; 
+      };
     }
 
     displayNotification = (message, icon, success = true) => {
-      this.setState({ 
-        display: true,
-        message: message,
-        icon: icon,
-        success: true,
-      });
-      setTimeout(() => {
-        this.setState({display: false})}, 2800);
+      this.setState({ message, icon, success, display: true },
+        () => setTimeout(() => this.setState({ display: false }), 2800));
     }
 
     render() {

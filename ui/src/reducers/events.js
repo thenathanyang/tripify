@@ -1,12 +1,12 @@
 // events reducer
 
 import axios from "axios";
+import moment from "moment";
 import produce from "immer";
 import Config from "config";
 
 import Event from "models/event";
 import { handleAxiosError } from "./error";
-import { Trips } from "./trips";
 
 ///////////////////////////////////////////////////////////////////////////////
 //                       Contants and helper functions                       //
@@ -81,17 +81,12 @@ class Action {
 const GetEvents = () => async dispatch => {
   dispatch(Action.InitAction(GET_EVENTS_INIT));
   try {
-    var d = new Date();
-    var month = d.getMonth();
-    const response = await axios.get(Config.routes.events.get(month+1));
-    const secondMonth = await axios.get(Config.routes.events.get((month + 1) %12 +1 ));
-    response.data.features = response.data.features.concat(secondMonth.data.features);
-    response.data.features.sort(function (a,b){
-      var timeA = a.properties.start_time;
-      var timeB = b.properties.start_time;
-      return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
-    });
-    dispatch(Action.GetEvents(null, response.data.features.map(Event.fromMappeningObject)));
+    const months = [0, 1, 2].map(d => moment().add(d, 'month').month() + 1);
+    const res = await Promise.all(months.map(m => axios.get(Config.routes.events.get(m))));
+    const events = res
+      .flatMap(res => res.data.features.map(Event.fromMappeningObject))
+      .sort((a, b) => Math.min(1, Math.max(-1, a.startDate - b.startDate)))
+    dispatch(Action.GetEvents(null, events));
   } catch (err) {
     handleAxiosError(dispatch, err, Action.GetEvents);
   }
@@ -100,16 +95,17 @@ const GetEvents = () => async dispatch => {
 /**
  * Get an event from Mappening by an ID
  * 
- * @param {String} id 
+ * @param {String} id
+ * @param {Function} callback - called if call was successful
  */
 const GetEvent = (id, callback) => async dispatch => {
   dispatch(Action.InitAction(GET_EVENT_INIT));
-  try{
+  try {
     const response = await axios.get(Config.routes.events.getOne(id));
-    var data =  Event.fromMappeningObject(response.data.features[0]);
-    dispatch(Action.GetEvent(null, data));
-    if (callback) callback (data);
-  }catch (err) {
+    const event = Event.fromMappeningObject(response.data.features[0]);
+    dispatch(Action.GetEvent(null, event));
+    if (callback) callback(event);
+  } catch (err) {
     handleAxiosError(dispatch, err, Action.GetEvent);
   }
 };

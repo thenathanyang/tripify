@@ -49,6 +49,10 @@ p {
   line-height: 120%;
 }
 
+a.no-style {
+  text-decoration: none;
+}
+
 /** import component styles here */
 @import "components/button/style";
 @import "components/header/style";

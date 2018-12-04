@@ -14,15 +14,15 @@ class Header extends React.Component {
   getMenu = () => {
     return (
       <div className="header">
-        <Link to="/" className="link"><div className="name">Tripify</div></Link>
+        <Link className="no-style" to="/"><div className="name">Tripify</div></Link>
         <div className="nav-icons">
-          <Link to="/" className="link">
+          <Link to="/" className="no-style">
             <Icon icon="home" color="white" className="icon" />
           </Link>
-          <Link to="/events" className="link">
+          <Link to="/events" className="no-style">
             <Icon icon="compass" color="white" className="icon" />
           </Link>
-          <Link to="/user" className="link">
+          <Link to="/user" className="no-style">
             <Icon icon="user" color="white" className="icon" />
           </Link>
         </div>

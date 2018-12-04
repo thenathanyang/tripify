@@ -7,7 +7,6 @@
   line-height: 47px;
   position: relative;
   box-shadow: 0 0 8px $gray;
-  // padding-left: 20px;
   text-align: center;
   z-index: 1000000;
 }
@@ -29,15 +28,11 @@
 
 .name {
   float: left;
+  color: white;
   margin-left: 20px;
 }
 
 .nav-icons {
   padding-right: 10px;
   float: right;
-}
-
-.link {
-  text-decoration: none;
-  color: white;
 }

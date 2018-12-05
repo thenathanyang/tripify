@@ -23,7 +23,7 @@ class JoinTrip extends React.Component {
 
   rsvp = accepted => () =>
     this.props.rsvpTrip(this.props.tripId, accepted, () => {
-      const message = accepted ? "Successfully RSVPed to the trip" : "Successfully declined invitation to the trip";
+      const message = accepted ? "Successfully accepted invitation to the trip" : "Successfully declined invitation to the trip";
       const icon = accepted ? "check" : "times";
       this.props.displayNotification(message, icon, accepted);
       this.props.redirectTrip();

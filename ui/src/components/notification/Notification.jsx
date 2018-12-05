@@ -12,7 +12,7 @@ import { history } from 'reducers';
  * appear above the header. 
  * 
  * Example:
- *  <Fading Popup 
+ *  <Notification 
  *    name="popup-notification"
  *    popupText="Success!"
  *    icon="check" 
@@ -39,6 +39,11 @@ class Notification extends React.Component {
     clearInterval(this.showPopupTimer);
     clearInterval(this.hidePopupTimer);    
   }
+
+  closePopup = () => {
+    this.setState({ display: false });
+    clearInterval(this.hidePopupTimer);
+  }
   
   render() {
     const { icon, popupText } = this.props;
@@ -52,8 +57,8 @@ class Notification extends React.Component {
         <div className={classnames(popupClasses)} > 
           { (icon) && <Icon className="popup-icon" icon={icon} /> }
           <Subheading text={popupText} />
+          <Icon className="close-popup" icon="times" onClick={this.closePopup}></Icon>
         </div>
-
       </div>
     );
   }

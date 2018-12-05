@@ -21,7 +21,8 @@
   font-size: 0.9em;
 }
 
-.icon:hover {
+.icon:hover,
+.icon-selected .icon {
   cursor: pointer;
   background: darken($blue, 15%);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import Icon from 'components/icon';
 
@@ -14,17 +14,17 @@ class Header extends React.Component {
   getMenu = () => {
     return (
       <div className="header">
-        <Link className="no-style" to="/"><div className="name">Tripify</div></Link>
+        <Link to="/trips" className="no-style"><div className="name">Tripify</div></Link>
         <div className="nav-icons">
-          <Link to="/" className="no-style">
+          <NavLink to="/trips" activeClassName="icon-selected" className="no-style">
             <Icon icon="home" color="white" className="icon" />
-          </Link>
-          <Link to="/events" className="no-style">
+          </NavLink>
+          <NavLink to="/events" activeClassName="icon-selected" className="no-style">
             <Icon icon="compass" color="white" className="icon" />
-          </Link>
-          <Link to="/user" className="no-style">
+          </NavLink>
+          <NavLink to="/user" activeClassName="icon-selected" className="no-style">
             <Icon icon="user" color="white" className="icon" />
-          </Link>
+          </NavLink>
         </div>
       </div>
     );

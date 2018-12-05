@@ -35,10 +35,13 @@ class ViewEvent extends React.Component {
 
   getAddPage() {
     return (
-      <div className="container">
-        <AddToTrip event={this.props.event} />
-        <Button small grey label="Cancel" onClick={this.removeAddPage} />
-      </div>
+      <>
+        <Header />
+        <div className="container">
+          <AddToTrip event={this.props.event} />
+          <Button small grey label="Cancel" onClick={this.removeAddPage} />
+        </div>
+      </>
     );
   }
 
